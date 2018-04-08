@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 
 const SERVER_ADDRESS = 'http://localhost';
-const SERVER_PORT = process.env.PORT || 8080;
+const SERVER_PORT = 80;
 
 
 
