@@ -1,0 +1,8 @@
+<p class='instructions'>
+Insert link from
+  <img src='../assets/pics/youtube-logo.svg' alt='youtube'>
+</p>
+<p><input type="text" [(ngModel)]="link"/></p>
+<button (click)="sendLink()">send to Karaokemp!</button>
+<hr>
+<label>response: {{response|async}}</label>
