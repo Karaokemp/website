@@ -27,6 +27,12 @@
     "core-js": "^2.4.1",
     "express": "^4.16.3",
     "fs": "0.0.1-security",
+    "kue": "^0.11.6",
+    "mongo-message-queue": "^0.1.3",
+    "mongodb": "^3.0.7",
+    "mongoose": "^5.0.15",
+    "mongoose-unique-validator": "^2.0.0",
+    "monq": "^0.3.7",
     "rxjs": "^5.5.2",
     "ytdl-core": "^0.20.2",
     "zone.js": "^0.8.14"
