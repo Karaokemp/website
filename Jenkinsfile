@@ -9,7 +9,10 @@ pipeline {
 
     stage('Unit Tests') {
       steps {
-        sh 'npm test'
+         withNPM(npmrcConfig:'ci-nprc') {
+            sh 'npm test'
+        }
+      
       }
     }
 
