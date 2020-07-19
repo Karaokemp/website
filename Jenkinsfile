@@ -3,7 +3,6 @@ pipeline {
   stages {
     stage('Install Dependencies') {
       steps {
-        echo 'publishing...'
         sh 'npm install'
       }
     }
