@@ -10,6 +10,7 @@ pipeline {
     stage('Unit Tests') {
       steps {
         withNPM(npmrcConfig: 'CI=true')
+        sh 'CI=true npm test'
       }
     }
 
