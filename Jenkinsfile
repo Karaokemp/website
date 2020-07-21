@@ -4,7 +4,7 @@ pipeline {
     stage('Install test dependencies') {
       steps {
         sh '''npm cache clean --force
-npm install --cross-env'''
+npm install'''
       }
     }
 
