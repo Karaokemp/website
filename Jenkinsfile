@@ -9,12 +9,12 @@ pipeline {
 
     stage('Unit Tests') {
       steps {
-        withNPM(npmrcConfig: 'ci-nprc') {
-          sh 'ls'
-        }
-
+        withNPM(npmrcConfig: 'CI=true')
       }
     }
 
+  }
+  environment {
+    CI = 'true'
   }
 }
