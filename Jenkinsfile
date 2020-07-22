@@ -12,10 +12,12 @@ pipeline {
         sh 'CI=true npm test'
       }
     }
-    post {
+    
+
+  }
+  post {
         always {
             junit '*.xml'
         }
     }
-  }
 }
