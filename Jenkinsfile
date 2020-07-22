@@ -19,7 +19,7 @@ pipeline {
   }
   post {
         always {
-            junit 'reports/jest-junit.xml'
+            junit 'reports/junit.xml'
         }
     }
 }
