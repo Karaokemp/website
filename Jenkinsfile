@@ -10,8 +10,7 @@ pipeline {
 
     stage('Unit Tests') {
       steps {
-        sh 'CI=true npm test'
-        sh 'ls'
+        sh 'CI=true JEST_JUNIT_OUTPUT_DIR="./reports" npm test'
       }
       
     }
