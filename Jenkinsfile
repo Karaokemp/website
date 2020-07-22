@@ -10,6 +10,7 @@ pipeline {
     stage('Unit Tests') {
       steps {
         sh 'CI=true npm test'
+        ls
       }
     }
     
@@ -17,7 +18,7 @@ pipeline {
   }
   post {
         always {
-            junit '*.xml'
+            junit 'reports/jest-junit.xml'
         }
     }
 }
