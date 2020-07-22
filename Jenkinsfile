@@ -10,7 +10,9 @@ pipeline {
     stage('Unit Tests') {
       steps {
         sh 'CI=true npm test'
+        sh 'ls'
       }
     }
+
   }
 }
