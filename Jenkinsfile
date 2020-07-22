@@ -1,7 +1,8 @@
 pipeline {
   agent any
+  triggers { pollSCM('* * * * *') }
   stages {
-    stage('Install test dependencies') {
+    stage('Install dependencies') {
       steps {
         sh 'npm install'
       }
@@ -20,7 +21,4 @@ pipeline {
             junit 'reports/junit.xml'
         }
     }
-  }
-  triggers {
-    pollSCM('* * * * *')
   }
