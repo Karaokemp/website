@@ -25,6 +25,7 @@ pipeline {
         always {
             sh    'cd frontend'
             junit 'reports/junit.xml'
+            sh    'ls'
         }
     }
   }
