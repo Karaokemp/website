@@ -10,9 +10,9 @@ pipeline {
     }
 
     stage('Unit Tests') {
-      when { 
-            changeset /*"frontend/**" */ "**"
-        }
+      /*when { 
+            changeset "frontend/**" 
+        } */
       steps {
         sh 'cd frontend'
         sh 'CI=true JEST_JUNIT_OUTPUT_DIR="./reports" npm test'
