@@ -14,8 +14,9 @@ pipeline {
             changeset "frontend/**" 
         } */
       steps {
-        sh 'ls'
         sh 'cd frontend'
+        sh 'ls'
+
         sh 'CI=true JEST_JUNIT_OUTPUT_DIR="./reports" npm test'
       
       }
