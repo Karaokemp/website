@@ -4,7 +4,7 @@
 **/node_modules
 # testing
 /coverage
-frontend/junit.xml
+frontend/reports/**
 
 # production
 /build
