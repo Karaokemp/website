@@ -11,7 +11,7 @@ pipeline {
 
     stage('Unit Tests') {
       when { 
-            changeset "frontendz/**"
+            changeset /*"frontend/**" */ "**"
         }
       steps {
         sh 'cd frontend'
