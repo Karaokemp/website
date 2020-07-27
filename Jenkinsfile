@@ -23,6 +23,7 @@ pipeline {
   }
   post {
         always {
+            sh    'cd frontend'
             junit 'reports/junit.xml'
         }
     }
