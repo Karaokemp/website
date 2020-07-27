@@ -4,8 +4,7 @@ pipeline {
   stages {
     stage('Install dependencies') {
       steps {
-        sh 'cd frontend'
-        sh 'npm install'
+        sh 'npm install --prefix frontend'
       }
     }
 
@@ -14,10 +13,8 @@ pipeline {
             changeset "frontend/**" 
         } */
       steps {
-        sh 'cd frontend'
-        sh 'ls'
 
-        sh 'CI=true JEST_JUNIT_OUTPUT_DIR="./reports" npm test'
+        sh 'CI=true JEST_JUNIT_OUTPUT_DIR="./reports" npm test --prefix frontend'
       
       }
     }
