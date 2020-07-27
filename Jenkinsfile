@@ -23,7 +23,7 @@ pipeline {
   }
   post {
         always {
-            junit 'frontend/reports/junit.xml'
+            junit 'reports/junit.xml'
         }
     }
   }
