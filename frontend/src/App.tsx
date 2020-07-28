@@ -1,19 +1,27 @@
-import React from 'react';
+import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-         Welcome to Karaokemp!
-        </p>
-        
-      </header>
-    </div>
-  );
+
+class App extends Component{
+  constructor(props:string) {
+    super(props);
+    this.state = {
+      videos: [],
+      selectedVideo: null
+    }
+
+  }
+  render() {
+    console.log(this.state);
+    return(
+      <div>
+        <p>Welcome to karaokemp!</p>
+      </div>
+    )
+  }
 }
+
+
 
 export default App;
