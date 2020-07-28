@@ -4,6 +4,6 @@ import App from './App';
 
 test('page renders correctly', () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/Welcome to Karaokemp!/i);
-  expect(linkElement).toBeInTheDocument();
+  const title = getByText(/Welcome to Karaokemp!/i);
+  expect(title).toBeInTheDocument();
 });
