@@ -13,18 +13,15 @@ pipeline {
           }*/
            stages{
              stage('Install packages') {
-          environment {
-                 npm_config_prefix='frontend'
-               }
+          
           steps {
-                  echo "npm_config_prefix is ${npm_config_prefix}"
-                  sh 'npm_config_prefix=frontend npm prefix'
+                  sh 'npm install --prefix frontend'
           }
         }
              stage('Unit Tests') {
                environment {
                  CI=true
-                 //npm_config_prefix='frontend'
+                 //npm_config_prefix='frontend
                  JEST_JUNIT_OUTPUT_DIR='../reports'
                  JEST_JUNIT_OUTPUT_NAME='frontend.xml'
                }
