@@ -3,6 +3,7 @@ pipeline {
     pollSCM('* * * * *')
   }
   agent any
+  stages{
      stage('build services'){
        parallel{
          stages{
@@ -31,6 +32,7 @@ pipeline {
        }
 
      }
+}
         
       }
 
