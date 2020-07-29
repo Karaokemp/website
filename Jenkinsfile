@@ -7,7 +7,10 @@ pipeline {
      stage('build services'){
        parallel{
          stage('build frontend'){
-          stages{
+           steps{
+             echo 'build frontend'
+           }
+          /*stages{
            stage('Install frontend packages') {
           when {
             changeset 'frontend/**'
@@ -17,9 +20,12 @@ pipeline {
           }
         } 
 
-         }
+         }*/
            stage('build backend'){
-            stages{
+             steps{
+               echo 'build backend'
+             }
+            /*stages{
             stage('Install backend packages') {
       when {
         changeset 'backend/**'
@@ -28,7 +34,7 @@ pipeline {
         sh 'npm install --prefix backend'
       }
     }
-         }
+         } */
            }
          }
        }
