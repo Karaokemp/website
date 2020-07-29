@@ -10,6 +10,7 @@ pipeline {
            steps{
              echo 'build frontend'
            }
+         }
           /*stages{
            stage('Install frontend packages') {
           when {
@@ -36,11 +37,10 @@ pipeline {
     }
          } */
            }
-         }
        }
-
      }
-  }    
+       
+  }   
 }
 
     
