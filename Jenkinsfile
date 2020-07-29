@@ -46,6 +46,11 @@ pipeline {
         sh 'npm install --prefix backend'
       }
     }
+    stage('Unit tests'){
+      steps{
+        echo "Passed?"
+      }
+    }
          }
            }
        }
