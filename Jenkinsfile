@@ -14,7 +14,7 @@ pipeline {
              stage('Install packages') {
           
           steps {
-            sh 'npm install'
+            sh 'npm install --prefix=frontend'
           }
         } 
              stage('Unit Tests') {
@@ -25,7 +25,7 @@ pipeline {
                  JEST_JUNIT_OUTPUT_NAME='frontend.xml'
                }
       steps {
-        sh  'npm test prefix=frontend'
+        sh  'npm test --prefix=frontend'
         junit 'reports/frontend.xml'
       }
     }
