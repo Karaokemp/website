@@ -7,8 +7,17 @@ pipeline {
      stage('build services'){
        parallel{
          stage('build frontend'){
-           steps{
-             echo 'build frontend'
+           stages{
+             stage('frontend A'){
+               steps{
+                 echo 'A'
+               }
+             }
+             stage('frontend B'){
+               steps{
+                 echo 'B'
+               }
+             }
            }
          }
           /*stages{
