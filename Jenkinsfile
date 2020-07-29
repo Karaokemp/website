@@ -20,7 +20,7 @@ pipeline {
              stage('Unit Tests') {
                environment {
                  CI=true
-                 npm_config_prefix='frontend'
+                 //npm_config_prefix='frontend'
                  JEST_JUNIT_OUTPUT_DIR='../reports'
                  JEST_JUNIT_OUTPUT_NAME='frontend.xml'
                }
