@@ -18,7 +18,7 @@ pipeline {
                }
           steps {
                   echo "npm_config_prefix is ${npm_config_prefix}"
-                  sh 'npm config prefix'
+                  sh 'npm prefix'
           }
         }
              stage('Unit Tests') {
