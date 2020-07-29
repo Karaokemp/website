@@ -17,16 +17,17 @@ pipeline {
             sh 'npm install --prefix frontend'
           }
         } 
-             stage('frontend B'){
-               steps{
-                 echo 'B'
-               }
-             }
+             stage('Unit Tests') {
+      steps {
+        sh 'CI=true JEST_JUNIT_OUTPUT_DIR="../reports" npm test --prefix frontend'
+        junit 'reports/junit.xml'
+      }
+    } */
            }
          }
          
            stage('build backend'){
-              /*when {
+            /*when {
         changeset 'backend/**'
       }*/
               stages{
@@ -46,16 +47,5 @@ pipeline {
   }   
 }
 
-    
-
-    /*stage(' Frontend Unit Tests') {
-      when {
-        changeset 'frontend/**'
-      }
-      steps {
-        sh 'CI=true JEST_JUNIT_OUTPUT_DIR="../reports" npm test --prefix frontend'
-        junit 'reports/junit.xml'
-      }
-    } */
 
   
