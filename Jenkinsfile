@@ -26,7 +26,7 @@ pipeline {
                }
  
       steps {
-        sh  'npm test --prefix frontend'
+        sh  'npm test'
         junit 'reports/frontend.xml'
       }
     }
