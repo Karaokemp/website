@@ -81,9 +81,29 @@ pipeline {
      }
 
      stage('Acceptance Tests'){
-         steps{
-           echo "Accepted??"
-         }
+        matrix {
+    axes {
+        axis {
+            name 'PLATFORM'
+            values 'linux', 'mac', 'windows'
+        }
+        axis {
+            name 'BROWSER'
+            values 'chrome', 'edge', 'firefox', 'safari'
+        }
+        axis {
+            name 'ARCHITECTURE'
+            values '32-bit', '64-bit'
+        }
+    }
+    stages{
+      stage('try'){
+        steps{
+           echo "Do Build for ${PLATFORM} ${ARCHITECTURE} - ${BROWSER}"
+        }
+      }
+    }
+}
        }  
   }   
 }
