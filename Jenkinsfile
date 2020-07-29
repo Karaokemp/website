@@ -58,11 +58,26 @@ pipeline {
 
      }
 
+     stage('Deploy'){
+       parallel{
+         stage('Integration'){
+           steps{
+             echo "Deploying to Integration"
+           }
+         }
+         stage('QA'){
+           steps{
+             echo "Deploying to QA"
+           }
+         }
+
+       }
+     }
+
      stage('Acceptance Tests'){
          steps{
            echo "Accepted??"
          }
-       }
-       
+       }  
   }   
 }
