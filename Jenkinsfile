@@ -3,9 +3,7 @@ pipeline {
     pollSCM('* * * * *')
   }
   agent any
-  stages {
-    stage('Install packages') {
-      parallel {
+   parallel {
         
 
         stage('Install frontend packages') {
@@ -27,7 +25,6 @@ pipeline {
     }
 
       }
-    }
 
     
 
@@ -42,5 +39,3 @@ pipeline {
     } */
 
   }
-  
-}
