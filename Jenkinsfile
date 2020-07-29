@@ -18,8 +18,14 @@ pipeline {
           }
         } 
              stage('Unit Tests') {
+               environment {
+                 CI=true
+                 JEST_JUNIT_OUTPUT_DIR='../reports'
+                 JEST_JUNIT_OUTPUT_NAME='frontend.xml'
+               }
+ 
       steps {
-        sh 'CI=true JEST_JUNIT_OUTPUT_DIR="../reports" JEST_JUNIT_OUTPUT_NAME="frontend.xml" npm test --prefix frontend'
+        sh  'npm test --prefix frontend'
         junit 'reports/frontend.xml'
       }
     }
