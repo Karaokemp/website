@@ -24,9 +24,8 @@ pipeline {
                  JEST_JUNIT_OUTPUT_DIR='../reports'
                  JEST_JUNIT_OUTPUT_NAME='frontend.xml'
                }
- 
       steps {
-        sh  'npm test'
+        sh  'npm test prefix=frontend'
         junit 'reports/frontend.xml'
       }
     }
