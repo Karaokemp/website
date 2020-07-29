@@ -22,7 +22,7 @@ pipeline {
         sh 'CI=true JEST_JUNIT_OUTPUT_DIR="../reports" npm test --prefix frontend'
         junit 'reports/junit.xml'
       }
-    } */
+    }
            }
          }
          
@@ -46,6 +46,3 @@ pipeline {
        
   }   
 }
-
-
-  
