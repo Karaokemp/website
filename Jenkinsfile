@@ -8,7 +8,6 @@ pipeline {
        parallel{
          stage('frontend'){
            environment {
-                 CI=true
                  npm_config_prefix='frontend'
                }
            /*when {
@@ -18,7 +17,6 @@ pipeline {
              stage('Install packages') {
           
           steps {
-            sh 'npm config list'
             sh 'npm install'
           }
         }
