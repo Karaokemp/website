@@ -3,19 +3,21 @@ pipeline {
     pollSCM('* * * * *')
   }
   agent any
-   parallel {
-        
-
-        stage('Install frontend packages') {
+     stage('build services'){
+       parallel{
+         stages{
+           stage('Install frontend packages') {
           when {
             changeset 'frontend/**'
           }
           steps {
             sh 'npm install --prefix frontend'
           }
-        }
+        } 
 
-        stage('Install backend packages') {
+         }
+         stages{
+            stage('Install backend packages') {
       when {
         changeset 'backend/**'
       }
@@ -23,6 +25,17 @@ pipeline {
         sh 'npm install --prefix backend'
       }
     }
+
+         }
+
+       }
+
+     }
+        
+
+        
+
+       
 
       }
 
@@ -38,4 +51,4 @@ pipeline {
       }
     } */
 
-  }
+  
