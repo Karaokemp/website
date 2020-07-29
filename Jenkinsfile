@@ -54,12 +54,15 @@ pipeline {
          }
            }
        }
-       stage('Acceptance Tests'){
+
+
+     }
+
+     stage('Acceptance Tests'){
          steps{
            echo "Accepted??"
          }
        }
-     }
        
   }   
 }
