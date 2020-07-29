@@ -4,7 +4,7 @@ pipeline {
   }
   agent any
   stages{
-     stage('services'){
+     stage('build'){
        parallel{
          stage('frontend'){
            
@@ -48,6 +48,11 @@ pipeline {
     }
          }
            }
+       }
+       stage('Acceptance Tests'){
+         steps{
+           echo "Accepted??"
+         }
        }
      }
        
