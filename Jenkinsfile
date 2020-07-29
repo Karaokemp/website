@@ -7,6 +7,10 @@ pipeline {
      stage('services'){
        parallel{
          stage('frontend'){
+           environment {
+                 CI=true
+                 npm_config_prefix='frontend'
+               }
            /*when {
             changeset 'frontend/**'
           }*/
@@ -14,9 +18,9 @@ pipeline {
              stage('Install packages') {
           
           steps {
-            sh 'npm install --prefix=frontend'
+            sh 'npm install'
           }
-        } 
+        }
              stage('Unit Tests') {
                environment {
                  CI=true
