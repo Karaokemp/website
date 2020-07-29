@@ -16,7 +16,8 @@ class App extends Component{
     console.log(this.state);
     return(
       <div>
-        <p>Welcome to karaokemp!</p>
+        <h3>Welcome to karaokemp!</h3>
+        <p>try to publish failed tests.</p>
       </div>
     )
   }

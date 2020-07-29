@@ -27,6 +27,7 @@ pipeline {
       steps {
 
         sh 'CI=true JEST_JUNIT_OUTPUT_DIR="./reports" npm test --prefix frontend'
+        junit 'frontend/reports/junit.xml'
       
       }
     }
@@ -34,7 +35,7 @@ pipeline {
   }
   post {
         always {
-            junit 'frontend/reports/junit.xml'
+            
         }
     }
   }
