@@ -17,8 +17,8 @@ pipeline {
                  npm_config_prefix='frontend'
                }
           steps {
-                  echo "Database engine is ${npm_config_prefix}"
-                  sh 'npm install'
+                  echo "npm_config_prefix is ${npm_config_prefix}"
+                  sh 'npm config prefix'
           }
         }
              stage('Unit Tests') {
