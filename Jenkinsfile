@@ -3,6 +3,8 @@ pipeline {
   stages {
     stage('Install frontend packages') {
       parallel {
+        
+
         stage('Install frontend packages') {
           when {
             changeset 'frontend/**'
@@ -12,16 +14,7 @@ pipeline {
           }
         }
 
-        stage('parallel backend') {
-          steps {
-            echo 'parallel backend step'
-          }
-        }
-
-      }
-    }
-
-    stage('Install backend packages') {
+        stage('Install backend packages') {
       when {
         changeset 'backend/**'
       }
@@ -29,6 +22,11 @@ pipeline {
         sh 'npm install --prefix backend'
       }
     }
+
+      }
+    }
+
+    
 
     stage(' Frontend Unit Tests') {
       when {
