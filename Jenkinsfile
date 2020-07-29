@@ -21,7 +21,6 @@ pipeline {
       steps {
         sh 'CI=true JEST_JUNIT_OUTPUT_DIR="../reports" JEST_JUNIT_OUTPUT_NAME="frontend.xml" npm test --prefix frontend'
         junit 'reports/frontend.xml'
-        sh 'ls reports'
       }
     }
            }
