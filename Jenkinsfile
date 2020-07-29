@@ -4,7 +4,7 @@ pipeline {
   }
   agent any
   stages{
-     stage('build services'){
+     stage('services'){
        parallel{
          stage('frontend'){
            /*when {
@@ -19,8 +19,9 @@ pipeline {
         } 
              stage('Unit Tests') {
       steps {
-        sh 'CI=true JEST_JUNIT_OUTPUT_DIR="../reports" npm test --prefix frontend'
-        junit 'reports/junit.xml'
+        sh 'CI=true JEST_JUNIT_OUTPUT_DIR="../reports" JEST_JUNIT_OUTPUT_NAME="frontend.xml" npm test --prefix frontend'
+        junit 'reports/frontend.xml'
+        sh 'ls'
       }
     }
            }
