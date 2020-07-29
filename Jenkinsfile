@@ -95,7 +95,7 @@ pipeline {
     stages{
       stage('try'){
         steps{
-           echo "Do Build for ${PLATFORM} ${ARCHITECTURE} - ${BROWSER}"
+           echo "Try ${PLATFORM} ${ARCHITECTURE}"
         }
       }
     }
