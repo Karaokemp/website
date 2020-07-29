@@ -1,4 +1,7 @@
 pipeline {
+  triggers {
+    pollSCM('* * * * *')
+  }
   agent any
   stages {
     stage('Install packages') {
@@ -28,7 +31,7 @@ pipeline {
 
     
 
-    stage(' Frontend Unit Tests') {
+    /*stage(' Frontend Unit Tests') {
       when {
         changeset 'frontend/**'
       }
@@ -36,10 +39,8 @@ pipeline {
         sh 'CI=true JEST_JUNIT_OUTPUT_DIR="../reports" npm test --prefix frontend'
         junit 'reports/junit.xml'
       }
-    }
+    } */
 
   }
-  triggers {
-    pollSCM('* * * * *')
-  }
+  
 }
