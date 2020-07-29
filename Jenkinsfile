@@ -6,7 +6,7 @@ pipeline {
   stages{
      stage('build services'){
        parallel{
-         stage('build frontend'){
+         stage('frontend'){
            /*when {
             changeset 'frontend/**'
           }*/
@@ -26,7 +26,7 @@ pipeline {
            }
          }
          
-           stage('build backend'){
+           stage('backend'){
             /*when {
         changeset 'backend/**'
       }*/
