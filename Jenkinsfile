@@ -88,10 +88,6 @@ pipeline {
             values 'linux', 'mac', 'windows'
         }
         axis {
-            name 'BROWSER'
-            values 'chrome', 'edge', 'firefox', 'safari'
-        }
-        axis {
             name 'ARCHITECTURE'
             values '32-bit', '64-bit'
         }
