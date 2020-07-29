@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Install frontend packages') {
+    stage('Install packages') {
       parallel {
         
 
