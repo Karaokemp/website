@@ -17,7 +17,8 @@ pipeline {
                  npm_config_prefix='frontend'
                }
           steps {
-            sh 'npm prefix'
+            echo '${npm_config_prefix}'
+            sh 'npm install'
           }
         }
              stage('Unit Tests') {
