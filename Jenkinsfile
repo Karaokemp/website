@@ -93,7 +93,7 @@ pipeline {
         }
     }
     stages{
-      stage('try'){
+      stage('test'){
         steps{
            echo "Try ${PLATFORM} ${ARCHITECTURE}"
         }
