@@ -21,3 +21,4 @@ yarn-debug.log*
 yarn-error.log*
 frontend/junit.xml
 backend/dist
+backend/junit.xml

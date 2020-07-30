@@ -5,6 +5,11 @@ pipeline {
   agent any
   stages{
      stage('build'){
+       environment {
+                 CI=true
+                 //npm_config_prefix='frontend
+                 JEST_JUNIT_OUTPUT_DIR='../reports'
+               }
        parallel{
          stage('frontend'){
            
@@ -20,10 +25,7 @@ pipeline {
         }
              stage('Unit Tests') {
                environment {
-                 CI=true
-                 //npm_config_prefix='frontend
-                 JEST_JUNIT_OUTPUT_DIR='../reports'
-                 JEST_JUNIT_OUTPUT_NAME='frontend.xml'
+                  JEST_JUNIT_OUTPUT_NAME='frontend.xml'
                }
       steps {
         sh  'npm test --prefix=frontend'
@@ -47,8 +49,13 @@ pipeline {
       }
     }
     stage('Unit tests'){
+      environment {
+        JEST_JUNIT_OUTPUT_NAME='backend.xml'
+      }
+
       steps{
         sh 'npm test --prefix backend'
+        sh 'ls reports'
       }
     }
          }
