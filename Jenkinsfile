@@ -55,7 +55,7 @@ pipeline {
 
       steps{
         sh 'npm test --prefix backend'
-        sh 'ls reports'
+        junit 'reports/backend.xml'
       }
     }
          }
