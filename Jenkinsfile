@@ -48,16 +48,13 @@ pipeline {
     }
     stage('Unit tests'){
       steps{
-        echo "Passed?"
+        sh 'npm test --prefix backend'
       }
     }
          }
            }
        }
-
-
      }
-
      stage('Publish Artifacts'){
        steps{
          echo "Publishing Artifacts"
