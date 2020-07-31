@@ -85,25 +85,9 @@ pipeline {
      }
 
      stage('Acceptance Tests'){
-        matrix {
-    axes {
-        axis {
-            name 'PLATFORM'
-            values 'linux', 'mac', 'windows'
-        }
-        axis {
-            name 'ARCHITECTURE'
-            values '32-bit', '64-bit'
-        }
-    }
-    stages{
-      stage('test'){
         steps{
-           echo "Try ${PLATFORM} ${ARCHITECTURE}"
+            echo 'Testing...'
         }
-      }
-    }
-}
        }  
   }   
 }
