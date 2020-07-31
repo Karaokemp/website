@@ -67,7 +67,6 @@ pipeline {
          echo "Publishing Artifacts"
        }
      }
-
      stage('Deploy'){
        parallel{
          stage('Integration'){
@@ -80,10 +79,8 @@ pipeline {
              echo "Deploying to QA"
            }
          }
-
        }
      }
-
      stage('Acceptance Tests'){
         steps{
             echo 'Testing...'
