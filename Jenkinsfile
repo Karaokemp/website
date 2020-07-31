@@ -13,7 +13,7 @@ pipeline {
        parallel{
          stage('frontend'){
            environment {
-                  PWD = ${PWD} + '/frontend'
+                  PWD = '$(pwd)/frontend'
                   JEST_JUNIT_OUTPUT_NAME='frontend.xml'
             }
            
