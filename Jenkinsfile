@@ -21,7 +21,9 @@ pipeline {
            stages{
              stage('Install packages') {
           steps {
-            sh 'npm install --prefix frontend'
+            dir("${SERVICE}"){
+              sh 'npm install'
+            }
             sh 'printenv'
             echo "${SERVICE}.xml"
 
