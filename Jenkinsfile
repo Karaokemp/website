@@ -22,8 +22,9 @@ pipeline {
            stages{
              stage('Install packages') {
           steps {
-            sh 'printenv'
             sh 'npm install --prefix frontend'
+            sh 'printenv'
+
           }
         }
              stage('Unit Tests') {
