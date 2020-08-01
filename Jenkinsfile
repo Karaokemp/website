@@ -13,22 +13,21 @@ pipeline {
        parallel{
          stage('frontend'){
            environment {
-                  JEST_JUNIT_OUTPUT_NAME='frontend.xml'
+                  SERVICE=FRONTEND
+                  JEST_JUNIT_OUTPUT_NAME='${SERVICE}.xml'
             }
-           
            /*when {
             changeset 'frontend/**'
           }*/
            stages{
              stage('Install packages') {
-          
           steps {
-                  sh 'printenv'
-                  sh 'npm install --prefix frontend'
+            sh 'printenv'
+            sh 'npm install --prefix frontend'
           }
         }
              stage('Unit Tests') {
-               environment {
+          environment {
                   JEST_JUNIT_OUTPUT_NAME='frontend.xml'
                }
       steps {
@@ -39,7 +38,7 @@ pipeline {
            }
          }
          
-           stage('backend'){
+         stage('backend'){
             /*when {
         changeset 'backend/**'
       }*/
@@ -74,8 +73,8 @@ pipeline {
      stage('Deploy'){
        parallel{
          stage('Integration'){
-           steps{
-             echo "Deploying to Integration"
+            steps{
+              echo "Deploying to Integration"
            }
          }
          stage('QA'){
