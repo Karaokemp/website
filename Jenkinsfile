@@ -23,7 +23,7 @@ pipeline {
           steps {
             sh 'npm install --prefix frontend'
             sh 'printenv'
-            echo '${SERVICE}.xml'
+            echo "${SERVICE}.xml"
 
 
           }
