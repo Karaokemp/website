@@ -13,7 +13,7 @@ pipeline {
        parallel{
          stage('frontend'){
            environment {
-                  SERVICE='frontend'
+              SERVICE='frontend'
             }
            /*when {
             changeset 'frontend/**'
@@ -24,25 +24,26 @@ pipeline {
             dir("${SERVICE}"){
               sh 'npm install'
             }
-            sh 'printenv'
-            echo "${SERVICE}.xml"
-
-
           }
         }
              stage('Unit Tests') {
           environment {
-                  JEST_JUNIT_OUTPUT_NAME='frontend.xml'
-               }
+            JEST_JUNIT_OUTPUT_NAME="${SERVICE}.xml"
+          }
       steps {
-        sh  'npm test --prefix=frontend'
-        junit 'reports/frontend.xml'
+        dir("${SERVICE}"){
+          sh 'npm test'
+        }
+        junit "reports/${SERVICE}.xml"
       }
     }
            }
          }
          
          stage('backend'){
+            environment {
+              SERVICE='backend'
+            }
             /*when {
         changeset 'backend/**'
       }*/
@@ -52,17 +53,20 @@ pipeline {
         changeset 'backend/**'
       }*/
       steps {
-        sh 'npm install --prefix backend'
-      }
+        dir("${SERVICE}"){
+          sh 'npm install'
+        }      
     }
+  }
     stage('Unit tests'){
       environment {
-        JEST_JUNIT_OUTPUT_NAME='backend.xml'
+          JEST_JUNIT_OUTPUT_NAME="${SERVICE}.xml"
       }
-
       steps{
-        sh 'npm test --prefix backend'
-        junit 'reports/backend.xml'
+        dir("${SERVICE}"){
+          'npm test'
+        }
+        junit 'reports/${SERVICE}.xml'
       }
     }
          }
