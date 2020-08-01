@@ -13,8 +13,7 @@ pipeline {
        parallel{
          stage('frontend'){
            environment {
-                  SERVICE='FRONTEND'
-                  JEST_JUNIT_OUTPUT_NAME='${SERVICE}.xml'
+                  SERVICE='frontend'
             }
            /*when {
             changeset 'frontend/**'
@@ -24,6 +23,8 @@ pipeline {
           steps {
             sh 'npm install --prefix frontend'
             sh 'printenv'
+            echo '${SERVICE}.xml'
+
 
           }
         }
