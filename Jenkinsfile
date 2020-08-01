@@ -13,7 +13,7 @@ pipeline {
        parallel{
          stage('frontend'){
            environment {
-                  SERVICE=FRONTEND
+                  SERVICE='FRONTEND'
                   JEST_JUNIT_OUTPUT_NAME='${SERVICE}.xml'
             }
            /*when {
