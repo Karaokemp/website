@@ -73,11 +73,11 @@ pipeline {
          }
            }
        }
-     }
-     stage('Publish Artifacts'){
-       steps{
-         echo "Publishing Artifacts"
+       stage('Publish Artifacts'){
+          steps{
+            echo "Publishing Artifacts"
        }
+     }
      }
      stage('Deploy'){
        parallel{
