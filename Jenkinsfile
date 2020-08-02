@@ -65,8 +65,9 @@ pipeline {
       steps{
         dir("${SERVICE}"){
           sh 'npm test'
+
         }
-        junit 'reports/${SERVICE}.xml'
+        junit "reports/${SERVICE}.xml"
       }
     }
          }
