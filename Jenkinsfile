@@ -64,7 +64,7 @@ pipeline {
       }
       steps{
         dir("${SERVICE}"){
-          'npm test'
+          sh 'npm test'
         }
         junit 'reports/${SERVICE}.xml'
       }
@@ -106,7 +106,6 @@ pipeline {
                     string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
                 }
             }
-            agent any
             steps {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
