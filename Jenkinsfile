@@ -100,8 +100,9 @@ pipeline {
        }
       stage('Deploy to Production') {
             input {
-                message "Deploy to Production?"
-                ok "Yes"
+                //message "Deploy to Production?"
+                ok "Deploy"
+
                 submitter "alice,bob"
                 parameters {
                     string(name: 'Deployer', defaultValue: 'Ophirus Magnivus', description: "Who does order the deploy?")
