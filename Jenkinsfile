@@ -37,6 +37,11 @@ pipeline {
         junit "reports/${SERVICE}.xml"
       }
     }
+    stage('Publish Artifacts'){
+          steps{
+            echo "Publishing Artifacts"
+       }
+     }
            }
          }
          
@@ -70,14 +75,15 @@ pipeline {
         junit "reports/${SERVICE}.xml"
       }
     }
-         }
-           }
-       }
-       stage('Publish Artifacts'){
+    stage('Publish Artifacts'){
           steps{
             echo "Publishing Artifacts"
        }
      }
+         }
+           }
+       }
+       
      }
      stage('Deploy'){
        parallel{
