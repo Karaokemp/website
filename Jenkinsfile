@@ -100,8 +100,8 @@ pipeline {
        }
       stage('Deploy to Production') {
             input {
-                //message "Deploy to Production?"
-                ok "Deploy"
+                message "Deploy to Production?"
+                ok "Deploy!"
 
                 submitter "alice,bob"
                 parameters {
