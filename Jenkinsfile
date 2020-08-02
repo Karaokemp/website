@@ -75,6 +75,11 @@ pipeline {
         junit "reports/${SERVICE}.xml"
       }
     }
+    stage('Build Artifacts'){
+          steps{
+            echo "Publishing Artifacts"
+       }
+     }
     stage('Publish Artifacts'){
           steps{
             echo "Publishing Artifacts"
