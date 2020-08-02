@@ -98,17 +98,17 @@ pipeline {
             echo 'Testing...'
         }
        }
-      stage('Input Example') {
+      stage('Deploy to Production') {
             input {
                 message "Should we continue?"
-                ok "Yes, we should."
+                ok "Yes"
                 submitter "alice,bob"
                 parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                    string(name: 'Deployer', defaultValue: 'Ophirus Magnivus', description: "Who does order the deploy?")
                 }
             }
             steps {
-                echo "Hello, ${PERSON}, nice to meet you."
+                echo "${Deployer} deployed to production! He is to blame!"
             }
         }  
   }   
