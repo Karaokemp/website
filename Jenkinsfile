@@ -77,7 +77,7 @@ pipeline {
     }
     stage('Build Artifacts'){
           steps{
-            echo "Publishing Artifacts"
+            echo "Pubbuilding Artifacts"
        }
      }
     stage('Publish Artifacts'){
