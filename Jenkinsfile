@@ -2,11 +2,12 @@ pipeline {
   triggers {
     pollSCM('* * * * *')
   }
-  agent any
+  agent none
    
   
   stages{
-    stage('Lint'){
+    node{
+        stage('Lint'){
           steps{
             echo "Linting Code..."
        }
@@ -121,6 +122,9 @@ pipeline {
             echo 'Testing...'
         }
        }
+
+    }
+    node{
       stage('Deploy to Production') {
             input {
                 message "Deploy to Production?"
@@ -139,5 +143,7 @@ pipeline {
                 }
             }
         }  
-  }   
+  } 
+    }
+    
 }
