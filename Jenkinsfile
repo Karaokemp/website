@@ -134,8 +134,8 @@ pipeline {
             steps {
                 echo "${Deployer} deployed to production! He is to blame!"
                 script {
-      currentBuild.displayName = "fooName"
-      currentBuild.description = "<a href='http://stackoverflow.com'>Stackoverbuild build" + env.BUILD_ID + "</a>"
+      currentBuild.displayName = "Released!"
+      currentBuild.description ="try at test.occano.io"
                 }
             }
         }  
