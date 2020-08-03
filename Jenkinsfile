@@ -2,8 +2,10 @@ pipeline {
   triggers {
     pollSCM('* * * * *')
   }
-  agent any
-  stages{
+  agent none
+  stage('predeploy'){
+    agent any
+    stages{
     stage('Lint'){
           steps{
             echo "Linting Code..."
@@ -118,8 +120,11 @@ pipeline {
         steps{
             echo 'Testing...'
         }
-       }
-      stage('Deploy to Production') {
+       } 
+  }
+  }
+  stage('Deploy to Production') {
+    agent any
             input {
                 message "Deploy to Production?"
                 ok "Deploy!"
@@ -132,6 +137,5 @@ pipeline {
             steps {
                 echo "${Deployer} deployed to production! He is to blame!"
             }
-        }  
-  }   
+        }    
 }
