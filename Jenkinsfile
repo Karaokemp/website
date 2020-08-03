@@ -2,12 +2,9 @@ pipeline {
   triggers {
     pollSCM('* * * * *')
   }
-  agent none
-   
-  
+  agent any
   stages{
-    node{
-        stage('Lint'){
+    stage('Lint'){
           steps{
             echo "Linting Code..."
        }
@@ -122,9 +119,6 @@ pipeline {
             echo 'Testing...'
         }
        }
-
-    }
-    node{
       stage('Deploy to Production') {
             input {
                 message "Deploy to Production?"
@@ -137,13 +131,7 @@ pipeline {
             }
             steps {
                 echo "${Deployer} deployed to production! He is to blame!"
-                script {
-      currentBuild.displayName = "Released!"
-      currentBuild.description ="try at test.occano.io"
-                }
             }
         }  
-  } 
-    }
-    
+  }   
 }
