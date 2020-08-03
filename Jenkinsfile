@@ -3,7 +3,8 @@ pipeline {
     pollSCM('* * * * *')
   }
   agent none
-  stage('predeploy'){
+  stages{
+    stage('predeploy'){
     agent any
     stages{
     stage('Lint'){
@@ -137,5 +138,8 @@ pipeline {
             steps {
                 echo "${Deployer} deployed to production! He is to blame!"
             }
-        }    
+        }   
+  }
+  
+   
 }
