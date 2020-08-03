@@ -3,11 +3,8 @@ pipeline {
     pollSCM('* * * * *')
   }
   agent any
-  node{
-    currentBuild.displayName = "fooName"
-    currentBuild.description = "<a href='http://stackoverflow.com'>Stackoverbuild build" + env.BUILD_ID + "</a>"
-
-  }
+   
+  
   stages{
     stage('Lint'){
           steps{
@@ -136,6 +133,10 @@ pipeline {
             }
             steps {
                 echo "${Deployer} deployed to production! He is to blame!"
+                script {
+      currentBuild.displayName = "fooName"
+      currentBuild.description = "<a href='http://stackoverflow.com'>Stackoverbuild build" + env.BUILD_ID + "</a>"
+                }
             }
         }  
   }   
