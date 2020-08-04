@@ -125,18 +125,9 @@ pipeline {
   }
   }
   stage('Deploy to Production') {
-    agent any
-            input {
-                message "Deploy to Production?"
-                ok "Deploy!"
-
-                submitter "alice,bob"
-                parameters {
-                    string(name: 'Deployer', defaultValue: 'Ophirus Magnivus', description: "Who does order the deploy?")
-                }
-            }
+            
             steps {
-                echo "${Deployer} deployed to production! He is to blame!"
+              build job: 'website-deployment'
             }
         }   
   }
