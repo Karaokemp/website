@@ -4,8 +4,6 @@ pipeline {
     pollSCM('* * * * *')
   }
   stages{
-    agent any
-    stages{
     stage('Lint'){
           steps{
             echo "Linting Code...."
@@ -120,16 +118,12 @@ pipeline {
         steps{
             echo 'Testing...'
         }
-       } 
-  }
-  
-  stage('Deploy to Production') {
+       }
+       stage('Deploy to Production') {
             
             steps {
               build job: '../website-deployment/master'
             }
         }   
-  }
-  
-   
+  }  
 }
