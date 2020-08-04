@@ -127,7 +127,7 @@ pipeline {
   stage('Deploy to Production') {
             
             steps {
-              build job: 'website-deployment'
+              build job: build '../website-deployment/master'
             }
         }   
   }
