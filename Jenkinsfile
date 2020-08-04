@@ -4,7 +4,6 @@ pipeline {
   }
   agent none
   stages{
-    stage('predeploy'){
     agent any
     stages{
     stage('Lint'){
@@ -123,7 +122,7 @@ pipeline {
         }
        } 
   }
-  }
+  
   stage('Deploy to Production') {
             
             steps {
