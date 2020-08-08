@@ -132,11 +132,13 @@ pipeline {
          agent any
             
             steps {
-              input {
-                  message("Deploy to Production?")
-                  ok "Deploy!"
-                  submitter "alice,bob"
-            }
+              input{
+		message "Press Ok to continue"
+		submitter "user1,user2"
+		parameters {
+			string(name:'username', defaultValue: 'user', description: 'Username of the user pressing Ok')
+		}
+	}
                 echo "${Deployer} deployed to production! He is to blame!"
           }            
         }   
