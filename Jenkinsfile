@@ -133,7 +133,7 @@ pipeline {
             
             steps {
               input {
-                  message "Deploy to Production?"
+                  message("Deploy to Production?")
                   ok "Deploy!"
                   submitter "alice,bob"
             }
