@@ -140,11 +140,8 @@ pipeline {
                     string(name: 'Deployer', defaultValue: 'Ophirus Magnivus', description: "Who does order the deploy?")
                 }
             }
-            steps {
                 echo "${Deployer} deployed to production! He is to blame!"
-            }
-              build job: '../website-deployment/master'
-            }
+            }            
         }   
   }  
 }
