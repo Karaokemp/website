@@ -136,12 +136,9 @@ pipeline {
                   message "Deploy to Production?"
                   ok "Deploy!"
                   submitter "alice,bob"
-                  parameters {
-                    string(name: 'Deployer', defaultValue: 'Ophirus Magnivus', description: "Who does order the deploy?")
-                }
             }
                 echo "${Deployer} deployed to production! He is to blame!"
-            }            
+          }            
         }   
   }  
 }
