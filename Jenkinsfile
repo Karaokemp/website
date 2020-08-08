@@ -1,7 +1,5 @@
 pipeline {
-  agent {
-        docker { image 'node:14-alpine' }
-    }
+  agent none 
   triggers {
     pollSCM('* * * * *')
   }
@@ -19,6 +17,9 @@ pipeline {
                }
        parallel{
          stage('frontend'){
+           agent {
+              docker { image 'node:14-alpine' }
+           }
            environment {
               SERVICE='frontend'
             }
@@ -58,6 +59,9 @@ pipeline {
          }
          
          stage('backend'){
+           agent {
+              docker { image 'node:14-alpine' }
+           }
             environment {
               SERVICE='backend'
             }
@@ -103,6 +107,7 @@ pipeline {
        
      }
      stage('Deploy'){
+       agent any
        parallel{
          stage('Integration'){
             steps{
@@ -117,11 +122,13 @@ pipeline {
        }
      }
      stage('Acceptance Tests'){
+       agent any
         steps{
             echo 'Testing...'
         }
        }
        stage('Deploy to Production') {
+         agent any
             
             steps {
               build job: '../website-deployment/master'
