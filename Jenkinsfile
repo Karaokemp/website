@@ -107,14 +107,15 @@ pipeline {
        
      }
      stage('Deploy'){
-       agent any
        parallel{
          stage('Integration'){
+           agent any
             steps{
               echo "Deploying to Integration"
            }
          }
          stage('QA'){
+           agent any
            steps{
              echo "Deploying to QA"
            }
