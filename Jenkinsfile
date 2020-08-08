@@ -3,6 +3,24 @@ pipeline {
   triggers {
     pollSCM('* * * * *')
   }
+
+  parameters {
+                string(
+                    name: 'branch',
+                    defaultValue: 'master',
+                    description: 'Branch of code to be deployed'
+                )
+                choice(
+                    name: 'service',
+                    choices: 'calcs-service\naudits-service\nrate-alerts',
+                    description: 'Service to be cleaned'
+                )
+                choice(
+                    name: 'environment',
+                    choices: 'uat1\nuat2\nprod',
+                    description: 'Environement whose services need cleanup'
+                )
+     } // close parameters
   stages{
     stage('Lint'){
           steps{
@@ -135,9 +153,6 @@ pipeline {
               input{
 		message "Press Ok to continue"
 		submitter "user1,user2"
-		parameters {
-			string(name:'username', defaultValue: 'user', description: 'Username of the user pressing Ok')
-		}
 	}
                 echo "${Deployer} deployed to production! He is to blame!"
           }            
