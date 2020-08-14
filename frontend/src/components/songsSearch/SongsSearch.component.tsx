@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './songsSearch.css'
+import './SongsSearch.css'
 import karaokempLogo from '../../pics/logo.png';
 import youtubeLogo from '../../pics/youtube-logo.svg';
 
@@ -14,7 +14,6 @@ export default class SongsSearchComponent extends Component{
 
   }
   render() {
-    console.log(this.state);
     return(
       <div>
         <h1>Welcome to The Karaokemp!</h1>
