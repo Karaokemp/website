@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import songsSearch from './components/songsSearch/songsSearch'
-import logo from './logo.svg';
-import './App.css';
-
+import SongsSearch from './components/songsSearch/SongsSearch.component'
 
 export default class App extends Component{
   constructor(props:string) {
@@ -14,12 +11,10 @@ export default class App extends Component{
 
   }
   render() {
-    console.log(this.state);
     return(
       <div>
-        <h3>Welcome to karaokemp!</h3>
-        <p>refactor to components</p>
-      </div>
-    )
+
+        <SongsSearch/>
+      </div>)
   }
 }
