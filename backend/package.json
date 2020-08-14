@@ -7,8 +7,9 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node dist/server.js",
+    "test": "jest --watchAll",
     "start:watch": "nodemon",
-    "test": "jest --reporters=jest-junit"
+    "test:ci": "jest --reporters=jest-junit"
   },
   "author": "dreckguy@gmail.com",
   "license": "ISC",

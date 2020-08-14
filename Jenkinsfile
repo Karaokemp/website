@@ -40,7 +40,7 @@ pipeline {
           }
       steps {
         dir("${SERVICE}"){
-          sh 'npm test'
+          sh 'npm test:ci'
         }
         junit "reports/${SERVICE}.xml"
       }
@@ -85,7 +85,7 @@ pipeline {
       }
       steps{
         dir("${SERVICE}"){
-          sh 'npm test'
+          sh 'npm test:ci'
 
         }
         junit "reports/${SERVICE}.xml"
