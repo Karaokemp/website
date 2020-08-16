@@ -76,6 +76,7 @@ pipeline {
       }*/
       steps {
         dir("${SERVICE}"){
+          sh 'npm config set loglevel verbose'
           sh 'npm install'
         }      
     }
