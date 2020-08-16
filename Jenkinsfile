@@ -41,6 +41,7 @@ pipeline {
       steps {
         dir("${SERVICE}"){
           sh 'npm run test:ci'
+          sh 'cat /root/.npm/_logs/2020-08-16T09_59_01_322Z-debug.log'
         }
         junit "reports/${SERVICE}.xml"
       }
