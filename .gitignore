@@ -22,3 +22,4 @@ yarn-error.log*
 frontend/junit.xml
 backend/dist
 backend/junit.xml
+frontend/node_modules/@types/jest/package.json
