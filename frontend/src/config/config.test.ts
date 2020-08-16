@@ -1,7 +1,7 @@
 import Config from './Config'
 let config:Config
 let preEnv:string
-describe('by default',()=>{
+describe.skip('by default',()=>{
   beforeAll(()=>{
     preEnv = process.env.ENVIRONMENT!
     process.env['ENVIRONMENT'] = '';
@@ -18,7 +18,7 @@ describe('by default',()=>{
   });
 })
 
-describe('if test',()=>{
+describe.skip('if test',()=>{
   beforeAll(()=>{
     preEnv = process.env.ENVIRONMENT!
     process.env['ENVIRONMENT'] = 'TEST';
