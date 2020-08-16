@@ -20,7 +20,7 @@ pipeline {
            agent {
               docker {
                 image 'node:14.8'
-                args '-v C:\cache\frontend:node_modules'
+                args '-v C:/cache/frontend:node_modules'
                 }
            }
            environment {
