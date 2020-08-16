@@ -1,4 +1,4 @@
-import { sum } from '../foo';
+import sum from './foo';
 describe('Basic Functions',()=>{
   test('basic', () => {
     expect(sum()).toBe(0);
