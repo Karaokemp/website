@@ -11,14 +11,14 @@ pipeline {
      }
      stage('build'){
        environment {
-                 CI=true
+                 //CI=true
                  //npm_config_prefix='frontend
                  JEST_JUNIT_OUTPUT_DIR='../reports'
                }
        parallel{
          stage('frontend'){
            agent {
-              docker { image 'node:14-alpine' }
+              docker { image 'node:14.8' }
            }
            environment {
               SERVICE='frontend'
