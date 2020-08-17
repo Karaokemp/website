@@ -2,8 +2,8 @@ import express, { Request, Response } from "express";
 import app from "./app";
 import request from "supertest"
 
-describe("Test the root path", () => {
-  test("It should response the GET method", () => {
+describe("The root path", () => {
+  test("should response the GET method", () => {
     return request(app)
       .get("/")
       .then(response => {
@@ -11,3 +11,14 @@ describe("Test the root path", () => {
       });
   });
 });
+
+describe("The link path", () => {
+    test("should response the PUT method with list that contains the link sended", () => {
+      return request(app)
+        .put('/link').send({url:'https://www.youtube.com/watch?v=OU3699R53rs'})
+        .then(response => {
+            let received = <Array<any>> response.body
+          expect(received.pop().url).toBe('https://www.youtube.com/watch?v=OU3699R53rs')
+        });
+    });
+  });
