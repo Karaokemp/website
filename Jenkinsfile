@@ -32,8 +32,9 @@ pipeline {
            stages{
              stage('Install packages') {
           steps {
+            sh 'pwd'
+            sh 'ls'
             dir("${SERVICE}"){
-              sh 'ls '
               sh 'npm install'
             }
           }
