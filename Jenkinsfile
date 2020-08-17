@@ -17,12 +17,8 @@ pipeline {
                }
        parallel{
          stage('frontend'){
-           agent {
-              docker {
-                image 'node:14.8'
-                //args '-v C:/cache/frontend:node_modules'
-                }
-           }
+               agent { dockerfile true }
+
            environment {
               SERVICE='frontend'
             }
