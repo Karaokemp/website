@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import {State} from './types'
 import app from "./app";
 import request from "supertest"
 
@@ -17,8 +18,8 @@ describe("The link path", () => {
       return request(app)
         .put('/link').send({url:'https://www.youtube.com/watch?v=OU3699R53rs'})
         .then(response => {
-            let received = <Array<any>> response.body
-          expect(received.pop().url).toBe('https://www.youtube.com/watch?v=OU3699R53rs')
+            let state = <State> response.body
+          expect(state.requests.pop().url).toBe('https://www.youtube.com/watch?v=OU3699R53rs')
         });
     });
   });
