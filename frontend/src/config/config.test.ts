@@ -1,5 +1,12 @@
-import config from "./config";
+import Config from './Config'
+let config:Config;
+let preEnv:string;
 describe('by default',()=>{
+  beforeAll(()=>{
+    preEnv = process.env.ENVIRONMENT!
+    process.env.ENVIRONMENT = '';
+    config = new Config();
+  })
   test('should get local environment', () => {
     expect(config.ENVIRONMENT).toBe('LOCAL');
   });
