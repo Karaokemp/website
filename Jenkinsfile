@@ -18,9 +18,10 @@ pipeline {
        parallel{
          stage('frontend'){
                agent { docker {
-            image 'node:14.8'
-            args '-v frontend_cache:/node_modules'
-        }}
+                      image 'node:14.8'
+                      args '-v frontend_cache:/node_modules'
+                            }
+                    }
 
            environment {
               SERVICE='frontend'
@@ -43,7 +44,6 @@ pipeline {
           }
       steps {
         dir("${SERVICE}"){
-          sh 'npm config set loglevel verbose'
           sh 'npm run test:ci'
         }
         junit "reports/${SERVICE}.xml"

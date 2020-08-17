@@ -1,2 +1,2 @@
 FROM node:14.8
-VOLUME [ "node_modules" ]
+VOLUME [ "/node_modules" ]
