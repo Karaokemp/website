@@ -8,5 +8,5 @@ describe('by default',()=>{
 
 
   test('should get correct backend url ', () => {
-    expect(config.URLS.KARAOKEMP_BACKEND).toBe('localhost:4001');
+    expect(config.URLS.KARAOKEMP_BACKEND).toBe('localhost:4000');
   });
