@@ -29,7 +29,7 @@ pipeline {
              stage('Install packages') {
           steps {
             dir("${SERVICE}"){
-              sh 'ls node_modules'
+              sh 'ls '
               sh 'npm install'
             }
           }
