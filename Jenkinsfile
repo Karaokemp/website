@@ -19,7 +19,7 @@ pipeline {
          stage('frontend'){
                agent { docker {
             image 'node:14.8'
-            args '-v frontend_cache:node_modules'
+            args '-v frontend_cache:/node_modules'
         }}
 
            environment {
