@@ -1,10 +1,10 @@
-export class Link{
+export class Song{
     url:string
 }
 export class State{
-     requests:Array<Link>
-     readySongs:Array<Link>
-     downloadingSongs:Array<Link>
+     requests:Array<Song>
+     readySongs:Array<Song>
+     downloadingSongs:Array<Song>
 
      constructor(){
          this.requests = [];
