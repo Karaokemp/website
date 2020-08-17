@@ -1,5 +1,5 @@
 import app from './app';
-const SERVER_PORT = 4001;
+const SERVER_PORT = 4000;
 
 app.listen( SERVER_PORT, () => {
     // tslint:disable-next-line:no-console
