@@ -2,11 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
+  "main": "dist/server/server.js",
   "scripts": {
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node dist/server.js",
+    "start": "node ./dist/server/server.js",
     "test": "jest --watchAll",
     "start:watch": "nodemon",
     "test:ci": "jest --reporters=jest-junit"
