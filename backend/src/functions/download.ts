@@ -20,7 +20,6 @@ export default function download(url:URL){
           })
           video.on('end',(endInfo)=>{
             console.log(songInfo)
-            
             forceResolve.bind(this)
           });
         })
