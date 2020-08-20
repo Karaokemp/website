@@ -1,5 +1,10 @@
 export class Song{
-    url:string
+    url:URL
+
+    constructor(path:string){
+        this.url = new URL(path)
+
+    }
 }
 export class State{
      requests:Array<Song>
