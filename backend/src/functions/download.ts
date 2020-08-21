@@ -3,5 +3,5 @@ import {Song} from '../types'
 
 
 export default function download(song:Song){
-  song.video.pipe(fs.createWriteStream(song.filename))
+  song.video.pipe(fs.createWriteStream(`songs/${song.filename}`))
 }

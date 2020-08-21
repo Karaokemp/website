@@ -1,5 +1,8 @@
 import  youtubedl, { Info } from 'youtube-dl'
+import path from 'path'
 import { Song } from '../types'
+const SONGS_DIR = 'songs'
+console.log(SONGS_DIR)
 export default class SongCreator{
     static create(url:URL){
         let forceResolve: Function
@@ -7,7 +10,7 @@ export default class SongCreator{
             forceResolve = resolve.bind(this)
               const video = youtubedl(url.href,
               ['--format=18'],
-              { cwd:__dirname })
+              {})
               video.on('info', function(info:youtubedl.Info) {
                   let song = new Song(url,info._filename,video)
                   resolve(song)
