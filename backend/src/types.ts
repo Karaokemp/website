@@ -1,9 +1,14 @@
+import youtubedl from "youtube-dl"
+
 export class Song{
     url:URL
+    filename:string
+    video:youtubedl.Youtubedl
 
-    constructor(path:string){
-        this.url = new URL(path)
-
+    constructor(url:URL,filename:string,video:youtubedl.Youtubedl){
+        this.url = url
+        this.filename = filename
+        this.video = video
     }
 }
 export class State{
@@ -16,5 +21,4 @@ export class State{
          this.readySongs = []
          this.downloadingSongs =[]
      }
-
 }

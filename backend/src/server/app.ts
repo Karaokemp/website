@@ -1,6 +1,7 @@
-import {Song,State} from './types'
+import {Song,State} from '../types'
 import { Request, Response } from "express";
 import express from "express";
+import SongCreator from '../services/SongCreator'
 import download from '../functions/download'
 import youtubedl from 'youtube-dl';
 const app = express()
@@ -12,12 +13,12 @@ app.use(bodyParser.json());
 
 app.get('/', (req: Request, res: Response) => res.send('Karaokemp website is online!\n'))
 app.put('/link', (req: Request, res: Response) => {
-    let link = new Song(req.body.path)
-    state.requests.push(link)
-    download(link.url).then((songInfo)=>{
-        console.log(songInfo)
-
+    let link = new URL(req.body.path)
+    SongCreator.create(link).then((song)=>{
+        download(song)
+        res.json(song)
+    }).catch((err)=>{
+        console.error(err)
     })
-    res.json(state)
-});
+})
 export default app
