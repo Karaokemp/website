@@ -3,7 +3,7 @@ import path from 'path'
 import { Song } from '../types'
 export default class SongCreator{
     static create(url:URL){
-        let promise = new Promise<Song>((resolve:Function,reject:Function)=>{
+        return new Promise<Song>((resolve:Function,reject:Function)=>{
               const video = youtubedl(url.href,
               ['--format=18'],
               {})
@@ -14,8 +14,7 @@ export default class SongCreator{
                 video.on('error',(err)=>{
                     reject(err);
                 })
-              })
-              return promise     
+              })        
       }
     
 }
