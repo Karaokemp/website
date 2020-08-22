@@ -15,9 +15,11 @@ app.get('/', (req: Request, res: Response) => res.send('Karaokemp website is onl
 app.put('/link', (req: Request, res: Response) => {
     let link = new URL(req.body.path)
     SongCreator.create(link).then((song)=>{
-        res.json(song)
+        console.log(song.filename)
         download(song).then(()=>{
-            console.log('end')
+            state.requests.push(song)
+            let payload = state.requests.map((song)=>song.filename)
+            res.json(payload)
         })
     }).catch((err)=>{
         console.error('error creating song')
