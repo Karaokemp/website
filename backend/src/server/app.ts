@@ -15,10 +15,12 @@ app.get('/', (req: Request, res: Response) => res.send('Karaokemp website is onl
 app.put('/link', (req: Request, res: Response) => {
     let link = new URL(req.body.path)
     SongCreator.create(link).then((song)=>{
-        download(song)
         res.json(song)
+        download(song).then(()=>{
+            console.log('end')
+        })
     }).catch((err)=>{
-        console.error(err)
+        console.error('error creating song')
     })
 })
 export default app
