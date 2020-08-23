@@ -19,7 +19,7 @@ describe.skip("The link path", () => {
         .put('/link').send({url:'https://www.youtube.com/watch?v=OU3699R53rs'})
         .then(response => {
             let state = <State> response.body
-          expect(state.requests.pop().url.href).toBe('https://www.youtube.com/watch?v=OU3699R53rs')
+          expect(state.requests.pop().href).toBe('https://www.youtube.com/watch?v=OU3699R53rs')
         });
     });
   });

@@ -12,7 +12,7 @@ export class Song{
     }
 }
 export class State{
-     requests:Array<Song>
+     requests:Array<URL>
      readySongs:Array<Song>
      downloadingSongs:Array<Song>
 

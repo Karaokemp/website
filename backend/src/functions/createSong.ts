@@ -1,8 +1,7 @@
 import  youtubedl, { Info } from 'youtube-dl'
 import path from 'path'
 import { Song } from '../types'
-export default class SongCreator{
-    static create(url:URL){
+export default function createSong(url:URL):Promise<Song>{
         return new Promise<Song>((resolve:Function,reject:Function)=>{
               const video = youtubedl(url.href,
               ['--format=18'],
@@ -16,4 +15,3 @@ export default class SongCreator{
                 })
               })        
       }
-}
