@@ -17,7 +17,7 @@ export class State{
      downloadingSongs:Array<Song>
 
      constructor(){
-         this.requests = [];
+         this.requests = new Array<URL>();
          this.readySongs = []
          this.downloadingSongs =[]
      }

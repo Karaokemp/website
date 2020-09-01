@@ -13,13 +13,14 @@ describe("The root path", () => {
   });
 });
 
-describe.skip("The link path", () => {
+describe("The link path", () => {
     test("should response the PUT method with list that contains the link sended", () => {
       return request(app)
-        .put('/link').send({url:'https://www.youtube.com/watch?v=OU3699R53rs'})
+        .put('/link').send({path:new URL('https://www.youtube.com/watch?v=OU3699R53rs').href})
         .then(response => {
-            let state = <State> response.body
-          expect(state.requests.pop().href).toBe('https://www.youtube.com/watch?v=OU3699R53rs')
+          expect(response.status).toBe(200)
+          let link = <URL> response.body.requests.pop()
+            expect(link).toBe('https://www.youtube.com/watch?v=OU3699R53rs')
         });
     });
   });
