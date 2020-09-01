@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SongsSearch from './components/songsSearch/SongsSearch.component'
 
+
 export default class App extends Component{
   constructor(props:string) {
     super(props);
@@ -11,10 +12,8 @@ export default class App extends Component{
 
   }
   render() {
-    return(
-      <div>
-
-        <SongsSearch/>
-      </div>)
+    return (<div>
+      <SongsSearch/>
+</div>)
   }
 }
