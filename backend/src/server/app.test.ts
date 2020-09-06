@@ -24,3 +24,16 @@ describe("The link path", () => {
         });
     });
   });
+
+  describe("The state path", () => {
+    test("should response the GET method with the state", () => {
+      return request(app)
+        .get('/state')
+        .then(response => {
+          expect(response.status).toBe(200)
+          let state = <State> response.body
+            expect(state).toHaveProperty('requests')
+            expect(state).toHaveProperty('readySongs')
+        });
+    });
+  });
