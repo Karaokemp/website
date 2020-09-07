@@ -12,6 +12,12 @@ export default function download(song:Song){
           video.on('error',(err)=>{
               reject(err);
           })
-          video.pipe(fs.createWriteStream(`${SONGS_FOLDER}/${song.filename}`))
+
+          let filePath = `${SONGS_FOLDER}/${song.filename}`
+          if(fs.existsSync(filePath)){
+            resolve(song)
+          }else{
+            video.pipe(fs.createWriteStream(filePath))
+          }
         })        
 }
