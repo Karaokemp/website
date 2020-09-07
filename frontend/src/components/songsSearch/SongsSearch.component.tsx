@@ -15,16 +15,28 @@ youtubeOpts={
 
 
 
-export default class SongsSearchComponent extends Component<{}, { linkPath: string, selectedVideoID: string }>{
+export default class SongsSearchComponent extends Component<{}, { linkPath: string, selectedVideoID: string, requests:Array<string>,readySongs:Array<string>}>{
 
   constructor(props:string) {
     super(props);
     this.state = {
       linkPath :'',
-      selectedVideoID :'qr-Bq_zKddg'
-      
+      selectedVideoID :'qr-Bq_zKddg',
+      requests: new Array<string>(),
+      readySongs: new Array<string>()
     }
+    this.state.requests.push('bla')
+    this.state.readySongs.push('bli')
+
     
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:4000/state')
+    .then(res => res.json())
+    .then((backendState) => {
+      this.setState({requests:backendState.requests,readySongs: backendState.readySongs})
+    }).catch(console.error)
   }
 
   handleLinkPathChange(change:ChangeEvent<HTMLInputElement> ){
@@ -34,7 +46,6 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
   }
 
   handleRequest(click:any){
-    console.log('click!')
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -42,9 +53,9 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
   };
   fetch('http://localhost:4000/link', requestOptions)
       .then(response => response.json())
-      .then(data => {
-        console.log(data)
-      });
+      .then((backendState) => {
+        this.setState({requests:backendState.requests,readySongs: backendState.readySongs})
+      }).catch(console.error)
 }
 
   _onReady(event:any) {
@@ -69,7 +80,7 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
 
     </div>
     <div className="col-6 col-lg-6">
-      <BackendState/>
+      <BackendState requests = {this.state.requests} readySongs = {this.state.readySongs}/>
       </div>
   </div>
 </div>)
