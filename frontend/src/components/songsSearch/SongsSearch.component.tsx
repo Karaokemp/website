@@ -33,6 +33,20 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
     this.setState({linkPath: link.href,selectedVideoID:id})
   }
 
+  handleRequest(click:any){
+    console.log('click!')
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({path: this.state.linkPath})
+  };
+  fetch('http://localhost:4000/link', requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+      });
+}
+
   _onReady(event:any) {
     // access to player in all event handlers via event.target
     //event.target.pauseVideo();
@@ -46,9 +60,9 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px'}}/></div> <br/><hr/>
         
         <p className='instructions'>Insert Link from &nbsp;<img src={youtubeLogo}alt=''/>
-        <input type="text"  onChange={this.handleLinkPathChange.bind(this)} style={{ width: "80%" }} placeholder='https://www.youtube.com/watch?v=...'/></p>
+        <input type="text"  onChange={this.handleLinkPathChange.bind(this)} style={{ width: "80%" }} placeholder='e.g. https://www.youtube.com/watch?v=...'/></p>
         <YouTube videoId={this.state.selectedVideoID} opts = {youtubeOpts}/>
-                <button  className="btn btn-primary">Request song!</button>
+                <button  className="btn btn-primary" onClick={this.handleRequest.bind(this)}>Request song!</button>
 
 
         <hr/>
@@ -62,7 +76,4 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
       
   }
 
-
 }
-
-

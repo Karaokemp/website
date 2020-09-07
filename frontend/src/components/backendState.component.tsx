@@ -28,7 +28,6 @@ export default class BackendStateComponent extends Component<{}, {requests:Array
         fetch('http://localhost:4000/state')
         .then(res => res.json())
         .then((data) => {
-            console.log(data)
           this.setState(data)
         })
         .catch(console.log)
