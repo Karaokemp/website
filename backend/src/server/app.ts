@@ -6,6 +6,8 @@ import Downloader from '../services/downloader'
 const app = express()
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
+var cors = require('cors')
+app.use(cors());
 let state = new State();
 const downloader = new Downloader(state)
 downloader.start();
