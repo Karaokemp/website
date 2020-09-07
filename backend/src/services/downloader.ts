@@ -3,7 +3,7 @@ import createSong from '../functions/createSong'
 import {State, Song} from '../types'
 import { request } from 'express'
 
-const INTERVAL = 1000
+const INTERVAL = 3000
 
 export default class DownloadService{
     state: State

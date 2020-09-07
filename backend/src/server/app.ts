@@ -1,3 +1,4 @@
+import path from 'path'
 import {Song,State} from '../types'
 import { Request, Response } from "express";
 import express from "express";
@@ -22,7 +23,8 @@ app.put('/link', (req: Request, res: Response) => {
 
         let payload = {
             requests: state.requests,
-            readySongs: state.readySongs.map(song => song.filename)
+            readySongs: state.readySongs.map(song => song.getName()
+            )
             }
             res.json(payload);
     }

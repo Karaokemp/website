@@ -1,9 +1,15 @@
 import youtubedl from "youtube-dl"
+import path from 'path'
 
 export class Song{
     url:URL
     filename:string
+    name:string
     video:youtubedl.Youtubedl
+
+    public getName(): string{
+        return path.parse(this.filename).name
+    }
 
     constructor(url:URL,filename:string,video:youtubedl.Youtubedl){
         this.url = url

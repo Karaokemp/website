@@ -3,10 +3,9 @@ import './SongsSearch.css'
 import karaokempLogo from '../../pics/logo.png';
 import youtubeLogo from '../../pics/youtube-logo.svg';
 
-import YouTube, { YouTubeProps } from 'react-youtube';
+import YouTube from 'react-youtube';
+import BackendState from '../backendState.component'
 
-
-import backendState from '../../static/state.json'
 
 let youtubeOpts:any
 youtubeOpts={
@@ -36,7 +35,7 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
 
   _onReady(event:any) {
     // access to player in all event handlers via event.target
-    event.target.pauseVideo();
+    //event.target.pauseVideo();
   }
 
   render() {
@@ -57,15 +56,10 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
         <hr/>
 
     </div>
-    <div className="col-6 col-lg-6">
-      <h4>requests</h4>
-      <hr/>
-      <ol>
-    {backendState.requests.map(url=><li>{url}</li>)}
-        </ol>
-
-    </div>
+    <div className="col-6 col-lg-6"><BackendState/></div>
+    
   </div>
+  
 </div>)
       
   }
