@@ -46,6 +46,7 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
   }
 
   handleRequest(click:any){
+    console.log('click!')
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -54,8 +55,8 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
   fetch('http://localhost:4000/link', requestOptions)
       .then(response => response.json())
       .then((backendState) => {
-        this.setState({requests:backendState.requests,readySongs: backendState.readySongs})
-      }).catch(console.error)
+      this.setState({requests:backendState.requests,readySongs: backendState.readySongs})
+    }).catch(console.error)
 }
 
   _onReady(event:any) {
