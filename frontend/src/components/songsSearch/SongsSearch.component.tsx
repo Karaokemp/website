@@ -6,6 +6,8 @@ import youtubeLogo from '../../pics/youtube-logo.svg';
 import YouTube from 'react-youtube';
 import BackendState from '../backendState.component'
 import Error from '../error.component'
+import ValidMark from '../validMark.component'
+import {YoutubeURL, YoutubeURLTypeError} from '../../types'
 
 const INTERVAL = 3000
 
@@ -17,24 +19,20 @@ youtubeOpts={
 
 
 
-export default class SongsSearchComponent extends Component<{}, { linkPath: string, selectedVideoID: string,errorMessage:string, requests:Array<string>,readySongs:Array<string>}>{
+export default class SongsSearchComponent extends Component<{}, { linkPath: string, selectedVideoID: string,errorMessage:string, requests:Array<string>,readySongs:Array<string>, valid:boolean}>{
 
   constructor(props:string) {
     super(props);
     this.state = {
       linkPath :'',
       errorMessage:'',
-      selectedVideoID :'qr-Bq_zKddg',
+      selectedVideoID :'qr-Bq_zKdd',
+      valid: false,
       requests: new Array<string>(),
       readySongs: new Array<string>()
     }
-    if(''){
-      console.log('True')
-    }else{
-          console.log('False')
-        }
-      
-    }
+   
+  }
   
 
   componentDidMount() {
@@ -49,17 +47,25 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
     }).catch(console.error)
   }
 
-  
-
   handleLinkPathChange(change:ChangeEvent<HTMLInputElement> ){
     let path = change.target.value
 
     try {
-      let link = new URL(path)
+      let link = new YoutubeURL(path)
       let videoID = link.searchParams.get('v') || this.state.selectedVideoID
       this.setState({linkPath: link.href,selectedVideoID:videoID})
-    } catch (TypeError) {
-      let msg = path ? 'Must be valid URL!' : ''      
+    } catch (err) {
+      let msg;
+      if(!path){
+        msg = ''
+      }else if(err instanceof YoutubeURLTypeError){
+        msg = 'Not a Youtube URL!'
+      }else if(err instanceof TypeError){
+        msg = 'Not a valid URL!'
+
+      }else{
+        msg = err.message
+      }
       this.setState({errorMessage:msg})
     }
   }
@@ -78,6 +84,10 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
     }).catch(console.error)
 }
 
+onYoutubeReady(){
+  this.setState({valid:true})
+}
+
   render() {
     return(<div className="container">
   <div className="row">
@@ -87,9 +97,11 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
         
         <p className='instructions'>Insert Link from &nbsp;<img src={youtubeLogo}alt=''/>
         <input type="text"  onChange={this.handleLinkPathChange.bind(this)} style={{ width: "80%" }} placeholder='e.g. https://www.youtube.com/watch?v=...'/>
+        <ValidMark valid={this.state.valid}/>
+
        <Error errorMessage = {this.state.errorMessage}/>
         </p>
-        <YouTube videoId={this.state.selectedVideoID} opts = {youtubeOpts}/>
+        <YouTube videoId={this.state.selectedVideoID} onPlay={this.onYoutubeReady.bind(this)} opts = {youtubeOpts}/>
                 <button  className="btn btn-primary" onClick={this.handleRequest.bind(this)}>Request song!</button>
 
 
@@ -101,7 +113,6 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
       </div>
   </div>
 </div>)
-      
   }
 
 }
