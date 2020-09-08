@@ -6,6 +6,7 @@ import youtubeLogo from '../../pics/youtube-logo.svg';
 import YouTube from 'react-youtube';
 import BackendState from '../backendState.component'
 
+const INTERVAL = 3000
 
 let youtubeOpts:any
 youtubeOpts={
@@ -15,29 +16,32 @@ youtubeOpts={
 
 
 
-export default class SongsSearchComponent extends Component<{}, { linkPath: string, selectedVideoID: string, requests:Array<string>,readySongs:Array<string>}>{
+export default class SongsSearchComponent extends Component<{}, { linkPath: string, selectedVideoID: string,errorMessage:string, requests:Array<string>,readySongs:Array<string>}>{
 
   constructor(props:string) {
     super(props);
     this.state = {
       linkPath :'',
+      errorMessage:'Must be URL!',
       selectedVideoID :'qr-Bq_zKddg',
       requests: new Array<string>(),
       readySongs: new Array<string>()
     }
-    this.state.requests.push('bla')
-    this.state.readySongs.push('bli')
-
-    
   }
 
   componentDidMount() {
+   this.updateBackendState()
+  }
+  updateBackendState() {
+    console.log('update!')
     fetch('http://localhost:4000/state')
     .then(res => res.json())
     .then((backendState) => {
       this.setState({requests:backendState.requests,readySongs: backendState.readySongs})
     }).catch(console.error)
   }
+
+  
 
   handleLinkPathChange(change:ChangeEvent<HTMLInputElement> ){
     const link = new URL(change.target.value)
@@ -46,7 +50,6 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
   }
 
   handleRequest(click:any){
-    console.log('click!')
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -56,6 +59,7 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
       .then(response => response.json())
       .then((backendState) => {
       this.setState({requests:backendState.requests,readySongs: backendState.readySongs})
+      setInterval(this.updateBackendState.bind(this),INTERVAL)
     }).catch(console.error)
 }
 
@@ -72,7 +76,10 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px'}}/></div> <br/><hr/>
         
         <p className='instructions'>Insert Link from &nbsp;<img src={youtubeLogo}alt=''/>
-        <input type="text"  onChange={this.handleLinkPathChange.bind(this)} style={{ width: "80%" }} placeholder='e.g. https://www.youtube.com/watch?v=...'/></p>
+        <input type="text"  onChange={this.handleLinkPathChange.bind(this)} style={{ width: "80%" }} placeholder='e.g. https://www.youtube.com/watch?v=...'/>
+        <div className="alert alert-danger alert-dismissible fade show">
+  <strong>{this.state.errorMessage}</strong></div>
+        </p>
         <YouTube videoId={this.state.selectedVideoID} opts = {youtubeOpts}/>
                 <button  className="btn btn-primary" onClick={this.handleRequest.bind(this)}>Request song!</button>
 
