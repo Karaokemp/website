@@ -5,6 +5,7 @@ import youtubeLogo from '../../pics/youtube-logo.svg';
 
 import YouTube from 'react-youtube';
 import BackendState from '../backendState.component'
+import Error from '../error.component'
 
 const INTERVAL = 3000
 
@@ -22,12 +23,19 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
     super(props);
     this.state = {
       linkPath :'',
-      errorMessage:'Must be URL!',
+      errorMessage:'',
       selectedVideoID :'qr-Bq_zKddg',
       requests: new Array<string>(),
       readySongs: new Array<string>()
     }
-  }
+    if(''){
+      console.log('True')
+    }else{
+          console.log('False')
+        }
+      
+    }
+  
 
   componentDidMount() {
    this.updateBackendState()
@@ -44,9 +52,16 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
   
 
   handleLinkPathChange(change:ChangeEvent<HTMLInputElement> ){
-    const link = new URL(change.target.value)
-    let id = link.searchParams.get('v') || this.state.selectedVideoID
-    this.setState({linkPath: link.href,selectedVideoID:id})
+    let path = change.target.value
+
+    try {
+      let link = new URL(path)
+      let videoID = link.searchParams.get('v') || this.state.selectedVideoID
+      this.setState({linkPath: link.href,selectedVideoID:videoID})
+    } catch (TypeError) {
+      let msg = path ? 'Must be valid URL!' : ''      
+      this.setState({errorMessage:msg})
+    }
   }
 
   handleRequest(click:any){
@@ -63,11 +78,6 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
     }).catch(console.error)
 }
 
-  _onReady(event:any) {
-    // access to player in all event handlers via event.target
-    //event.target.pauseVideo();
-  }
-
   render() {
     return(<div className="container">
   <div className="row">
@@ -77,8 +87,7 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
         
         <p className='instructions'>Insert Link from &nbsp;<img src={youtubeLogo}alt=''/>
         <input type="text"  onChange={this.handleLinkPathChange.bind(this)} style={{ width: "80%" }} placeholder='e.g. https://www.youtube.com/watch?v=...'/>
-        <div className="alert alert-danger alert-dismissible fade show">
-  <strong>{this.state.errorMessage}</strong></div>
+       <Error errorMessage = {this.state.errorMessage}/>
         </p>
         <YouTube videoId={this.state.selectedVideoID} opts = {youtubeOpts}/>
                 <button  className="btn btn-primary" onClick={this.handleRequest.bind(this)}>Request song!</button>
