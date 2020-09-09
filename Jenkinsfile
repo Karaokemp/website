@@ -51,7 +51,7 @@ pipeline {
           steps{
             dir("${SERVICE}"){
                 script{
-                  def customImage = docker.build("my-image:${env.BUILD_ID}")
+                  def customImage = docker.build("dreckguy/karaokemp-website-frontend:${env.BUILD_ID}")
                   customImage.push()
                 }
             }
