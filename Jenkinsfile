@@ -17,26 +17,20 @@ pipeline {
                }
        parallel{
          stage('frontend'){
-               agent { docker {
-                      image 'node:14.8'
-                      args '-v frontend_cache:/node_modules'
-                            }
-                    }
-
+               agent { 
+                      docker {image 'node:14.8'}
+                }
            environment {
               SERVICE='frontend'
             }
-           /*when {
+           when {
             changeset 'frontend/**'
-          }*/
+          }
            stages{
              stage('Install packages') {
           steps {
             dir("${SERVICE}"){
-              sh 'ls'
               sh 'npm install'
-              sh 'ls'
-
             }
           }
         }
@@ -66,14 +60,14 @@ pipeline {
          
          stage('backend'){
            agent {
-              docker { image 'node:14-alpine' }
+              docker { image 'node:14.8' }
            }
             environment {
               SERVICE='backend'
             }
-            /*when {
+            when {
         changeset 'backend/**'
-      }*/
+      }
               stages{
             stage('Install packages') {
       /*when {
@@ -99,12 +93,15 @@ pipeline {
     }
     stage('Build Artifacts'){
           steps{
-            echo "Pubbuilding Artifacts"
+            sh "docker build"
        }
      }
     stage('Publish Artifacts'){
           steps{
-            echo "Publishing Artifacts"
+            script{
+                def image = docker.build("my-image:${env.BUILD_ID}")
+                image.push()
+            } 
        }
      }
          }
