@@ -132,5 +132,4 @@ pipeline {
               build job: '../website-deployment/master'
             }
         }   
-  }  
-}
+  }
