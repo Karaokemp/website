@@ -1,5 +1,5 @@
 pipeline {
-  agent none 
+  agent any 
   triggers {
     pollSCM('* * * * *')
   }
@@ -17,7 +17,7 @@ pipeline {
                }
        parallel{
          stage('frontend'){
-               agent any /*{ 
+               /*agent any { 
                       docker {image 'node:14.8'}
                 }*/
            environment {
@@ -59,9 +59,9 @@ pipeline {
          }
          
          stage('backend'){
-           agent {
+           /*agent {
               docker { image 'node:14.8' }
-           }
+           } */
             environment {
               SERVICE='backend'
             }
