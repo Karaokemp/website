@@ -25,9 +25,10 @@ app.put('/link', (req: Request, res: Response) => {
 
         let payload = {
             requests: state.requests,
-            readySongs: state.readySongs.map(song => song.getName()
-            )
+            readySongs: state.readySongs.map(song => song.getName()),
+            downloading: state.downloading
             }
+           
             res.json(payload);
     }
 

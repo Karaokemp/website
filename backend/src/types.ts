@@ -35,6 +35,7 @@ export class SongSet{
 export class State{
      requests:Array<URL>
      readySongs:SongSet
+     downloading:URL
 
      constructor(){
          this.requests = new Array<URL>();

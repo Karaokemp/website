@@ -15,10 +15,12 @@ export default class DownloadService{
     handleRequest(){
         if(this.state.requests.length){
             let request = this.state.requests.shift();
+            this.state.downloading = request
             console.log(`handling request: ${request}`)
             createSong(request).then(download).then((song:Song)=>{
                 console.log(`created: ${song.filename}`)
                 this.state.readySongs.add(song)
+                this.state.downloading = null
             }).catch((err:Error)=>{
                 console.error(err.message)
             })

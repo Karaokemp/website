@@ -10,6 +10,7 @@ import ValidMark from '../validMark.component'
 import {YoutubeURL, YoutubeURLTypeError} from '../../types'
 
 const INTERVAL = 3000
+const DEFAULT_VIDEO_ID = 'FxyQTb6n4_I'
 
 let youtubeOpts:any
 youtubeOpts={
@@ -19,17 +20,17 @@ youtubeOpts={
 
 
 
-export default class SongsSearchComponent extends Component<{}, { linkPath: string, selectedVideoID: string,errorMessage:string, requests:Array<string>,readySongs:Array<string>, valid:boolean}>{
+export default class SongsSearchComponent extends Component<{}, { linkPath: string, selectedVideoID: string,errorMessage:string, requests:Array<string>,readySongs:Array<string>, downloading:string}>{
 
   constructor(props:string) {
     super(props);
     this.state = {
       linkPath :'',
       errorMessage:'',
-      selectedVideoID :'qr-Bq_zKdd',
-      valid: false,
+      selectedVideoID :DEFAULT_VIDEO_ID,
       requests: new Array<string>(),
-      readySongs: new Array<string>()
+      readySongs: new Array<string>(),
+      downloading:''
     }
    
   }
@@ -39,21 +40,21 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
    this.updateBackendState()
   }
   updateBackendState() {
-    console.log('update!')
     fetch('http://localhost:4000/state')
     .then(res => res.json())
     .then((backendState) => {
-      this.setState({requests:backendState.requests,readySongs: backendState.readySongs})
+      this.setState({...backendState})
     }).catch(console.error)
   }
 
   handleLinkPathChange(change:ChangeEvent<HTMLInputElement> ){
     let path = change.target.value
+    this.setState({linkPath:path})
 
     try {
       let link = new YoutubeURL(path)
       let videoID = link.searchParams.get('v') || this.state.selectedVideoID
-      this.setState({linkPath: link.href,selectedVideoID:videoID})
+      this.setState({selectedVideoID:videoID})
     } catch (err) {
       let msg;
       if(!path){
@@ -84,8 +85,11 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
     }).catch(console.error)
 }
 
-onYoutubeReady(){
-  this.setState({valid:true})
+onYoutubeReady(event:any){
+  event.target.playVideo()
+}
+onYoutubeChange(event:any){
+  //event.target.playVideo()
 }
 
   render() {
@@ -97,11 +101,14 @@ onYoutubeReady(){
         
         <p className='instructions'>Insert Link from &nbsp;<img src={youtubeLogo}alt=''/>
         <input type="text"  onChange={this.handleLinkPathChange.bind(this)} style={{ width: "80%" }} placeholder='e.g. https://www.youtube.com/watch?v=...'/>
-        <ValidMark valid={this.state.valid}/>
+        <ValidMark valid={!this.state.errorMessage && this.state.linkPath.length >0 }/>
 
        <Error errorMessage = {this.state.errorMessage}/>
         </p>
-        <YouTube videoId={this.state.selectedVideoID} onPlay={this.onYoutubeReady.bind(this)} opts = {youtubeOpts}/>
+        <YouTube videoId={this.state.selectedVideoID} 
+        onReady={this.onYoutubeReady.bind(this)}
+        onStateChange={this.onYoutubeChange.bind(this)}
+        opts = {youtubeOpts}/>
                 <button  className="btn btn-primary" onClick={this.handleRequest.bind(this)}>Request song!</button>
 
 
@@ -109,7 +116,7 @@ onYoutubeReady(){
 
     </div>
     <div className="col-6 col-lg-6">
-      <BackendState requests = {this.state.requests} readySongs = {this.state.readySongs}/>
+      <BackendState requests = {this.state.requests} readySongs = {this.state.readySongs} downloading = {this.state.downloading}/>
       </div>
   </div>
 </div>)

@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import Downloading from '../components/downloading.component'
 
 
-export default class BackendStateComponent extends Component<{requests:Array<string>,readySongs:Array<string>}, {}>{
+export default class BackendStateComponent extends Component<{requests:Array<string>,readySongs:Array<string>,downloading:string}, {}>{
     
-  constructor(props:{requests:Array<string>,readySongs:Array<string>}) {
+  constructor(props:{requests:Array<string>,readySongs:Array<string>, downloading:string}) {
         super(props);
   }
     render(){
@@ -13,6 +14,7 @@ export default class BackendStateComponent extends Component<{requests:Array<str
         <ol>
       {this.props.requests.map((url,index) => <li key={index}>{url}</li>)}
           </ol>
+          <Downloading link={this.props.downloading}/>
           <h4>Ready Songs</h4>
         <hr/>
         <ol>
