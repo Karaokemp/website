@@ -17,9 +17,9 @@ pipeline {
                }
        parallel{
          stage('frontend'){
-               agent { 
+               agent any /*{ 
                       docker {image 'node:14.8'}
-                }
+                }*/
            environment {
               SERVICE='frontend'
             }
