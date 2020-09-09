@@ -100,7 +100,7 @@ pipeline {
           steps{
             script{
                 def image = docker.build("my-image:${env.BUILD_ID}")
-                image.push()
+                //image.push()
             } 
        }
      }
