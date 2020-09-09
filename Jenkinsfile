@@ -1,5 +1,5 @@
 pipeline {
-  agent any 
+  agent none
   triggers {
     pollSCM('* * * * *')
   }
@@ -11,15 +11,17 @@ pipeline {
      }
      stage('build'){
        environment {
-                 //CI=true
-                 //npm_config_prefix='frontend
                  JEST_JUNIT_OUTPUT_DIR='../reports'
                }
        parallel{
          stage('frontend'){
-               /*agent any { 
-                      docker {image 'node:14.8'}
-                }*/
+                 agent {
+    dockerfile {
+        filename 'Dockerfile.build'
+        label 'my-defined-label'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
+}
            environment {
               SERVICE='frontend'
             }
@@ -59,9 +61,10 @@ pipeline {
          }
          
          stage('backend'){
-           /*agent {
-              docker { image 'node:14.8' }
-           } */
+           agent{ 
+                      docker {image 'node:14.8'}
+           }
+
             environment {
               SERVICE='backend'
             }
