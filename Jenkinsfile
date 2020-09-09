@@ -15,9 +15,10 @@ pipeline {
                }
        parallel{
          stage('frontend'){
-    agent { dockerfile true }
+                 agent {
     dockerfile {
-        filename 'Dockerfile'
+        filename 'Dockerfile.build'
+        //label 'my-defined-label'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
 }
@@ -49,10 +50,6 @@ pipeline {
     stage('Build Artifacts'){
           steps{
             echo "Building Artifacts"
-            script{
-              def customImage = docker.build("my-image:${env.BUILD_ID}")
-    customImage.push()
-            }
        }
      }
     stage('Publish Artifacts'){
@@ -132,4 +129,5 @@ pipeline {
               build job: '../website-deployment/master'
             }
         }   
-  }
+  }  
+}
