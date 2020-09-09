@@ -92,15 +92,7 @@ pipeline {
     }
     stage('Build Artifacts'){
           steps{
-            sh "docker build"
-       }
-     }
-    stage('Publish Artifacts'){
-          steps{
-            script{
-                def image = docker.build("my-image:${env.BUILD_ID}")
-                //image.push()
-            } 
+            echo "docker build..."
        }
      }
          }
