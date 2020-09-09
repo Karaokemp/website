@@ -15,9 +15,9 @@ pipeline {
                }
        parallel{
          stage('frontend'){
-                 agent {
+    agent { dockerfile true }
     dockerfile {
-        filename 'Dockerfile.build'
+        filename 'Dockerfile'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
 }
