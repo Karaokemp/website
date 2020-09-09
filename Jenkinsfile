@@ -18,7 +18,7 @@ pipeline {
                  agent {
     dockerfile {
         filename 'Dockerfile.build'
-        label 'my-defined-label'
+        //label 'my-defined-label'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
 }
@@ -64,7 +64,6 @@ pipeline {
            agent{ 
                       docker {image 'node:14.8'}
            }
-
             environment {
               SERVICE='backend'
             }
@@ -73,9 +72,6 @@ pipeline {
       }*/
               stages{
             stage('Install packages') {
-      /*when {
-        changeset 'backend/**'
-      }*/
       steps {
         dir("${SERVICE}"){
           sh 'npm install'
