@@ -49,7 +49,10 @@ pipeline {
     }
     stage('Build Artifacts'){
           steps{
-            echo "Building Artifacts"
+            script{
+               def customImage = docker.build("my-image:${env.BUILD_ID}")
+            customImage.push()
+            }
        }
      }
     stage('Publish Artifacts'){
