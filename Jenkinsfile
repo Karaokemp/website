@@ -15,8 +15,13 @@ pipeline {
                }
        parallel{
          stage('frontend'){
-            agent { dockerfile true }
-
+                 agent {
+    dockerfile {
+        filename 'Dockerfile.build'
+        //label 'my-defined-label'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
+}
            environment {
               SERVICE='frontend'
             }
