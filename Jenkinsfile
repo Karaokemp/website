@@ -52,7 +52,7 @@ pipeline {
             dir("${SERVICE}"){
                 script{
                   def customImage = docker.build("dreckguy/karaokemp-website-frontend:${env.BUILD_ID}")
-                  customImage.push()
+                  //customImage.push()
                 }
             }
        }
