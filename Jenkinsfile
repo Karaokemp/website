@@ -15,8 +15,8 @@ pipeline {
                }
        parallel{
          stage('frontend'){
-                 agent { dockerfile true }
-}
+            agent { dockerfile true }
+
            environment {
               SERVICE='frontend'
             }
