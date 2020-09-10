@@ -51,8 +51,10 @@ pipeline {
           steps{
             dir("${SERVICE}"){
                 script{
-                  def customImage = docker.build("dreckguy/karaokemp-website-frontend:${env.BUILD_ID}")
-                  //customImage.push()
+                  docker.withRegistry( '', 'dockerhub'){
+                      def customImage = docker.build("dreckguy/karaoikemp-website-frontend:latest")
+                      customImage.push()
+    }
                 }
             }
        }
