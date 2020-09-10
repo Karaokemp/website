@@ -9,5 +9,5 @@ services:
     ports:
       - 4000:4000
     volumes:
-      - "${PWD}/songs:/usr/src/app/songs"
+      - "./songs:/usr/src/app/songs"
   
