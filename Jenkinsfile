@@ -52,7 +52,7 @@ pipeline {
             dir("${SERVICE}"){
                 script{
                   docker.withRegistry( '', 'dockerhub'){
-                      def customImage = docker.build("dreckguy/karaokemp-website-frontend:latest")
+                      def customImage = docker.build("dreckguy/karaokemp-website-${SERVICE}:latest")
                       customImage.push()
     }
                 }
@@ -94,7 +94,14 @@ pipeline {
     }
     stage('Build Artifacts'){
           steps{
-            echo "docker build..."
+            dir("${SERVICE}"){
+                script{
+                  docker.withRegistry( '', 'dockerhub'){
+                      def customImage = docker.build("dreckguy/karaokemp-website-${SERVICE}:latest")
+                      customImage.push()
+    }
+                }
+            }
        }
      }
          }
