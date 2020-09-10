@@ -17,7 +17,7 @@ pipeline {
          stage('frontend'){
                  agent {
     dockerfile {
-        filename 'Dockerfile.build'
+        filename 'Dockerfile.agent'
         //label 'my-defined-label'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
