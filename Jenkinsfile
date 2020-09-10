@@ -63,9 +63,13 @@ pipeline {
          }
          
          stage('backend'){
-           agent{ 
-                      docker {image 'node:14.8'}
-           }
+           agent {
+    dockerfile {
+        filename 'Dockerfile.agent'
+        //label 'my-defined-label'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
+}
             environment {
               SERVICE='backend'
             }
