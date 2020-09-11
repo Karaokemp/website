@@ -72,6 +72,15 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
   }
 
   handleRequest(click:any){
+    if(this.state.linkPath.length && !this.state.errorMessage){
+      this.sendRequest();
+    }else{
+      this.setState({errorMessage: "Could not send request!"})
+    }
+
+  }
+
+  sendRequest(){
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
