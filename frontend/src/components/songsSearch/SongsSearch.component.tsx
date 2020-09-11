@@ -1,6 +1,6 @@
 import React, {Component, ChangeEvent} from 'react';
 import './SongsSearch.css'
-import karaokempLogo from '../../pics/logo.png'
+import karaokempLogo from '../../pics/logo.png';
 import youtubeLogo from '../../pics/youtube-logo.svg';
 
 import YouTube from 'react-youtube';
@@ -72,15 +72,6 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
   }
 
   handleRequest(click:any){
-    if(this.state.linkPath.length && !this.state.errorMessage){
-      this.sendRequest();
-    }else{
-      this.setState({errorMessage: "Could not send request!"})
-    }
-
-  }
-
-  sendRequest(){
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -105,9 +96,8 @@ onYoutubeChange(event:any){
     return(<div className="container">
   <div className="row">
     <div className="col-6 col-lg-6">
-      <h1>The Annual Chicken Party</h1>
-      <h3>request karaoke songs for the party</h3>
-      <div className="text-center"><img src={karaokempLogo} alt='' style={{height:'400px'}}/></div> <br/><hr/>
+      <h1>Welcome to The Karaokemp!</h1>
+      <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px'}}/></div> <br/><hr/>
         
         <p className='instructions'>Insert Link from &nbsp;<img src={youtubeLogo}alt=''/>
         <input type="text"  onChange={this.handleLinkPathChange.bind(this)} style={{ width: "80%" }} placeholder='e.g. https://www.youtube.com/watch?v=...'/>
