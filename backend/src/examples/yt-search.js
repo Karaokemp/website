@@ -9,6 +9,3 @@ yts( 'karaoke', function ( err, r ) {
     console.log( `${ views } | ${ v.title } (${ v.timestamp }) | ${ v.author.name }` )
   } )
 } )
- 
-// promises also supported
-// const r = await yts( 'superman theme' )

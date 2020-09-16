@@ -11,7 +11,7 @@ export default class App extends Component{
     <div className='player-wrapper'>
         <ReactPlayer
         className='react-player fixed-bottom'
-        url= 'https://www.youtube.com/watch?v=AUjmpbd-U2Q'
+        url= 'https://karaoke-songs.s3.eu-central-1.amazonaws.com/The+Bad+Touch+-+The+Bloodhound+Gang+_+Karaoke+Version+_+KaraFun-AUjmpbd-U2Q.mp4'
         width='100%'
         height='100%'
         controls = {true}

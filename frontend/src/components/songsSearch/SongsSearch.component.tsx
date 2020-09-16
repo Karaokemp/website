@@ -108,12 +108,12 @@ onYoutubeChange(event:any){
       <h1>Welcome to The Karaokemp!</h1>
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px'}}/></div> <br/><hr/>
         
-        <p className='instructions'>Insert Link from &nbsp;<img src={youtubeLogo}alt=''/>
+        <div className='instructions'>Insert Link from &nbsp;<img src={youtubeLogo}alt=''/>
         <input type="text"  onChange={this.handleLinkPathChange.bind(this)} style={{ width: "80%" }} placeholder='e.g. https://www.youtube.com/watch?v=...'/>
         <ValidMark valid={!this.state.errorMessage && this.state.linkPath.length >0 }/>
 
        <Error errorMessage = {this.state.errorMessage}/>
-        </p>
+        </div>
         <YouTube videoId={this.state.selectedVideoID} 
         onReady={this.onYoutubeReady.bind(this)}
         onStateChange={this.onYoutubeChange.bind(this)}
