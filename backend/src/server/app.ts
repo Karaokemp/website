@@ -20,7 +20,7 @@ app.put('/link', (req: Request, res: Response) => {
     upload(link).then((song:Song)=>{
         console.log(song)
     })
-    //state.requests.push(link)
+    state.requests.push(link)
     sendState(req,res)
     })
 
