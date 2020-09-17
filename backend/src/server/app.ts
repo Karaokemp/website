@@ -11,15 +11,12 @@ var cors = require('cors')
 app.use(cors());
 let state = new State();
 const uploader = new Uploader(state)
-//uploader.start();
+uploader.start();
 
 app.get('/', (req: Request, res: Response) => res.send('Karaokemp backend is online!\n'))
 app.put('/link', (req: Request, res: Response) => {
     console.log('got link!')
     let link = new YoutubeURL(req.body.path)
-    upload(link).then((song:Song)=>{
-        console.log(song)
-    })
     state.requests.push(link)
     sendState(req,res)
     })
@@ -30,8 +27,8 @@ app.put('/link', (req: Request, res: Response) => {
 
         let payload = {
             requests: state.requests,
-            readySongs: state.readySongs.map(song => song.getName()),
-            downloading: state.downloading
+            readySongs: state.readySongs.map(song => song.cloudUrl),
+            downloading:state.downloading
             }
            
             res.json(payload);

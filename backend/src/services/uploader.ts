@@ -11,14 +11,16 @@ export default class uploadService{
     }
 
     handleRequest(){
-        if(this.state.requests.length){
+        if(this.state.requests.length && !this.state.downloading){
             let request = this.state.requests.shift();
             this.state.downloading = request
             console.log(`handling request: ${request}`)
            
                 upload(request).then((song)=>{
                     this.state.readySongs.add(song)
-                this.state.downloading = null
+                    this.state.downloading = null
+                }).catch((err)=>{
+                    console.error(err.message)
                 })
         }
     }
