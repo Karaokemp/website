@@ -23,7 +23,7 @@ export default class BackendStateComponent extends Component<{state:State| null}
           <h4>Ready Songs</h4>
         <hr/>
         <ol>
-        {this.props.state.readySongs.list.map((song:Song,index) => <li key={index}>{song.filename}</li>)}
+        {this.props.state.readySongs.list.map((song:Song,index) => <li key={index}>{song.cloudUrl}</li>)}
           </ol>
       </div>)
     }
