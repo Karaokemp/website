@@ -1,6 +1,7 @@
 import React from 'react';
+import { YoutubeURL } from '../../../types';
  
-const DownloadingComponent = (props:{link:string}) => {
+const DownloadingComponent = (props:{link:YoutubeURL | null}) => {
     if(props.link){
         return (<div className="alert alert-info" role="alert">
         <h5>Downloading:</h5>

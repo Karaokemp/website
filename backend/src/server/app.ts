@@ -23,15 +23,8 @@ app.put('/link', (req: Request, res: Response) => {
 
     app.get('/state',sendState)
 
-    function sendState(req: Request, res: Response){
-
-        let payload = {
-            requests: state.requests,
-            readySongs: state.readySongs.map(song => song.cloudUrl),
-            downloading:state.downloading
-            }
-           
-            res.json(payload);
+    function sendState(req: Request, res: Response){           
+            res.json(state);
     }
 
 export default app

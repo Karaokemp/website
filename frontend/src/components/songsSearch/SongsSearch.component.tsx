@@ -1,4 +1,5 @@
 import React, {Component, ChangeEvent} from 'react';
+import {State,YoutubeURL,YoutubeURLTypeError} from '../../types'
 import './SongsSearch.css'
 import karaokempLogo from '../../pics/logo.png';
 import youtubeLogo from '../../pics/youtube-logo.svg';
@@ -7,7 +8,6 @@ import YouTube from 'react-youtube';
 import BackendState from '../backendState.component'
 import Error from '../error.component'
 import ValidMark from '../validMark.component'
-import {YoutubeURL, YoutubeURLTypeError} from '../../types'
 
 const INTERVAL = 3000
 const DEFAULT_VIDEO_ID = 'FxyQTb6n4_I'
@@ -20,7 +20,7 @@ youtubeOpts={
 
 
 
-export default class SongsSearchComponent extends Component<{}, { linkPath: string, selectedVideoID: string,errorMessage:string, requests:Array<string>,readySongs:Array<string>, downloading:string}>{
+export default class SongsSearchComponent extends Component<{}, { linkPath: string, selectedVideoID: string,errorMessage:string,backendState:State|null}>{
 
   constructor(props:string) {
     super(props);
@@ -28,9 +28,7 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
       linkPath :'',
       errorMessage:'',
       selectedVideoID :DEFAULT_VIDEO_ID,
-      requests: new Array<string>(),
-      readySongs: new Array<string>(),
-      downloading:''
+      backendState: null
     }
    
   }
@@ -42,8 +40,8 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
   updateBackendState() {
     fetch('http://localhost:4000/state')
     .then(res => res.json())
-    .then((backendState) => {
-      this.setState({...backendState})
+    .then((newBackendState:State) => {
+      this.setState({backendState:newBackendState})
     }).catch(console.error)
   }
 
@@ -88,8 +86,8 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
   };
   fetch('http://localhost:4000/link', requestOptions)
       .then(response => response.json())
-      .then((backendState) => {
-      this.setState({requests:backendState.requests,readySongs: backendState.readySongs})
+      .then((newBackendState) => {
+      this.setState({backendState:newBackendState})
       setInterval(this.updateBackendState.bind(this),INTERVAL)
     }).catch(console.error)
 }
@@ -125,7 +123,7 @@ onYoutubeChange(event:any){
 
     </div>
     <div className="col-6 col-lg-6">
-      <BackendState requests = {this.state.requests} readySongs = {this.state.readySongs} downloading = {this.state.downloading}/>
+      <BackendState state = {this.state.backendState}/>
       </div>
   </div>
 </div>)

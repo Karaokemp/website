@@ -33,11 +33,12 @@ export class SongSet{
 export class State{
      requests:Array<YoutubeURL>
      readySongs:SongSet
-     downloading:YoutubeURL
+     downloading:YoutubeURL | null
 
      constructor(){
          this.requests = new Array<YoutubeURL>();
          this.readySongs = new SongSet()
+         this.downloading = null
      }
 }
 
