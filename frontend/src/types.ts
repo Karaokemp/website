@@ -21,9 +21,7 @@ export class SongSet{
             this.list.push(song);
         }
     }
-    public getHello(){
-        return 'hello'
-    }
+    
 }
 export class State{
      requests:Array<YoutubeURL>
@@ -35,6 +33,10 @@ export class State{
          this.readySongs = new SongSet()
          this.downloading = null
      }
+
+     public getHello(){
+        return 'hello'
+    }
 }
 
 export class YoutubeURL extends URL{

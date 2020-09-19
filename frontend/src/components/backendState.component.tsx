@@ -12,6 +12,7 @@ export default class BackendStateComponent extends Component<{state:State| null}
       if(!this.props.state){
         return (<div><p>Waiting for connection to Karaokemp servers...</p></div>)
       }
+      console.log(this.props.state.getHello())
       
         return (<div>
         <h4>Requests</h4>
