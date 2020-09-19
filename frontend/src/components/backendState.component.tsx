@@ -12,6 +12,7 @@ export default class BackendStateComponent extends Component<{state:State| null}
       if(!this.props.state){
         return (<div><p>Waiting for connection to Karaokemp servers...</p></div>)
       }
+      
         return (<div>
         <h4>Requests</h4>
         <hr/>
@@ -22,6 +23,7 @@ export default class BackendStateComponent extends Component<{state:State| null}
           <h4>Ready Songs</h4>
         <hr/>
         <ol>
+        {this.props.state.readySongs.list.map((song:Song,index) => <li key={index}>{song.filename}</li>)}
           </ol>
       </div>)
     }

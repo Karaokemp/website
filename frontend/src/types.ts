@@ -12,7 +12,7 @@ export class Song{
 
 }
 export class SongSet{
-     private list: Array<Song>
+     public list: Array<Song>
     constructor(){
         this.list = new Array<Song>()
     }
@@ -21,8 +21,8 @@ export class SongSet{
             this.list.push(song);
         }
     }
-    public map(fn:(value: Song, index: number) => any):Array<any>{
-        return this.list.map(fn)
+    public map(callbackfn: (value: Song, index: number, array: Song[]) => any):Array<any>{
+        return this.list.map(callbackfn)
     }
 }
 export class State{
