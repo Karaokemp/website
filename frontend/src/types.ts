@@ -21,8 +21,8 @@ export class SongSet{
             this.list.push(song);
         }
     }
-    public map(callbackfn: (value: Song, index: number, array: Song[]) => any):Array<any>{
-        return this.list.map(callbackfn)
+    public getHello(){
+        return 'hello'
     }
 }
 export class State{

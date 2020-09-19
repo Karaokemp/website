@@ -1,4 +1,3 @@
-import path from 'path'
 export class Song{
     videoId:string
     filename: string
@@ -11,13 +10,9 @@ export class Song{
 
     }
 
-
-    public getName(): string{
-        return path.parse(this.filename).name
-    }
 }
 export class SongSet{
-    private list: Array<Song>
+     public list: Array<Song>
     constructor(){
         this.list = new Array<Song>()
     }
@@ -26,8 +21,8 @@ export class SongSet{
             this.list.push(song);
         }
     }
-    public map(fn:(value: Song, index: number, array: Song[]) => any):Array<any>{
-        return this.list.map(fn)
+    public getHello(){
+        return 'hello'
     }
 }
 export class State{
