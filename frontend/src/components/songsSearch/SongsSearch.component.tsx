@@ -4,7 +4,7 @@ import './SongsSearch.css'
 import karaokempLogo from '../../pics/logo.png';
 import youtubeLogo from '../../pics/youtube-logo.svg';
 
-import YouTube from 'react-youtube';
+import ReactPlayer from 'react-player'
 import BackendState from '../backendState.component'
 import Error from '../error.component'
 import ValidMark from '../validMark.component'
@@ -112,10 +112,7 @@ onYoutubeChange(event:any){
 
        <Error errorMessage = {this.state.errorMessage}/>
         </div>
-        <YouTube videoId={this.state.selectedVideoID} 
-        onReady={this.onYoutubeReady.bind(this)}
-        onStateChange={this.onYoutubeChange.bind(this)}
-        opts = {youtubeOpts}/>
+        <ReactPlayer url={`https://www.youtube.com/watch?v=${this.state.selectedVideoID}&vl=en`} />
                 <button  className="btn btn-primary" onClick={this.handleRequest.bind(this)}>Request song!</button>
 
 
