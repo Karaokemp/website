@@ -12,7 +12,7 @@ export class Song{
 
 }
 export class SongSet{
-     public list: Array<Song>
+    list: Array<Song>
     constructor(){
         this.list = new Array<Song>()
     }
@@ -33,10 +33,6 @@ export class State{
          this.readySongs = new SongSet()
          this.downloading = null
      }
-
-     public getHello(){
-        return 'hello'
-    }
 }
 
 export class YoutubeURL extends URL{
