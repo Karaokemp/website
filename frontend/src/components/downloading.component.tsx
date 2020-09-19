@@ -1,5 +1,5 @@
 import React from 'react';
-import { YoutubeURL } from '../../../types';
+import { YoutubeURL } from '../types';
  
 const DownloadingComponent = (props:{link:YoutubeURL | null}) => {
     if(props.link){
