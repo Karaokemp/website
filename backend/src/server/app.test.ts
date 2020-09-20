@@ -16,7 +16,7 @@ describe("The root path", () => {
 describe("The link path", () => {
     test("should response the PUT method with list that contains the link sended", () => {
       return request(app)
-        .put('/link').send({path:new URL('https://www.youtube.com/watch?v=OU3699R53rs').href})
+        .put('/link').send({videoId:new URL('https://www.youtube.com/watch?v=OU3699R53rs').searchParams.get('v')})
         .then(response => {
           expect(response.status).toBe(200)
           let link = <URL> response.body.requests.pop()
