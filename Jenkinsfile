@@ -54,6 +54,7 @@ pipeline {
                   docker.withRegistry( '', 'dockerhub'){
                       def customImage = docker.build("dreckguy/karaokemp-website-${SERVICE}:${GIT_COMMIT}")
                       customImage.push()
+                      customImage.push('latest')
     }
                 }
             }
@@ -103,6 +104,8 @@ pipeline {
                   docker.withRegistry( '', 'dockerhub'){
                       def customImage = docker.build("dreckguy/karaokemp-website-${SERVICE}:${GIT_COMMIT}")
                       customImage.push()
+                      customImage.push('latest')
+
     }
                 }
             }
