@@ -53,9 +53,7 @@ pipeline {
                 script{
                   docker.withRegistry( '', 'dockerhub'){
                       def image = docker.build("dreckguy/karaokemp-website-${SERVICE}")
-                      image.push('latest')
-                      image.push("${GIT_COMMIT}")
-
+                      image.push('latest',"${GIT_COMMIT}")
     }
                 }
             }
