@@ -52,7 +52,7 @@ pipeline {
             dir("${SERVICE}"){
                 script{
                   docker.withRegistry( '', 'dockerhub'){
-                      def customImage = docker.build("dreckguy/karaokemp-website-${SERVICE}:latest")
+                      def customImage = docker.build("dreckguy/karaokemp-website-${SERVICE}:${GIT_COMMIT}")
                       customImage.push()
     }
                 }
@@ -101,7 +101,7 @@ pipeline {
             dir("${SERVICE}"){
                 script{
                   docker.withRegistry( '', 'dockerhub'){
-                      def customImage = docker.build("dreckguy/karaokemp-website-${SERVICE}:latest")
+                      def customImage = docker.build("dreckguy/karaokemp-website-${SERVICE}:${GIT_COMMIT}")
                       customImage.push()
     }
                 }
