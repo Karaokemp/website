@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import {State} from '../../../types'
+import {State} from '../types'
 import app from "./app";
 import request from "supertest"
 

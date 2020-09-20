@@ -1,5 +1,5 @@
 import app from './app';
-import Downloader from '../services/uploader'
+import Downloader from '../services/uploader.service'
 const SERVER_PORT = 4000;
 
 app.listen( SERVER_PORT, () => {

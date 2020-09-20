@@ -1,5 +1,5 @@
 import upload from '../functions/upload'
-import {State, Song, YoutubeURL} from '../../../types'
+import {State, Song, YoutubeURL} from '../types'
 
 const INTERVAL = 3000
 

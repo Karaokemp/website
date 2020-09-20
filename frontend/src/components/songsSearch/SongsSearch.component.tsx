@@ -20,12 +20,12 @@ youtubeOpts={
 
 
 
-export default class SongsSearchComponent extends Component<{}, { linkPath: string, selectedVideoID: string,errorMessage:string,backendState:State|null}>{
+export default class SongsSearchComponent extends Component<{}, { term: string, selectedVideoID: string,errorMessage:string,backendState:State|null}>{
 
   constructor(props:string) {
     super(props);
     this.state = {
-      linkPath :'',
+      term :'',
       errorMessage:'',
       selectedVideoID :DEFAULT_VIDEO_ID,
       backendState: null
@@ -45,17 +45,18 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
     }).catch(console.error)
   }
 
-  handleLinkPathChange(change:ChangeEvent<HTMLInputElement> ){
-    let path = change.target.value
-    this.setState({linkPath:path})
+  handleInputChange(change:ChangeEvent<HTMLInputElement> ){
+    let value = change.target.value
+
+    this.setState({term:value})
 
     try {
-      let link = new YoutubeURL(path)
+      let link = new YoutubeURL(value)
       let videoID = link.searchParams.get('v') || this.state.selectedVideoID
       this.setState({selectedVideoID:videoID})
     } catch (err) {
       let msg;
-      if(!path){
+      if(!value){
         msg = ''
       }else if(err instanceof YoutubeURLTypeError){
         msg = 'Not a Youtube URL!'
@@ -69,8 +70,8 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
     }
   }
 
-  handleRequest(click:any){
-    if(this.state.linkPath.length && !this.state.errorMessage){
+  handleRequest(){
+    if(this.state.term.length && !this.state.errorMessage){
       this.sendRequest();
     }else{
       this.setState({errorMessage: "Could not send request!"})
@@ -82,7 +83,7 @@ export default class SongsSearchComponent extends Component<{}, { linkPath: stri
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({path: this.state.linkPath})
+      body: JSON.stringify({videoId: this.state.selectedVideoID})
   };
   fetch('http://localhost:4000/link', requestOptions)
       .then(response => response.json())
@@ -107,8 +108,8 @@ onYoutubeChange(event:any){
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px'}}/></div> <br/><hr/>
         
         <div className='instructions'>Insert Link from &nbsp;<img src={youtubeLogo}alt=''/>
-        <input type="text"  onChange={this.handleLinkPathChange.bind(this)} style={{ width: "80%" }} placeholder='e.g. https://www.youtube.com/watch?v=...'/>
-        <ValidMark valid={!this.state.errorMessage && this.state.linkPath.length >0 }/>
+        <input type="text"  onChange={this.handleInputChange.bind(this)} style={{ width: "80%" }} placeholder='e.g. https://www.youtube.com/watch?v=...'/>
+        <ValidMark valid={!this.state.errorMessage && this.state.term.length >0 }/>
 
        <Error errorMessage = {this.state.errorMessage}/>
         </div>
