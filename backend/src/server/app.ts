@@ -16,7 +16,6 @@ uploader.start();
 
 app.get('/', (req: Request, res: Response) => res.send('Karaokemp backend is online!\n'))
 app.put('/link', (req: Request, res: Response) => {
-    console.log('got link!')
     let link = new YoutubeURL(`https://www.youtube.com/watch?v=${req.body.videoId}`)
     state.requests.push(link)
     sendState(req,res)
