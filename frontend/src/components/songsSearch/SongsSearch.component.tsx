@@ -1,34 +1,37 @@
 import React, {Component, ChangeEvent} from 'react';
-import {State,YoutubeURL,YoutubeURLTypeError} from '../../types'
+import {State,YoutubeURL,isYoutubePath, Song,SecondaryComponentMode} from '../../types'
 import './SongsSearch.css'
 import karaokempLogo from '../../pics/logo.png';
 import youtubeLogo from '../../pics/youtube-logo.svg';
 
 import ReactPlayer from 'react-player'
-import BackendState from '../backendState.component'
+import SecondaryComponent from '../secondary.component'
 import Error from '../error.component'
 import ValidMark from '../validMark.component'
 
 const INTERVAL = 3000
 const DEFAULT_VIDEO_ID = 'FxyQTb6n4_I'
 
-let youtubeOpts:any
-youtubeOpts={
-  height: '300',
-          width: '80%'
-}
 
+export default class SongsSearchComponent extends Component<{}, {
+   term: string,
+   selectedVideoID: string,
+   errorMessage:string,
+   suggestions:Song[]|null,
+   backendState:State|null,
+   secondaryComponent: SecondaryComponentMode
+  }>{
 
-
-export default class SongsSearchComponent extends Component<{}, { term: string, selectedVideoID: string,errorMessage:string,backendState:State|null}>{
-
-  constructor(props:string) {
+  constructor(props:any) {
     super(props);
     this.state = {
       term :'',
       errorMessage:'',
       selectedVideoID :DEFAULT_VIDEO_ID,
-      backendState: null
+      backendState: null,
+      suggestions: null,
+      secondaryComponent : SecondaryComponentMode.NOTHING
+
     }
    
   }
@@ -43,35 +46,30 @@ export default class SongsSearchComponent extends Component<{}, { term: string, 
     .then((newBackendState:State) => {
       this.setState({backendState:newBackendState})
     }).catch(console.error)
+    
   }
 
   handleInputChange(change:ChangeEvent<HTMLInputElement> ){
     let value = change.target.value
-
-    this.setState({term:value})
-
-    try {
+    if(isYoutubePath(value)){
       let link = new YoutubeURL(value)
-      let videoID = link.searchParams.get('v') || this.state.selectedVideoID
-      this.setState({selectedVideoID:videoID})
-    } catch (err) {
-      let msg;
-      if(!value){
-        msg = ''
-      }else if(err instanceof YoutubeURLTypeError){
-        msg = 'Not a Youtube URL!'
-      }else if(err instanceof TypeError){
-        msg = 'Not a valid URL!'
+      let videoId = link.searchParams.get('v') || this.state.selectedVideoID
+      this.setState({selectedVideoID:videoId})
 
-      }else{
-        msg = err.message
-      }
-      this.setState({errorMessage:msg})
+    }else{
+      fetch(`localhost:4000/songs?term=${value}`)
+      .then(res => res.json())
+      .then((newSuggestions:Song[]) => {
+        this.setState({suggestions:newSuggestions})
+      }).catch(console.error)
+
     }
+        
+
   }
 
   handleRequest(){
-    if(this.state.term.length && !this.state.errorMessage){
+    if(this.state.selectedVideoID.length && !this.state.errorMessage){
       this.sendRequest();
     }else{
       this.setState({errorMessage: "Could not send request!"})
@@ -88,8 +86,7 @@ export default class SongsSearchComponent extends Component<{}, { term: string, 
   fetch('http://localhost:4000/link', requestOptions)
       .then(response => response.json())
       .then((newBackendState) => {
-      this.setState({backendState:newBackendState})
-      setInterval(this.updateBackendState.bind(this),INTERVAL)
+      this.setState({secondaryComponent:SecondaryComponentMode.BACKEND_STATE})
     }).catch(console.error)
 }
 
@@ -108,7 +105,7 @@ onYoutubeChange(event:any){
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px'}}/></div> <br/><hr/>
         
         <div className='instructions'>Insert Link from &nbsp;<img src={youtubeLogo}alt=''/>
-        <input type="text"  onChange={this.handleInputChange.bind(this)} style={{ width: "80%" }} placeholder='e.g. https://www.youtube.com/watch?v=...'/>
+        <input type="text"  onChange={this.handleInputChange.bind(this)} style={{ width: "80%" }} placeholder='title, artist, link'/>
         <ValidMark valid={!this.state.errorMessage && this.state.term.length >0 }/>
 
        <Error errorMessage = {this.state.errorMessage}/>
@@ -121,7 +118,7 @@ onYoutubeChange(event:any){
 
     </div>
     <div className="col-6 col-lg-6">
-      <BackendState state = {this.state.backendState}/>
+      <SecondaryComponent mode = {this.state.secondaryComponent}/>
       </div>
   </div>
 </div>)

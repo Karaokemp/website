@@ -43,6 +43,12 @@ export class YoutubeURL extends URL{
 
 }
 
+export enum SecondaryComponentMode {
+    BACKEND_STATE,
+    SONG_SUGGESTIONS,
+    NOTHING
+  }
+
 export function isYoutubePath(path:string):boolean{
     const m = '^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+'
     let result = path.match(m)
