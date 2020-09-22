@@ -9,8 +9,9 @@ import SecondaryComponent from '../secondary.component'
 import Error from '../error.component'
 import ValidMark from '../validMark.component'
 
-const INTERVAL = 3000
 const DEFAULT_VIDEO_ID = 'FxyQTb6n4_I'
+const KARAOKEMP_BACKEND = process.env.REACT_APP_KARAOKEMP_BACKEND || 'http://localhost:4000'
+
 
 
 export default class SongsSearchComponent extends Component<{}, {
@@ -18,7 +19,6 @@ export default class SongsSearchComponent extends Component<{}, {
    selectedVideoID: string,
    errorMessage:string,
    suggestions:Song[]|null,
-   backendState:State|null,
    secondaryComponent: SecondaryComponentMode
   }>{
 
@@ -28,27 +28,12 @@ export default class SongsSearchComponent extends Component<{}, {
       term :'',
       errorMessage:'',
       selectedVideoID :DEFAULT_VIDEO_ID,
-      backendState: null,
       suggestions: null,
-      secondaryComponent : SecondaryComponentMode.NOTHING
-
+      secondaryComponent : SecondaryComponentMode.BACKEND_STATE      
     }
    
   }
   
-
-  componentDidMount() {
-   this.updateBackendState()
-  }
-  updateBackendState() {
-    fetch('http://localhost:4000/state')
-    .then(res => res.json())
-    .then((newBackendState:State) => {
-      this.setState({backendState:newBackendState})
-    }).catch(console.error)
-    
-  }
-
   handleInputChange(change:ChangeEvent<HTMLInputElement> ){
     let value = change.target.value
     if(isYoutubePath(value)){
@@ -57,7 +42,7 @@ export default class SongsSearchComponent extends Component<{}, {
       this.setState({selectedVideoID:videoId})
 
     }else{
-      fetch(`localhost:4000/songs?term=${value}`)
+      fetch(`${KARAOKEMP_BACKEND}/songs?term=${value}`)
       .then(res => res.json())
       .then((newSuggestions:Song[]) => {
         this.setState({suggestions:newSuggestions})
@@ -90,13 +75,6 @@ export default class SongsSearchComponent extends Component<{}, {
     }).catch(console.error)
 }
 
-onYoutubeReady(event:any){
-  event.target.playVideo()
-}
-onYoutubeChange(event:any){
-  //event.target.playVideo()
-}
-
   render() {
     return(<div className="container">
   <div className="row">
@@ -118,7 +96,7 @@ onYoutubeChange(event:any){
 
     </div>
     <div className="col-6 col-lg-6">
-      <SecondaryComponent mode = {this.state.secondaryComponent}/>
+      <SecondaryComponent mode = {this.state.secondaryComponent} />
       </div>
   </div>
 </div>)
