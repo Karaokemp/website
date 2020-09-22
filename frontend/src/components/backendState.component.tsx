@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Downloading from '../components/downloading.component'
-import {State,Song, YoutubeURL} from '../types'
+import {State,Song, YoutubeURL, KaraokempSong} from '../types'
 
 const KARAOKEMP_BACKEND = process.env.REACT_APP_KARAOKEMP_BACKEND || 'http://localhost:4000'
 const FETCHING_INTERVAL = Number(process.env.REACT_APP_FETCHING_INTERVAL)|| 1000
@@ -51,7 +51,7 @@ fetchingTimeout: Object | null
           <h4>Ready Songs</h4>
         <hr/>
         <ol>
-        {this.state.backendState.readySongs.list.map((song:Song,index) => <li key={index}>{song.cloudUrl}</li>)}
+        {this.state.backendState.readySongs.list.map((song:KaraokempSong,index) => <li key={index}>{song.cloudUrl}</li>)}
           </ol>
       </div>)
     }

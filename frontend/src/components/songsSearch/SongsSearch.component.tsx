@@ -1,5 +1,6 @@
 import React, {Component, ChangeEvent} from 'react';
-import {State,YoutubeURL,isYoutubePath, Song,SecondaryComponentMode} from '../../types'
+import {observer} from 'mobx-react'
+import {YoutubeURL,isYoutubePath, Song,SecondaryComponentMode} from '../../types'
 import './SongsSearch.css'
 import karaokempLogo from '../../pics/logo.png';
 import youtubeLogo from '../../pics/youtube-logo.svg';
@@ -14,7 +15,7 @@ const KARAOKEMP_BACKEND = process.env.REACT_APP_KARAOKEMP_BACKEND || 'http://loc
 
 
 
-export default class SongsSearchComponent extends Component<{}, {
+export default observer(class SongsSearchComponent extends Component<{}, {
    term: string,
    selectedVideoID: string,
    errorMessage:string,
@@ -86,7 +87,7 @@ export default class SongsSearchComponent extends Component<{}, {
         <input type="text"  onChange={this.handleInputChange.bind(this)} style={{ width: "80%" }} placeholder='title, artist, link'/>
         <ValidMark valid={!this.state.errorMessage && this.state.term.length >0 }/>
 
-       <Error errorMessage = {this.state.errorMessage}/>
+       <Error/>
         </div>
         <ReactPlayer url={`https://www.youtube.com/watch?v=${this.state.selectedVideoID}&vl=en`} />
                 <button  className="btn btn-primary" onClick={this.handleRequest.bind(this)}>Request song!</button>
@@ -102,4 +103,4 @@ export default class SongsSearchComponent extends Component<{}, {
 </div>)
   }
 
-}
+})
