@@ -1,5 +1,5 @@
-import { observable,action} from "mobx";
-import { KaraokempSong, SecondaryComponentMode, Song} from "../types";
+import { observable,action, computed} from "mobx";
+import { KaraokempSong, MessageTheme, SecondaryComponentMode, Song} from "../types";
 
 export class Store {
   @observable
@@ -11,11 +11,21 @@ export class Store {
   @observable
   selectedVideoId = 'FxyQTb6n4_I'
   @observable
-  message = {text:'Here is some text!',bootstrapClasses:"alert alert-danger alert-dismissible fade show"}
+  message = {text:'Here is some text!',theme:MessageTheme.SUCCESS}
   @observable
   secondaryComponent = SecondaryComponentMode.BACKEND_STATE      
   @action
   selectSong(videoId: string) {
     this.selectedVideoId = videoId
   }
+   @computed
+   get messageThemeBootstrapClasses() {
+        switch(this.message.theme){
+          case MessageTheme.ERROR:
+          return "alert alert-danger alert-dismissible fade show"
+          case MessageTheme.SUCCESS:
+          return "alert alert-success"
+          }
+
+    }
 }

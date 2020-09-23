@@ -80,3 +80,7 @@ export enum SecondaryComponentMode {
     SONG_SUGGESTIONS,
     NOTHING
   }
+export enum MessageTheme{
+    ERROR,
+    SUCCESS
+}

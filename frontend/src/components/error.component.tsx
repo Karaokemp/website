@@ -4,7 +4,7 @@ import { Store } from '../store/store';
  
 const ErrorComponent = inject("store") (observer((props:{ store?: Store }) => {
     if(props.store!.message){
-        return (<div className={props.store!.message.bootstrapClasses}>
+        return (<div className={props.store!.messageThemeBootstrapClasses}>
         <strong>{props.store!.message.text}</strong></div>)
     }else{
         return (<div></div>)
