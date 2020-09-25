@@ -20,7 +20,8 @@ export class Store {
   }
   @action
   toggleTheme(){
-    this.message.theme = MessageTheme.ERROR? MessageTheme.SUCCESS: MessageTheme.ERROR
+
+    this.message.theme = this.message.theme == MessageTheme.ERROR ? MessageTheme.SUCCESS: MessageTheme.ERROR
   }
    @computed
    get messageThemeBootstrapClasses() {
