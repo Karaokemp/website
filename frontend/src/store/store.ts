@@ -18,6 +18,10 @@ export class Store {
   selectSong(videoId: string) {
     this.selectedVideoId = videoId
   }
+  @action
+  toggleTheme(){
+    this.message.theme = MessageTheme.ERROR? MessageTheme.SUCCESS: MessageTheme.ERROR
+  }
    @computed
    get messageThemeBootstrapClasses() {
         switch(this.message.theme){

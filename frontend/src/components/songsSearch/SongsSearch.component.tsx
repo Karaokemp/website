@@ -1,5 +1,5 @@
 import React, {Component, ChangeEvent} from 'react';
-import {observer} from 'mobx-react'
+import {observer,inject} from 'mobx-react'
 import {YoutubeURL,isYoutubePath, Song,SecondaryComponentMode} from '../../types'
 import './SongsSearch.css'
 import karaokempLogo from '../../pics/logo.png';
@@ -7,15 +7,16 @@ import youtubeLogo from '../../pics/youtube-logo.svg';
 
 import ReactPlayer from 'react-player'
 import SecondaryComponent from '../secondary.component'
-import Error from '../error.component'
+import Error from '../message.component'
 import ValidMark from '../validMark.component'
+import { Store } from '../../store/store';
 
 const DEFAULT_VIDEO_ID = 'FxyQTb6n4_I'
 const KARAOKEMP_BACKEND = process.env.REACT_APP_KARAOKEMP_BACKEND || 'http://localhost:4000'
 
 
 
-export default observer(class SongsSearchComponent extends Component<{}, {
+export default inject("store")(observer(class SongsSearchComponent extends Component<{ store?: Store }, {
    term: string,
    selectedVideoID: string,
    errorMessage:string,
@@ -37,6 +38,8 @@ export default observer(class SongsSearchComponent extends Component<{}, {
   
   handleInputChange(change:ChangeEvent<HTMLInputElement> ){
     let value = change.target.value
+    this.props.store?.toggleTheme()
+
     if(isYoutubePath(value)){
       let link = new YoutubeURL(value)
       let videoId = link.searchParams.get('v') || this.state.selectedVideoID
@@ -103,4 +106,4 @@ export default observer(class SongsSearchComponent extends Component<{}, {
 </div>)
   }
 
-})
+}))
