@@ -82,5 +82,6 @@ export enum SecondaryComponentMode {
   }
 export enum MessageTheme{
     ERROR,
-    SUCCESS
+    SUCCESS,
+    NOTHING
 }

@@ -1,6 +1,6 @@
 import React, {Component, ChangeEvent} from 'react';
-import {observer,inject} from 'mobx-react'
-import {YoutubeURL,isYoutubePath, Song,SecondaryComponentMode} from '../../types'
+import {observer} from 'mobx-react'
+import {YoutubeURL,isYoutubePath, Song,SecondaryComponentMode, MessageTheme} from '../../types'
 import './SongsSearch.css'
 import karaokempLogo from '../../pics/logo.png';
 import youtubeLogo from '../../pics/youtube-logo.svg';
@@ -8,47 +8,50 @@ import youtubeLogo from '../../pics/youtube-logo.svg';
 import ReactPlayer from 'react-player'
 import SecondaryComponent from '../secondary.component'
 import ValidMark from '../validMark.component'
-import { Store,Context} from '../../store/store';
+import {Context} from '../../store/store';
 import MSG from '../message.component'
 
 const DEFAULT_VIDEO_ID = 'FxyQTb6n4_I'
 const KARAOKEMP_BACKEND = process.env.REACT_APP_KARAOKEMP_BACKEND || 'http://localhost:4000'
 
 
-
-export default observer(class SongsSearchComponent extends Component<{ store?: Store }, {
+@observer
+export default class SongsSearchComponent extends Component<{}, {
    term: string,
    selectedVideoID: string,
-   errorMessage:string,
+   message:{text:string,theme:MessageTheme},
    suggestions:Song[]|null,
    secondaryComponent: SecondaryComponentMode
   }>{
 
-    static contextType = Context;
+    static contextType = Context
 
-  constructor(props:any) {
-    super(props);
-    this.state = {
-      term :'',
-      errorMessage:'',
-      selectedVideoID :DEFAULT_VIDEO_ID,
-      suggestions: null,
-      secondaryComponent : SecondaryComponentMode.BACKEND_STATE      
+    constructor(props:any) {
+      super(props)
+      this.state = {
+        term :'',
+        message: {text:'',theme:MessageTheme.NOTHING},
+        selectedVideoID :DEFAULT_VIDEO_ID,
+        suggestions: null,
+        secondaryComponent : SecondaryComponentMode.BACKEND_STATE      
     }
-   
   }
   
   handleInputChange(change:ChangeEvent<HTMLInputElement> ){
     let value = change.target.value
-    const store = this.context
-    store?.toggleTheme()
+    this.context!.toggleTheme()
 
     if(isYoutubePath(value)){
       let link = new YoutubeURL(value)
       let videoId = link.searchParams.get('v') || this.state.selectedVideoID
       this.setState({selectedVideoID:videoId})
+      this.setState({message: {text:"Found Youtube Link!",theme:MessageTheme.SUCCESS}})
+
 
     }else{
+      this.setState({message: {text:'',theme:MessageTheme.NOTHING}})
+
+      
       fetch(`${KARAOKEMP_BACKEND}/songs?term=${value}`)
       .then(res => res.json())
       .then((newSuggestions:Song[]) => {
@@ -61,10 +64,10 @@ export default observer(class SongsSearchComponent extends Component<{ store?: S
   }
 
   handleRequest(){
-    if(this.state.selectedVideoID.length && !this.state.errorMessage){
+    if(this.state.selectedVideoID.length){
       this.sendRequest();
     }else{
-      this.setState({errorMessage: "Could not send request!"})
+      this.setState({message: {text:"Could not send request!",theme:MessageTheme.ERROR}})
     }
 
   }
@@ -80,6 +83,8 @@ export default observer(class SongsSearchComponent extends Component<{ store?: S
       .then((newBackendState) => {
       this.setState({secondaryComponent:SecondaryComponentMode.BACKEND_STATE})
     }).catch(console.error)
+    this.setState({message: {text:'',theme:MessageTheme.NOTHING}})
+
 }
 
   render() {
@@ -89,15 +94,14 @@ export default observer(class SongsSearchComponent extends Component<{ store?: S
       <h1>Welcome to The Karaokemp!</h1>
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px'}}/></div> <br/><hr/>
         
-        <div className='instructions'>Insert Link from &nbsp;<img src={youtubeLogo}alt=''/>
-        <input type="text"  onChange={this.handleInputChange.bind(this)} style={{ width: "80%" }} placeholder='title, artist, link'/>
-        <ValidMark valid={!this.state.errorMessage && this.state.term.length >0 }/>
+        <div className='instructions'>Steal Video from &nbsp;<img src={youtubeLogo}alt=''/>
+        <input type="text" onChange={this.handleInputChange.bind(this)} style={{ width: "80%" }} placeholder='title, artist, link'/>
+        <ValidMark valid={!this.state.message && this.state.term.length >0 }/>
 
-       <MSG/>
+       <MSG message ={this.state.message}/>
         </div>
         <ReactPlayer url={`https://www.youtube.com/watch?v=${this.state.selectedVideoID}&vl=en`} />
                 <button  className="btn btn-primary" onClick={this.handleRequest.bind(this)}>Request song!</button>
-
 
         <hr/>
 
@@ -109,8 +113,5 @@ export default observer(class SongsSearchComponent extends Component<{ store?: S
 </div>)
   }
 
-  componentDidMount(){
-    console.log(this.context)
-  }
 
-})
+}
