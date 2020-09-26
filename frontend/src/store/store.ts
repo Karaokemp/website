@@ -1,4 +1,5 @@
 import { observable,action, computed} from "mobx";
+import React from "react";
 import { KaraokempSong, MessageTheme, SecondaryComponentMode, Song} from "../types";
 
 export class Store {
@@ -34,3 +35,5 @@ export class Store {
 
     }
 }
+
+export const Context = React.createContext(new Store())

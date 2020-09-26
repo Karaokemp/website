@@ -1,15 +1,12 @@
-import { inject, observer } from 'mobx-react';
-import React from 'react';
-import { Store } from '../store/store';
+import {observer} from 'mobx-react';
+import React, { useContext } from 'react';
+import {Context} from '../store/store';
  
-const MessageComponent = inject("store") (observer((props:{ store?: Store }) => {
-    if(props.store!.message){
-        return (<div className={props.store!.messageThemeBootstrapClasses}>
-        <strong>{props.store!.message.text}</strong></div>)
-    }else{
-        return (<div></div>)
-    }
-   
-  }))
+const MessageComponent = observer(() => {
+    const store = useContext(Context);
+    console.log(store)
+return (<div className = {store.messageThemeBootstrapClasses}>{store.message.text}</div>)
+
+  })
 
   export default MessageComponent

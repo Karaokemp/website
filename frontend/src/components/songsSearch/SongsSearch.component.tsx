@@ -7,22 +7,24 @@ import youtubeLogo from '../../pics/youtube-logo.svg';
 
 import ReactPlayer from 'react-player'
 import SecondaryComponent from '../secondary.component'
-import Error from '../message.component'
 import ValidMark from '../validMark.component'
-import { Store } from '../../store/store';
+import { Store,Context} from '../../store/store';
+import MSG from '../message.component'
 
 const DEFAULT_VIDEO_ID = 'FxyQTb6n4_I'
 const KARAOKEMP_BACKEND = process.env.REACT_APP_KARAOKEMP_BACKEND || 'http://localhost:4000'
 
 
 
-export default inject("store")(observer(class SongsSearchComponent extends Component<{ store?: Store }, {
+export default observer(class SongsSearchComponent extends Component<{ store?: Store }, {
    term: string,
    selectedVideoID: string,
    errorMessage:string,
    suggestions:Song[]|null,
    secondaryComponent: SecondaryComponentMode
   }>{
+
+    static contextType = Context;
 
   constructor(props:any) {
     super(props);
@@ -38,7 +40,8 @@ export default inject("store")(observer(class SongsSearchComponent extends Compo
   
   handleInputChange(change:ChangeEvent<HTMLInputElement> ){
     let value = change.target.value
-    this.props.store?.toggleTheme()
+    const store = this.context
+    store?.toggleTheme()
 
     if(isYoutubePath(value)){
       let link = new YoutubeURL(value)
@@ -90,7 +93,7 @@ export default inject("store")(observer(class SongsSearchComponent extends Compo
         <input type="text"  onChange={this.handleInputChange.bind(this)} style={{ width: "80%" }} placeholder='title, artist, link'/>
         <ValidMark valid={!this.state.errorMessage && this.state.term.length >0 }/>
 
-       <Error/>
+       <MSG/>
         </div>
         <ReactPlayer url={`https://www.youtube.com/watch?v=${this.state.selectedVideoID}&vl=en`} />
                 <button  className="btn btn-primary" onClick={this.handleRequest.bind(this)}>Request song!</button>
@@ -106,4 +109,8 @@ export default inject("store")(observer(class SongsSearchComponent extends Compo
 </div>)
   }
 
-}))
+  componentDidMount(){
+    console.log(this.context)
+  }
+
+})
