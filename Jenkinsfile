@@ -182,8 +182,9 @@ pipeline {
          agent any
             
             steps {
-              //build job: '../website-deployment/master'
-              sh 'ls ../'
+              build job: '../website-deployment_master'
+
+
             }
         }   
   }  
