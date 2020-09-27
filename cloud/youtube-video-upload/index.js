@@ -1,5 +1,5 @@
-const HELLO_MESSAGE = "HELLO! This is DreckGuy :D"
+const MSG = "HELLO! This is DreckGuy :D"
 
 exports.handler = (event, context, callback) => {
-    callback(null,HELLO_MESSAGE)
+    callback(null,MSG)
 };
