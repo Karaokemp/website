@@ -21,7 +21,7 @@ export default function upload(link:YoutubeURL){
     });
           video.on('info', function(info:youtubedl.Info) {
             youtubedlInfo = info
-            let uploadParams:any = {Bucket:'karaoke-songs', Key:youtubedlInfo._filename, Body: video,ContentType:'video/mp4',ACL: 'public-read', Metadata: {videoId: videoId}};
+            let uploadParams:any = {Bucket:'karaoke-songs', Key:youtubedlInfo._filename, Body: video,ContentType:'video/mp4',ACL: 'public-read', Metadata: {videoId: videoId}}
             s3.upload(uploadParams, (err: any, data: {Location: string, Bucket: string, Key: string, ETag: string}) => {
               if (err) {
                 reject(err);

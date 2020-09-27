@@ -114,6 +114,28 @@ pipeline {
      }
          }
            }
+            stage('Cloud services'){
+                 agent {
+    dockerfile {
+        filename 'Dockerfile.agent'
+        //label 'my-defined-label'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
+}
+          
+           stages{
+             stage('s3-upload') {
+               environment{
+                 SERVICE="youtube-video-upload"
+               }
+          steps {
+            dir("cloud/${SERVICE}"){
+              sh 'npm install'
+            }
+          }
+        }
+           }
+         }
        }
        
      }
