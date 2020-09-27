@@ -146,7 +146,7 @@ pipeline {
            stage ('push artifact') {
             steps {
                 zip zipFile: "${GIT_COMMIT}.zip", archive: true, dir:"cloud/${SERVICE}"
-                archiveArtifacts artifacts: "${GIT_COMMIT}.zip", fingerprint: true
+                archiveArtifacts artifacts: "${SERVICE}.zip", fingerprint: true
             }
         }
          }
