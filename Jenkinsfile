@@ -128,11 +128,22 @@ pipeline {
                environment{
                  SERVICE="youtube-video-upload"
                }
-          steps {
+         stages{
+           stage("install packages"){
+              steps {
             dir("cloud/${SERVICE}"){
               sh 'npm install'
             }
           }
+           }
+          stage("run"){
+              steps {
+            dir("cloud/${SERVICE}"){
+              sh 'npm start'
+            }
+          }
+           }
+         }
         }
            }
          }
