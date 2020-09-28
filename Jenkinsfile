@@ -60,6 +60,8 @@ pipeline {
       }
     }
     stage('Create Docker image'){
+          when{false}
+
           steps{
             dir("${SERVICE}"){
                 script{
@@ -113,6 +115,7 @@ pipeline {
       }
     }
     stage('Create Docker image'){
+          when{false}
           steps{
             dir("${SERVICE}"){
                 script{
