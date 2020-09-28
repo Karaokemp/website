@@ -53,8 +53,8 @@ pipeline {
       steps{
          dir("${SERVICE}"){
               sh 'npm run build'
-              archiveArtifacts artifacts: "build/**/*.*", fingerprint: true
-              //s3Upload( entries:{bucket:"karaokemp-artifacts/karaokemp-website",sourceFile:"build/**/*.*"})
+              //archiveArtifacts artifacts: "build/**/*.*", fingerprint: true
+              s3Upload(bucket:"karaokemp-artifacts")
 
             }
       }
