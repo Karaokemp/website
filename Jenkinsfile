@@ -112,7 +112,7 @@ pipeline {
         junit "reports/${SERVICE}.xml"
       }
     }
-    stage('Build Artifacts'){
+    stage('Create Docker image'){
           steps{
             dir("${SERVICE}"){
                 script{
@@ -168,7 +168,6 @@ pipeline {
            }
          }
        }
-       
      }
      stage('Deploy'){
        parallel{
