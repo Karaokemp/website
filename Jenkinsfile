@@ -54,8 +54,8 @@ pipeline {
          dir("${SERVICE}"){
               sh 'npm run build'
               //archiveArtifacts artifacts: "build/**/*.*", fingerprint: true
-              withAWS(credentials:"aws"){
-                s3Upload(file:"build",bucket:"karaokemp-artifacts")
+              withAWS(credentials:"aws", region:"eu-central-1"){
+                  s3Upload(file:"build",bucket:"karaokemp-artifacts")
               }
             }
       }
