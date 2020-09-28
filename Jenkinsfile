@@ -54,7 +54,7 @@ pipeline {
          dir("${SERVICE}"){
               sh 'npm run build'
               //archiveArtifacts artifacts: "build/**/*.*", fingerprint: true
-              s3Upload('build/**/*.*', bucket:'karaokemp-artifacts', path:'karaokemp-website')
+              s3Upload(workingDir:'frontend', includePathPattern:"build/**" bucket:'karaokemp-artifacts', path:'karaokemp-website')
 
 
               
