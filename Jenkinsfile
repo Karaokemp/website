@@ -59,9 +59,7 @@ pipeline {
             }
       }
     }
-    stage('Create Docker image'){
-          when{false}
-
+    /*stage('Create Docker image'){
           steps{
             dir("${SERVICE}"){
                 script{
@@ -74,7 +72,7 @@ pipeline {
                 }
             }
        }
-     }
+     }*/
            }
          }
          
@@ -114,7 +112,7 @@ pipeline {
         junit "reports/${SERVICE}.xml"
       }
     }
-    stage('Create Docker image'){
+    /*stage('Create Docker image'){
           when{false}
           steps{
             dir("${SERVICE}"){
@@ -128,7 +126,7 @@ pipeline {
                 }
             }
        }
-     }
+     }*/
          }
            }
             stage('Cloud services'){
