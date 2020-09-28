@@ -26,7 +26,8 @@ pipeline {
               SERVICE='frontend'
             }
            when {
-            changeset "**|frontend/**"
+            //changeset "frontend/**"
+            changeset "*"
           }
            stages{
              stage('Install packages') {
