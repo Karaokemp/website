@@ -6,7 +6,7 @@ pipeline {
   stages{
     stage('Lint'){
           steps{
-            echo "Linting Code...."
+            echo "Linting Code..."
        }
      }
      stage('build'){
