@@ -48,7 +48,18 @@ pipeline {
         junit "reports/${SERVICE}.xml"
       }
     }
-    stage('Build Artifacts'){
+
+    stage("Create S3 Artifacts"){
+      steps{
+         dir("${SERVICE}"){
+              sh 'npm run build'
+              archiveArtifacts artifacts: "build/**/*.*", fingerprint: true
+
+              
+            }
+      }
+    }
+    stage('Create Docker image'){
           steps{
             dir("${SERVICE}"){
                 script{
