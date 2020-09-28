@@ -26,7 +26,7 @@ pipeline {
               SERVICE='frontend'
             }
            when {
-            changeset "frontend/**"
+            changeset "${SERVICE}/**"
             changeset "*"
           }
            stages{
@@ -76,9 +76,10 @@ pipeline {
             environment {
               SERVICE='backend'
             }
-            /*when {
-        changeset 'backend/**'
-      }*/
+           when {
+            changeset "${SERVICE}/**"
+            changeset "*"
+          }
               stages{
             stage('Install packages') {
       steps {
