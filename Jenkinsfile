@@ -52,13 +52,11 @@ pipeline {
     stage("Create S3 Artifacts"){
       steps{
          dir("${SERVICE}"){
-              sh 'npm run build'
+            sh 'npm run build'
+         }
               //archiveArtifacts artifacts: "build/**/*.*", fingerprint: true
-              s3Upload(workingDir:'frontend', includePathPattern:"build/**" bucket:'karaokemp-artifacts', path:'karaokemp-website')
-
-
-              
-            }
+          s3Upload(workingDir:'frontend', includePathPattern:"build/**" bucket:'karaokemp-artifacts', path:'karaokemp-website')
+            
       }
     }
     stage('Create Docker image'){
