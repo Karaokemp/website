@@ -26,7 +26,7 @@ pipeline {
               SERVICE='frontend'
             }
            when {
-            changeset "frontend/**"
+            //changeset "frontend/**"
             changeset "*"
           }
            stages{
@@ -78,7 +78,7 @@ pipeline {
             }
 
             when {
-            changeset "backend/**"
+            //changeset "backend/**"
             changeset "*"
           }
               stages{
