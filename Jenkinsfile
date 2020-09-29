@@ -167,6 +167,7 @@ pipeline {
                   withAWS(credentials:"aws", region:"eu-central-1"){
                     s3Upload(file:"${FUNCTION}.zip",bucket:"karaokemp-artifacts/${GIT_COMMIT}/${SERVICE}")
                   }
+                sh 'ls'
                 
             }
         }
