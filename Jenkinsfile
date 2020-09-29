@@ -164,12 +164,10 @@ pipeline {
             steps {
                 zip zipFile: "${FUNCTION}.zip", archive: true, dir:"${SERVICE}/${FUNCTION}"
                 //archiveArtifacts artifacts: "${FUNCTION}.zip", fingerprint: true
-                dir("${SERVICE}"){
-                  sh "ls"
                   withAWS(credentials:"aws", region:"eu-central-1"){
                     s3Upload(file:"${FUNCTION}.zip",bucket:"karaokemp-artifacts/${GIT_COMMIT}/${SERVICE}")
                   }
-                }
+                
             }
         }
          }
