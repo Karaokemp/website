@@ -167,6 +167,7 @@ pipeline {
                     s3Upload(file:"${FUNCTION}.zip",bucket:"karaokemp-artifacts/COMMIT-${GIT_COMMIT}/${SERVICE}")
                 }
                 sh "rm -rf ${FUNCTION}.zip"
+                sh sh 'printenv'
             }
         }
          }
