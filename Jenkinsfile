@@ -162,11 +162,11 @@ pipeline {
            }
            stage ('push artifact') {
             steps {
-                //zip zipFile: "${SERVICE}.zip", archive: true, dir:"cloud/${SERVICE}"
-                //archiveArtifacts artifacts: "${SERVICE}.zip", fingerprint: true
-                dir("${SERVICE}/${FUNCTION}"){
+                zip zipFile: "${FUNCTION}.zip", archive: true, dir:"${SERVICE}"
+                //archiveArtifacts artifacts: "${FUNCTION}.zip", fingerprint: true
+                dir("${SERVICE}"){
                   withAWS(credentials:"aws", region:"eu-central-1"){
-                    s3Upload(file:"build",bucket:"karaokemp-artifacts/${GIT_COMMIT}/${SERVICE}/${FUNCTION}")
+                    s3Upload(file:"${FUNCTION}.zip",bucket:"karaokemp-artifacts/${GIT_COMMIT}/${SERVICE}")
                   }
                 }
             }
