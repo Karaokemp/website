@@ -3,7 +3,8 @@ pipeline{
     stages{
         stage("Choose Commit"){
             steps{
-                echo input([message: "Commit:",parameters:[$class: 'TextParameterDefinition', defaultValue: "${GIT_COMMIT}", description: 'choose commit to deploy', name:"deployCommit"])
+                 input([message: "Commit:",parameters:[$class: 'TextParameterDefinition', defaultValue: "${GIT_COMMIT}", description: 'choose commit to deploy', name:"deployCommit"])
+                 echo "${params.deployCommit}"
             }
         }
         stage("Show Comit"){
@@ -12,3 +13,4 @@ pipeline{
             }
         }
     }
+}
