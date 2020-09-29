@@ -164,7 +164,7 @@ pipeline {
             steps {
                 zip zipFile: "${FUNCTION}.zip", archive: true, dir:"${SERVICE}/${FUNCTION}"
                 withAWS(credentials:"aws", region:"eu-central-1"){
-                    s3Upload(file:"${FUNCTION}.zip",bucket:"karaokemp-artifacts/COMMIT-${GIT_COMMIT}/${SERVICE}")
+                    s3Upload(file:"${FUNCTION}.zip",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/${SERVICE}")
                 }
                 sh "rm -rf ${FUNCTION}.zip"
                 sh 'printenv'
