@@ -162,7 +162,7 @@ pipeline {
            }
            stage ('push artifact') {
             steps {
-                zip zipFile: "${FUNCTION}.zip", archive: true, dir:"${SERVICE}"
+                zip zipFile: "${FUNCTION}.zip", archive: true, dir:"${SERVICE}/${FUNCTION}"
                 //archiveArtifacts artifacts: "${FUNCTION}.zip", fingerprint: true
                 dir("${SERVICE}"){
                   withAWS(credentials:"aws", region:"eu-central-1"){
