@@ -53,7 +53,6 @@ pipeline {
       steps{
          dir("${SERVICE}"){
               sh 'npm run build'
-              //archiveArtifacts artifacts: "build/**/*.*", fingerprint: true
               withAWS(credentials:"aws", region:"eu-central-1"){
                   s3Upload(file:"build",bucket:"karaokemp-artifacts/${GIT_COMMIT}/${SERVICE}")
               }
@@ -130,6 +129,9 @@ pipeline {
          }
            }
             stage('Cloud services'){
+              environment{
+                SERVICE='cloud-functions'
+              }
                  agent {
     dockerfile {
         filename 'Dockerfile.agent'
@@ -141,27 +143,33 @@ pipeline {
            stages{
              stage('s3-upload') {
                environment{
-                 SERVICE="youtube-video-upload"
+                 FUNCTION="youtube-video-upload"
                }
          stages{
            stage("install packages"){
               steps {
-            dir("cloud/${SERVICE}"){
+            dir("${SERVICE}/${FUNCTION}"){
               sh 'npm install'
             }
           }
            }
           stage("run"){
               steps {
-            dir("cloud/${SERVICE}"){
+            dir("${SERVICE}/${FUNCTION}"){
               sh 'npm start'
             }
           }
            }
            stage ('push artifact') {
             steps {
-                zip zipFile: "${SERVICE}.zip", archive: true, dir:"cloud/${SERVICE}"
-                archiveArtifacts artifacts: "${SERVICE}.zip", fingerprint: true
+                //zip zipFile: "${SERVICE}.zip", archive: true, dir:"cloud/${SERVICE}"
+                //archiveArtifacts artifacts: "${SERVICE}.zip", fingerprint: true
+                dir("${SERVICE}/${FUNCTION}"){
+              sh 'npm run build'
+              withAWS(credentials:"aws", region:"eu-central-1"){
+                  s3Upload(file:"build",bucket:"karaokemp-artifacts/${GIT_COMMIT}/${SERVICE}/${FUNCTION}")
+              }
+            }
             }
         }
          }
