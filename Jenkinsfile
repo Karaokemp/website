@@ -141,7 +141,7 @@ pipeline {
 }
           
            stages{
-             stage('s3-upload') {
+             stage('youtube-video-upload') {
                environment{
                  FUNCTION="youtube-video-upload"
                }
@@ -163,13 +163,10 @@ pipeline {
            stage ('push artifact') {
             steps {
                 zip zipFile: "${FUNCTION}.zip", archive: true, dir:"${SERVICE}/${FUNCTION}"
-                //archiveArtifacts artifacts: "${FUNCTION}.zip", fingerprint: true
-                  withAWS(credentials:"aws", region:"eu-central-1"){
-                    s3Upload(file:"${FUNCTION}.zip",bucket:"karaokemp-artifacts/${GIT_COMMIT}/${SERVICE}")
-                  }
+                withAWS(credentials:"aws", region:"eu-central-1"){
+                    s3Upload(file:"${FUNCTION}.zip",bucket:"karaokemp-artifacts/COMMIT-${GIT_COMMIT}/${SERVICE}")
+                }
                 sh "rm -rf ${FUNCTION}.zip"
-                sh 'ls'
-                
             }
         }
          }
