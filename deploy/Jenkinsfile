@@ -4,7 +4,7 @@ pipeline{
         stage("Choose Commit"){
             steps{
                 input {
-                    message "Commit:"
+                    message: "Commit:"
                     parameters {
                     string(name: 'DEPLOY_COMMIT', defaultValue: '${GIT_COMMIT}', description: 'choose specific commit to deploy')
                     }
@@ -13,7 +13,7 @@ pipeline{
         }
         stage("Show Comit"){
             steps{
-                echo "Deploying ${DEPLOY_COMMIT}"
+                echo "Deploying ${DEPLOY}"
             }
         }
     }
