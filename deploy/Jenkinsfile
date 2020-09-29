@@ -1,32 +1,20 @@
 pipeline{
     agent any
     stages{
-        stage("A"){
+        stage("Choose Commit"){
             steps{
-                echo "========executing A========"
-            }
-            post{
-                always{
-                    echo "========always========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
+                input {
+                    message "Commit:"
+                    parameters {
+                    string(name: 'DEPLOY_COMMIT', defaultValue: '${GIT_COMMIT}', description: 'choose specific commit to deploy')
+                    }
                 }
             }
         }
-    }
-    post{
-        always{
-            echo "========always========"
-        }
-        success{
-            echo "========pipeline executed successfully ========"
-        }
-        failure{
-            echo "========pipeline execution failed========"
+        stage("Show Comit"){
+            steps{
+                echo "Deploying ${DEPLOY_COMMIT}"
+            }
         }
     }
 }
