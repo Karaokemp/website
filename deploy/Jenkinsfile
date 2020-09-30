@@ -9,9 +9,8 @@ pipeline {
             steps {
                 withAWS(credentials:"aws", region:"eu-central-1"){
                     script{
-                            files = s3FindFiles(bucket:'karaokemp-artifacts', glob:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend/**")
+                            files = s3FindFiles(bucket:'karaokemp-artifacts', glob:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend/**", onlyFiles: true)
                             files.each {
-                                item -> echo "found: ${item}"
                                 s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts", fromPath:"${item}", toBucket:'karaokemp-website', toPath:"${item}")
                             }
                     }
