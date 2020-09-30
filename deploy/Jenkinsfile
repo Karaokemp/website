@@ -8,8 +8,8 @@ pipeline{
     stages{
         stage("Choose Commit"){
             steps{
-                 input([message: "Commit:",parameters:[$class: 'TextParameterDefinition', defaultValue: "${GIT_COMMIT}", description: 'choose commit to deploy', name:"deployCommit"])
-                 echo "${params.deployCommit}"
+                 //input([message: "Commit:",parameters:[$class: 'TextParameterDefinition', defaultValue: "${GIT_COMMIT}", description: 'choose commit to deploy', name:"deployCommit"])
+                 echo 'bla' //"${params.deployCommit}"
             }
         }
         stage("Show Comit"){
