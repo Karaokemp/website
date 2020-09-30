@@ -8,7 +8,6 @@ pipeline {
         stage('Example') {
             steps {
                 echo "Commit: ${params.DEPLOY_COMMIT}"
-                echo "Choice: ${params.CHOICE}"
             }
         }
     }
