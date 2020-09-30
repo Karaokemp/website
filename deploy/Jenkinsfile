@@ -28,10 +28,11 @@ pipeline {
         stage("Lambda Zip files"){
             steps{
                 echo "Deploying...."
-                withAWS(credentials:"aws", region:"eu-central-1"){
-                    publishLambda(lambdaPublishBuildStepVariables:{})
+                withCredentials([usernamePassword(credentialsId: 'aws', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    publishLambda(lambdaPublishBuildStepVariables:{awsAccessKeyId:"${USERNAME}",awsSecretKey:"${PASSWORD}"})
                 }
             }
+        }
 
 
         }
