@@ -5,9 +5,11 @@ pipeline {
         //choice(name: 'TARGET', choices: ['One', 'Two', 'Three'], description: 'Choose Deployment Target')
     }
     stages {
-        stage('Example') {
+        stage('Deploy static website files') {
             steps {
                 echo "Commit: ${params.DEPLOY_COMMIT}"
+                s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend", fromPath:'', toBucket:'karaokemp-website', toPath:'')
+
             }
         }
     }
