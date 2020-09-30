@@ -17,7 +17,7 @@ pipeline {
                                 String itemPath = itemObject.toString()
                                 String item = itemPath.drop(pathLength)
                                 echo "item: ${item}"
-                                s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts", fromPath:"${item}", toBucket:'karaokemp-website', toPath:"${item}")
+                                s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts", fromPath:"${itemPath}", toBucket:'karaokemp-website', toPath:"${item}")
                             }
                     }
                 }
