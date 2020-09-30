@@ -8,7 +8,7 @@ pipeline {
         stage('Deploy static website files') {
             steps {
                 echo "Commit: ${params.DEPLOY_COMMIT}"
-                s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend", fromPath:'', toBucket:'karaokemp-website', toPath:'')
+                s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts", fromPath:"/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend", toBucket:'karaokemp-website', toPath:'/')
 
             }
         }
