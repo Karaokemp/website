@@ -10,7 +10,7 @@ pipeline {
                 withAWS(credentials:"aws", region:"eu-central-1"){
                     script{
                         withAWS(credentials:"aws", region:"eu-central-1"){
-                            files = s3FindFiles(bucket:'my-bucket', glob:'karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend')
+                            files = s3FindFiles(bucket:'karaokemp-artifacts', glob:'karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend')
                             files.each { echo it }
                         }
                     }
