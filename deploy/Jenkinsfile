@@ -1,26 +1,29 @@
-pipeline{
+pipeline {
     agent any
-    
+    parameters {
+        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
 
-    stages{
-        stage("Choose Commit"){
-            steps{
-                 script {
-                   values = ['Apple', 'Banana', 'Peach']
-                   parameters = []
-                   values.each {
-                       echo it
-                       parameters.add( [$class: 'BooleanParameterDefinition', defaultValue:
-false, description: '', name: it ] )
-                   }
- 
-                   res = input(
-                       message: 'Was this successful?', parameters: parameters
-                   )
-                                                         print(res)
-               }
- 
+        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+
+        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+
+        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+
+        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+    }
+    stages {
+        stage('Example') {
+            steps {
+                echo "Hello ${params.PERSON}"
+
+                echo "Biography: ${params.BIOGRAPHY}"
+
+                echo "Toggle: ${params.TOGGLE}"
+
+                echo "Choice: ${params.CHOICE}"
+
+                echo "Password: ${params.PASSWORD}"
+            }
         }
     }
-}
 }
