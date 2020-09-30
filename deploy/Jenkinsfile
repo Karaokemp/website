@@ -7,11 +7,9 @@ pipeline{
             steps{
                  script {
                    values = ['Apple', 'Banana', 'Peach']
-                   parameters = []
+                   parameters = [[$class: 'BooleanParameterDefinition', defaultValue:false, description: '', name: it ]]
                    values.each {
                        echo it
-                       parameters.add( [$class: 'BooleanParameterDefinition', defaultValue:
-false, description: '', name: it ] )
                    }
  
                    res = input(
