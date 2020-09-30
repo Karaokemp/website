@@ -30,7 +30,7 @@ pipeline {
                 echo "Deploying...."
                 script{
                     withCredentials([usernamePassword(credentialsId: 'aws', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        publishLambda(lambdaPublishBuildStepVariables:{awsAccessKeyId:USERNAME,awsSecretKey:PASSWORD})
+                        publishLambda(lambdaPublishBuildStepVariables:{awsAccessKeyId:"${USERNAME}",awsSecretKey:PASSWORD})
                     }
                 }
             }
