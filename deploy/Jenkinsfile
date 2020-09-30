@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Example') {
             steps {
-                input message: 'specify commit', parameters: [string(defaultValue: "{GIT_COMMIT}", description: '', name: 'DEPLOY_COMMIT', trim: true)]
+                input message: 'specify commit', parameters: [string(defaultValue: "${GIT_COMMIT}", description: '', name: 'DEPLOY_COMMIT', trim: true)]
             }
         }
     }
