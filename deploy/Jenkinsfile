@@ -10,7 +10,7 @@ pipeline {
                 withAWS(credentials:"aws", region:"eu-central-1"){
                     script{
                             String path = "karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend"
-                            int pathLength = path.length()
+                            int pathLength = path.length() + 1
                             files = s3FindFiles(bucket:'karaokemp-artifacts', glob:"${path}/**", onlyFiles: true)
                             files.each {
                                 itemObject -> echo "item path: ${itemObject}"
