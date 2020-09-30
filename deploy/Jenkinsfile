@@ -28,7 +28,7 @@ pipeline {
         stage("Lambda Zip files"){
             steps{
                 echo "Deploying...."
-                publishLambda({})
+                publishLambda(lambdaPublishBuildStepVariables:{})
             }
 
 
