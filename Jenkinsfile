@@ -202,7 +202,7 @@ pipeline {
          agent any
             
             steps {
-              build job: '../website-deployment/master', parameters:[string(name: 'passed_build_number_param', value:"${GIT_COMMIT}")]
+              build job: '../website-deployment/master', parameters:[string(name: "DEPLOY_COMMIT", value:"${GIT_COMMIT}")]
 
 
             }
