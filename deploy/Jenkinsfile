@@ -9,11 +9,13 @@ pipeline {
             steps {
                 withAWS(credentials:"aws", region:"eu-central-1"){
                     script{
-                        files = s3FindFiles(bucket:'my-bucket', glob:'karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend')
-                        files.each { echo it }
+                        withAWS(credentials:"aws", region:"eu-central-1"){
+                            files = s3FindFiles(bucket:'my-bucket', glob:'karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend')
+                            files.each { echo it }
+                        }
                     }
-                    echo "Commit: ${params.DEPLOY_COMMIT}"
-                    s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts", fromPath:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend/index.html", toBucket:'karaokemp-website', toPath:'index.html')
+                    //echo "Commit: ${params.DEPLOY_COMMIT}"
+                    //s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts", fromPath:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend/index.html", toBucket:'karaokemp-website', toPath:'index.html')
                 }
             }
         }
