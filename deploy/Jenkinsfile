@@ -25,7 +25,7 @@ pipeline {
                     }
                 }
 
-        stage("Lambda Functions Zip files"){
+        stage("Lambda Zip files"){
             steps{
                 echo "Deploying...."
             }
