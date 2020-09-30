@@ -12,7 +12,9 @@ pipeline {
                             path = "karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend"
                             files = s3FindFiles(bucket:'karaokemp-artifacts', glob:"${path}/**", onlyFiles: true)
                             files.each {
-                                item -> echo "found: ${item}"
+                                itemPath -> echo "item path: ${itemPath}"
+                                item = itemPath.take(path.length())
+                                echo "item: ${item}"
                                 s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts", fromPath:"${item}", toBucket:'karaokemp-website', toPath:"${item}")
                             }
                     }
