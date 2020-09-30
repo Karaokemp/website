@@ -1,12 +1,26 @@
-pipeline {
+pipeline{
     agent any
-   
-    stages {
-        stage('Example') {
-            steps {
-                input message: 'specify commit', parameters: [string(defaultValue: "${GIT_COMMIT}", description: '', name: 'DEPLOY_COMMIT', trim: true)]
-                echo "${DEPLOY_COMMIT}"
-            }
+    
+
+    stages{
+        stage("Choose Commit"){
+            steps{
+                 script {
+                   values = ['Apple', 'Banana', 'Peach']
+                   parameters = []
+                   values.each {
+                       echo it
+                       parameters.add( [$class: 'BooleanParameterDefinition', defaultValue:
+false, description: '', name: it ] )
+                   }
+ 
+                   res = input(
+                       message: 'Was this successful?', parameters: parameters
+                   )
+                                                         print(res)
+               }
+ 
         }
+    }
     }
 }
