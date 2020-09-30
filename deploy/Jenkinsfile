@@ -10,11 +10,12 @@ pipeline {
                 withAWS(credentials:"aws", region:"eu-central-1"){
                     script{
                             String path = "karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend"
+                            int pathLength = itemPath.length()
                             files = s3FindFiles(bucket:'karaokemp-artifacts', glob:"${path}/**", onlyFiles: true)
                             files.each {
-                                itemPath -> echo "item path: ${itemPath}"
-                                int pathLength = path.length()
-                                item = itemPath.drop(pathLength)
+                                itemObject -> echo "item path: ${itemObject}"
+                                String itemPath = itemObject.toString()
+                                String item = itemPath.drop(pathLength)
                                 echo "item: ${item}"
                                 s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts", fromPath:"${item}", toBucket:'karaokemp-website', toPath:"${item}")
                             }
