@@ -28,7 +28,7 @@ pipeline {
         stage("Lambda Zip files"){
             steps{
                     withCredentials([usernamePassword(credentialsId: 'aws', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh "docker run --rm -e AWS_ACCESS_KEY_ID=${USERNAME} -e AWS_SECRET_ACCESS_KEY=${PASSWORD} amazon/aws-cli s3 ls"
+                        sh "docker run --rm -e AWS_ACCESS_KEY_ID=${USERNAME} -e AWS_SECRET_ACCESS_KEY=${PASSWORD} amazon/aws-cliupdate-function-code --function-name youtube-video-upload --s3-bucket karaokemp-artifacts --s3-key karaokemp-website/COMMIT-022b0ba5d9f3ba463ab8eb3df078647f0ec0fdcf/cloud-functions/youtube-video-upload.zip"
                     }
                 }
             }
