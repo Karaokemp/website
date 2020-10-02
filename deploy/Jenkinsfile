@@ -27,10 +27,8 @@ pipeline {
 
         stage("Lambda Zip files"){
             steps{
-                echo "Deploying...."
-                script{
                     withCredentials([usernamePassword(credentialsId: 'aws', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        publishLambda(lambdaPublishBuildStepVariables:{awsAccessKeyId:"${USERNAME}",awsSecretKey:PASSWORD})
+                        sh "docker run --rm -ti -e AWS_ACCESS_KEY_ID=${USERNAME} -e AWS_SECRET_ACCESS_KEY=${PASSWORD} amazon/aws-cli s3 ls"
                     }
                 }
             }
