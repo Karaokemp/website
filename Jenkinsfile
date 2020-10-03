@@ -4,11 +4,6 @@ pipeline {
     pollSCM('* * * * *')
   }
   stages{
-    stage('Lint'){
-          steps{
-            echo "Linting Code..."
-       }
-     }
      stage('Build'){
        environment {
                  JEST_JUNIT_OUTPUT_DIR='../reports'
@@ -111,7 +106,7 @@ pipeline {
         junit "reports/${SERVICE}.xml"
       }
     }
-    /*stage('Create Docker image'){
+    stage('Create Docker image'){
           when{false}
           steps{
             dir("${SERVICE}"){
@@ -125,7 +120,7 @@ pipeline {
                 }
             }
        }
-     }*/
+     }
          }
            }
             stage('Cloud'){
@@ -153,7 +148,7 @@ pipeline {
             }
           }
            }
-          stage("run"){
+          stage("Test"){
               steps {
             dir("${SERVICE}/functions/${FUNCTION}"){
               sh 'npm start'
