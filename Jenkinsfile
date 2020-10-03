@@ -153,7 +153,7 @@ pipeline {
             }
           }
            }
-          stage("run"){
+          stage("Test"){
               steps {
             dir("${SERVICE}/functions/${FUNCTION}"){
               sh 'npm start'
