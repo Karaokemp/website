@@ -4,11 +4,6 @@ pipeline {
     pollSCM('* * * * *')
   }
   stages{
-    stage('Lint'){
-          steps{
-            echo "Linting Code..."
-       }
-     }
      stage('Build'){
        environment {
                  JEST_JUNIT_OUTPUT_DIR='../reports'
@@ -111,7 +106,7 @@ pipeline {
         junit "reports/${SERVICE}.xml"
       }
     }
-    /*stage('Create Docker image'){
+    stage('Create Docker image'){
           when{false}
           steps{
             dir("${SERVICE}"){
@@ -125,41 +120,29 @@ pipeline {
                 }
             }
        }
-     }*/
+     }
          }
            }
             stage('Cloud'){
-              environment{
-                SERVICE='cloud'
-              }
                  agent {
     dockerfile {
         filename 'Dockerfile.agent'
         //label 'my-defined-label'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
-}
-          
-           stages{
+}        
+           parallel{
              stage('Functions') {
-               environment{
-                 FUNCTION="youtube-video-upload"
-               }
-         stages{
-           stage("install packages"){
-              steps {
-            dir("${SERVICE}/functions/${FUNCTION}"){
-              sh 'npm install'
-            }
-          }
-           }
-          stage("run"){
-              steps {
-            dir("${SERVICE}/functions/${FUNCTION}"){
-              sh 'npm start'
-            }
-          }
-           }
+               parallel{
+                 stage("youtube-video-upload"){
+                   stages{
+                    stage("install packages"){
+                      steps {
+                        dir("${SERVICE}/functions/${FUNCTION}"){
+                          sh 'npm install'
+                        }
+                      }
+                  }
            stage ('push artifact') {
             steps {
                 zip zipFile: "${FUNCTION}.zip", archive: true, dir:"${SERVICE}/functions/${FUNCTION}"
@@ -171,6 +154,13 @@ pipeline {
             }
         }
          }
+                 }
+                 stage("list-songs"){
+                   steps{
+                      echo "Listing songs..."
+                   }
+                 }
+               }
         }
            }
          }
