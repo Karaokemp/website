@@ -128,9 +128,9 @@ pipeline {
      }*/
          }
            }
-            stage('Cloud services'){
+            stage('Cloud'){
               environment{
-                SERVICE='cloud-functions'
+                SERVICE='cloud'
               }
                  agent {
     dockerfile {
@@ -141,21 +141,21 @@ pipeline {
 }
           
            stages{
-             stage('youtube-video-upload') {
+             stage('Functions') {
                environment{
                  FUNCTION="youtube-video-upload"
                }
          stages{
            stage("install packages"){
               steps {
-            dir("${SERVICE}/${FUNCTION}"){
+            dir("${SERVICE}/functions/${FUNCTION}"){
               sh 'npm install'
             }
           }
            }
           stage("run"){
               steps {
-            dir("${SERVICE}/${FUNCTION}"){
+            dir("${SERVICE}/functions/${FUNCTION}"){
               sh 'npm start'
             }
           }

@@ -33,7 +33,7 @@ export default class SongsSearchComponent extends Component<{}, {
         message: {text:'',theme:MessageTheme.NOTHING},
         selectedVideoID :DEFAULT_VIDEO_ID,
         suggestions: null,
-        secondaryComponent : SecondaryComponentMode.BACKEND_STATE      
+        secondaryComponent : SecondaryComponentMode.NOTHING    
     }
   }
   
