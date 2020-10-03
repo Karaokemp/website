@@ -4,11 +4,6 @@ pipeline {
     pollSCM('* * * * *')
   }
   stages{
-    stage('Lint'){
-          steps{
-            echo "Linting Code..."
-       }
-     }
      stage('Build'){
        environment {
                  JEST_JUNIT_OUTPUT_DIR='../reports'
