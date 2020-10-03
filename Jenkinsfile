@@ -9,12 +9,12 @@ pipeline {
             echo "Linting Code..."
        }
      }
-     stage('build'){
+     stage('Build'){
        environment {
                  JEST_JUNIT_OUTPUT_DIR='../reports'
                }
        parallel{
-         stage('frontend'){
+         stage('Frontend'){
                  agent {
     dockerfile {
         filename 'Dockerfile.agent'
@@ -76,7 +76,7 @@ pipeline {
            }
          }
          
-         stage('backend'){
+         stage('Backend'){
            agent {
     dockerfile {
         filename 'Dockerfile.agent'
