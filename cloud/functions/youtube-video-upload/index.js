@@ -1,6 +1,12 @@
-const MSG = "HELLO! This is DreckGuy !!! Created this short code on local workstation"
-exports.handler = async (event)=>{
-  return new Promise((resolve)=>{
-      resolve(MSG)
-    })
+/**
+ * A Lambda function that returns a static string
+ */
+exports.helloFromLambdaHandler = async () => {
+  // If you change this message, you will need to change hello-from-lambda.test.js
+  const message = 'Hello from Lambda!';
+
+  // All log statements are written to CloudWatch
+  console.info(`${message}`);
+  
+  return message;
 }
