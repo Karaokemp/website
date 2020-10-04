@@ -4,8 +4,8 @@ pipeline {
         string(name: 'DEPLOY_COMMIT', description: 'commit to deploy to website')
         //choice(name: 'TARGET', choices: ['One', 'Two', 'Three'], description: 'Choose Deployment Target')
     }
-    stages {
-        stage("Transfer Files"){
+        stages {
+            stage("Transfer Files"){
             parallel{
                 stage('Static website files') {
                     steps {
@@ -35,11 +35,12 @@ pipeline {
             stage("SAM Project"){
                 steps{
                     withAWS(credentials:"aws", region:"eu-central-1"){
-                    samDeploy(templateFile:"cloud/template.yaml",region:"eu-central-1",s3Bucket:"karaokemp-artifacts", stackName:"karaokemp-services")
+                        samDeploy(templateFile:"cloud/template.yaml",region:"eu-central-1",s3Bucket:"karaokemp-artifacts", stackName:"karaokemp-services")
                 }
             }
         }
 
-    }
         }
+    }
+}
 }
