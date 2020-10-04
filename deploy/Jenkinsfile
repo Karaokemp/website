@@ -34,9 +34,8 @@ pipeline {
             }
             stage("SAM Project"){
                 steps{
-                    withCredentials([usernamePassword(credentialsId: 'aws', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        samDeploy(credentialsId:'aws',templateFile:"cloud/template.yaml",region:"eu-central-1",s3Bucket:"karaokemp-artifacts", stackName:"karaokemp-services")
-                }
+                        samDeploy(credentialsId:'aws-sam',templateFile:"cloud/template.yaml",region:"eu-central-1",s3Bucket:"karaokemp-artifacts", stackName:"karaokemp-services")
+
             }
         }
 
