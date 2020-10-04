@@ -34,7 +34,9 @@ pipeline {
             }
             stage("SAM Project"){
                 steps{
-                    samDeploy(templateFile:"cloud\template.yaml",credentialsId:'aws',region:"eu-central-1",s3Bucket:"karaokemp-artifacts", stackName:"karaokemp-services")
+                    dir("cloud"){
+                        samDeploy(credentialsId:'aws',region:"eu-central-1",s3Bucket:"karaokemp-artifacts", stackName:"karaokemp-services")
+                    }
                 }
             }
         }
