@@ -15,11 +15,10 @@ pipeline {
                                 int pathLength = path.length() + 1
                                 files = s3FindFiles(bucket:'karaokemp-artifacts', glob:"${path}/**", onlyFiles: true)
                                 files.each {
-                                    itemObject ->
+                                    itemObject -> echo "item path: ${itemObject}"
                                     String itemPath = itemObject.toString()
                                     String item = itemPath.drop(pathLength)
                                     s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts", fromPath:"${itemPath}", toBucket:'karaokemp-website', toPath:"${item}")
-                                }
                                 }
                             }
                         }
@@ -31,11 +30,6 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'aws', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh "docker run --rm -e AWS_ACCESS_KEY_ID=${USERNAME} -e AWS_SECRET_ACCESS_KEY=${PASSWORD} -e AWS_DEFAULT_REGION=eu-central-1 amazon/aws-cli lambda update-function-code --function-name youtube-video-upload --s3-bucket karaokemp-artifacts --s3-key karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud/functions/youtube-video-upload.zip"
                     }
-                }
-            }
-             stage("SAM Project"){
-                steps{
-                        samDeploy(credentialsId:'aws-sam',templateFile:"cloud/template.yaml",region:"eu-central-1",s3Bucket:"karaokemp-artifacts", stackName:"karaokemp-services")
                 }
             }
         }
