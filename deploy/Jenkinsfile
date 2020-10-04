@@ -35,7 +35,7 @@ pipeline {
             stage("SAM Project"){
                 steps{
                     withAWS(credentials:"aws", region:"eu-central-1"){
-                        samDeploy(templateFile:"cloud/template.yaml",region:"eu-central-1",s3Bucket:"karaokemp-artifacts", stackName:"karaokemp-services")
+                        samDeploy(credentialsId:'aws',templateFile:"cloud/template.yaml",region:"eu-central-1",s3Bucket:"karaokemp-artifacts", stackName:"karaokemp-services")
                 }
             }
         }
