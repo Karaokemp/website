@@ -136,30 +136,6 @@ pipeline {
 }
           
            stages{
-             stage('Functions') {
-               environment{
-                 FUNCTION="youtube-video-upload"
-               }
-         stages{
-           stage("install packages"){
-              steps {
-            dir("${SERVICE}/functions/${FUNCTION}"){
-              sh 'npm install'
-            }
-          }
-           }
-           stage ('push artifact') {
-            steps {
-                zip zipFile: "${FUNCTION}.zip", archive: true, dir:"${SERVICE}/functions/${FUNCTION}"
-                withAWS(credentials:"aws", region:"eu-central-1"){
-                    s3Upload(file:"${FUNCTION}.zip",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/cloud/functions")
-                }
-                sh "rm -rf ${FUNCTION}.zip"
-                sh 'printenv'
-            }
-        }
-         }
-        }
            }
          }
        }

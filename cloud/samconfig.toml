@@ -7,5 +7,4 @@ s3_bucket = "karaokemp-artifacts"
 s3_prefix = "karaokemp-website/karaokemp-backend-services"
 region = "eu-central-1"
 confirm_changeset = false
-force_upload = true
 capabilities = "CAPABILITY_IAM"
