@@ -148,13 +148,6 @@ pipeline {
             }
           }
            }
-          stage("Test"){
-              steps {
-            dir("${SERVICE}/functions/${FUNCTION}"){
-              sh 'npm start'
-            }
-          }
-           }
            stage ('push artifact') {
             steps {
                 zip zipFile: "${FUNCTION}.zip", archive: true, dir:"${SERVICE}/functions/${FUNCTION}"
