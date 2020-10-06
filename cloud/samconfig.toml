@@ -3,8 +3,8 @@ version = 0.1
 [default.deploy]
 [default.deploy.parameters]
 stack_name = "karaokemp-backend-services"
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-12j1cok899yq8"
-s3_prefix = "karaokemp-backend-services"
+s3_bucket = "karaokemp-artifacts"
+s3_prefix = "karaokemp-website/karaokemp-backend-services"
 region = "eu-central-1"
-confirm_changeset = true
+confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
