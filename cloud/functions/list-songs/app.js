@@ -15,10 +15,9 @@ let response;
  * 
  */
 exports.lambdaHandler = async (event, context) => {
-        // const ret = await axios(url);
         response = {
             'statusCode': 200,
-            'body': JSON.stringify(["nothing but mammals"])
+            'body': JSON.stringify(["nothing but mammals!!!"])
         }
     return response
 };

@@ -14,7 +14,7 @@ Resources:
   ListSongsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./list-songs
+      CodeUri: ./functions/list-songs
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
       Events:
