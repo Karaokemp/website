@@ -123,7 +123,7 @@ pipeline {
      }*/
          }
            }
-            stage('Cloud Services'){
+            stage('Cloud'){
                  agent {
     dockerfile {
         filename 'Dockerfile.agent'
