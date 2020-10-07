@@ -130,12 +130,17 @@ pipeline {
         //label 'my-defined-label'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
-}         
-           steps{
+}
+stages{
+  stage("Package changes"){
+    steps{
              dir('cloud'){
                 sh "sam --version"
              }
            }
+  }
+}         
+
          }
        }
      }
