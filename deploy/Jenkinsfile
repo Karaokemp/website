@@ -34,7 +34,8 @@ pipeline {
             }
              stage("SAM Project"){
                 steps{
-                    sh sam version
+                    sh sam --version
+                    sh aws --version
                 }
             }
         }
