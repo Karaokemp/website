@@ -6,3 +6,18 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
 RUN apt update
 RUN  apt install -y docker-ce
+#install aws
+RUN apt-get update -y && apt-get upgrade -y
+RUN apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev \
+libssl-dev libreadline-dev libffi-dev wget
+RUN curl -O https://www.python.org/ftp/python/3.9.0/Python-3.9.0.tar.xz && \
+tar -xf Python-3.9.0.tar.xz && cd Python-3.9.0 && ./configure --enable-optimizations && \
+make && make altinstall
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3.9 get-pip.py
+RUN pip install aws-sam-cli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install
+
+
+
