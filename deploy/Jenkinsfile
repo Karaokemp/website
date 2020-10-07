@@ -1,5 +1,11 @@
 pipeline {
-    agent any
+    agent {
+    dockerfile {
+        filename 'Dockerfile.agent'
+        //label 'my-defined-label'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
+}
     parameters {
         string(name: 'DEPLOY_COMMIT', description: 'commit to deploy to website')
         //choice(name: 'TARGET', choices: ['One', 'Two', 'Three'], description: 'Choose Deployment Target')
