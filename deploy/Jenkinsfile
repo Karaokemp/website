@@ -21,7 +21,7 @@ pipeline {
                                 int pathLength = path.length() + 1
                                 files = s3FindFiles(bucket:'karaokemp-artifacts', glob:"${path}/**", onlyFiles: true)
                                 files.each {
-                                    itemObject -> echo "item path: ${itemObject}"
+                                    itemObject ->
                                     String itemPath = itemObject.toString()
                                     String item = itemPath.drop(pathLength)
                                     s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts", fromPath:"${itemPath}", toBucket:'karaokemp-website', toPath:"${item}")
