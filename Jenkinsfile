@@ -133,7 +133,7 @@ pipeline {
 }         
            steps{
              dir('cloud'){
-                sh sam --version
+                sh "sam --version"
              }
            }
          }
