@@ -11,7 +11,7 @@ pipeline {
         //choice(name: 'TARGET', choices: ['One', 'Two', 'Three'], description: 'Choose Deployment Target')
     }
     stages {
-        stage("Transfer Files"){
+        stage("Deploy"){
             parallel{
                 stage('Static website files') {
                     steps {
@@ -30,15 +30,7 @@ pipeline {
                         }
                     }
                 }
-
-        stage("Lambda Zip files"){
-            steps{
-                    withCredentials([usernamePassword(credentialsId: 'aws', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh "docker run --rm -e AWS_ACCESS_KEY_ID=${USERNAME} -e AWS_SECRET_ACCESS_KEY=${PASSWORD} -e AWS_DEFAULT_REGION=eu-central-1 amazon/aws-cli lambda update-function-code --function-name youtube-video-upload --s3-bucket karaokemp-artifacts --s3-key karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud/functions/youtube-video-upload.zip"
-                    }
-                }
-            }
-             stage("SAM Project"){
+             stage("Cloud Services"){
                 steps{
                     sh "sam --version"
                     sh "aws --version"
