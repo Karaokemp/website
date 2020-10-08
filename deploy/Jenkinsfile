@@ -34,9 +34,10 @@ pipeline {
                 steps{
                     dir('cloud'){
                          withAWS(credentials:"aws", region:"eu-central-1"){
-                             s3Download(file:'', bucket:'karaokemp-artifacts', path:'karaokemp-website/${DEPLOY_COMMIT}/cloud-services/packaged.yaml', force:true)
+                             s3Download(file:'packaged.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services", force:true)
                         }
-                    sh 'cat packaged.yaml'
+                             sh 'cat packaged.yaml'
+
                     }
                 }
             }
