@@ -17,7 +17,7 @@ let response;
 exports.lambdaHandler = async (event, context) => {
         response = {
             'statusCode': 200,
-            'body': JSON.stringify(["nothing but mammals!!!"])
+            'body': JSON.stringify(["nothing but mammals!!!","I like big Butts"])
         }
     return response
 };
