@@ -6,7 +6,7 @@ pipeline {
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
 }
-    parameters {
+    parameters {`
         string(name: 'DEPLOY_COMMIT', description: 'commit to deploy to website')
         //choice(name: 'TARGET', choices: ['One', 'Two', 'Three'], description: 'Choose Deployment Target')
     }
@@ -32,8 +32,10 @@ pipeline {
                 }
              stage("Cloud Services"){
                 steps{
-                    sh "sam --version"
-                    sh "aws --version"
+                    dir('cloud'){
+                        sh "sam --version"
+
+                    }
                 }
             }
         }

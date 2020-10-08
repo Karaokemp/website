@@ -135,8 +135,14 @@ stages{
   stage("Package changes"){
     steps{
              dir('cloud'){
-                sh "sam --version"
+                sh "sam package \
+                    --template-file template.yaml \
+                    --output-template-file packaged.yaml \
+                    --s3-bucket karaokemp-artifacts \
+                    --s3-prefix karaokemp-website/${GIT_COMMIT}/cloud-services"
+                archiveArtifacts artifacts: "packaged.yaml", fingerprint: true
              }
+
            }
   }
 }         
