@@ -4,7 +4,7 @@ version = 0.1
 [default.deploy.parameters]
 stack_name = "karaokemp-backend-services"
 s3_bucket = "karaokemp-artifacts"
-s3_prefix = "karaokemp-website/karaokemp-backend-services"
+s3_prefix = "karaokemp-website/karaokemp-cloud-services"
 region = "eu-central-1"
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
