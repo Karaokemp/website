@@ -33,8 +33,10 @@ pipeline {
              stage("Cloud Services"){
                 steps{
                     dir('cloud'){
-                        sh "sam --version"
-
+                         withAWS(credentials:"aws", region:"eu-central-1"){
+                             s3Download(file:'', bucket:'karaokemp-artifacts', path:'karaokemp-website/${DEPLOY_COMMIT}/cloud-services/packaged.yaml', force:true)
+                        }
+                    sh 'cat packaged.yaml'
                     }
                 }
             }
