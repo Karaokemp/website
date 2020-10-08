@@ -6,7 +6,7 @@
   "scripts": {
     "start": "run-p backend frontend",
     "frontend": "cd frontend && npm start",
-    "backend" : "cd backend && npm run start:watch"
+    "backend": "cd backend && npm run start:watch"
   },
   "repository": {
     "type": "git",

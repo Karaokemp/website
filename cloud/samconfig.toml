@@ -2,7 +2,7 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "karaokemp-backend-services"
+stack_name = "karaokemp-cloud-services"
 s3_bucket = "karaokemp-artifacts"
 s3_prefix = "karaokemp-website/karaokemp-cloud-services"
 region = "eu-central-1"
