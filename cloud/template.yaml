@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-All Karaokemp services needed to be available online
+  Karaokemp services needed to be available online
   
 Globals:
   Function:
