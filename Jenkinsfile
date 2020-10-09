@@ -154,29 +154,9 @@ stages{
          }
        }
      }
-     stage('Deploy'){
-       parallel{
-         stage('Integration'){
-           agent any
-            steps{
-              echo "Deploying to Integration"
-           }
-         }
-         stage('QA'){
-           agent any
-           steps{
-             echo "Deploying to QA"
-           }
-         }
-       }
-     }
-     stage('Acceptance Tests'){
-       agent any
-        steps{
-            echo 'Testing...'
-        }
-       }
-       stage('Deploy to Production') {
+ 
+     
+       stage('Deploy') {
          agent any
             
             steps {
