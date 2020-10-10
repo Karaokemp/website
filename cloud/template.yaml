@@ -27,3 +27,13 @@ Resources:
             ApiId: !Ref BoardHttpApi
             Method: GET
             Path: /songs
+  Outputs:
+    ListSongsApi:
+      Description: "API Gateway endpoint URL for Prod stage for List Songs function"
+      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Test/songs/"
+    ListSongsFunction:
+      Description: "List Songs Lambda Function ARN"
+      Value: !GetAtt ListSongsFunction.Arn
+    ListSongsFunctionIamRole:
+      Description: "Implicit IAM Role created for List Songs function"
+      Value: !GetAtt ListSongsFunctionRole.Arn
