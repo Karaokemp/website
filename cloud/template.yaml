@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description:
+Description: >
   Karaokemp services needed to be available online
   
 Globals:
@@ -8,32 +8,29 @@ Globals:
     Timeout: 3
 
 Resources:
-  BoardHttpApi:
-    Type: AWS::Serverless::HttpApi
-    Properties:
-      StageName: Test
-      CorsConfiguration: True
-  GetMessagesFunction:
+  ListSongsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: ./list-songs/app.lambdaHandler
+      CodeUri: ./functions/list-songs
+      Handler: app.lambdaHandler
       Runtime: nodejs12.x
-      MemorySize: 128
-      Timeout: 5
       Events:
-        GetMessages:
-          Type: HttpApi
+        ListSongs:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            ApiId: !Ref BoardHttpApi
-            Method: GET
-            Path: /songs
-  Outputs:
-    GetMessagesApi:
-      Description: "API Gateway endpoint URL for Test stage for List Songs function"
-      Value: !Sub "https://${BoardHttpApi}.execute-api.${AWS::Region}.amazonaws.com/Test/songs/"
-    GetMessagesFunction:
-      Description: "List Songs Lambda Function ARN"
-      Value: !GetAtt GetMessagesFunction.Arn
-    GetMessagesFunctionIamRole:
-      Description: "Implicit IAM Role created for List Songs function"
-      Value: !GetAtt GetMessagesFunctionRole.Arn
+            Path: /list-songs
+            Method: get
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  ListSongsApi:
+    Description: "API Gateway endpoint URL for Prod stage for List Songs function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/list-songs/"
+  ListSongsFunction:
+    Description: "List Songs Lambda Function ARN"
+    Value: !GetAtt ListSongsFunction.Arn
+  ListSongsFunctionIamRole:
+    Description: "Implicit IAM Role created for List Songs function"
+    Value: !GetAtt ListSongsFunctionRole.Arn
