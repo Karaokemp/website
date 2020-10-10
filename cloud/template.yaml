@@ -1,7 +1,17 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: >
+Description:
   Karaokemp services needed to be available online
+
+Parameters: 
+  Stage: 
+    Type: String
+    Default: Test
+    AllowedValues: 
+      - Test
+      - Prod
+      - $default
+    Description: What stage to deploy?
   
 Globals:
   Function:
@@ -11,7 +21,8 @@ Resources:
   SongsApi:
     Type: AWS::Serverless::HttpApi
     Properties:
-      #StageName: Test
+      StageName:
+        Ref: Stage
       CorsConfiguration: True
   ListSongsFunction:
     Type: AWS::Serverless::Function
