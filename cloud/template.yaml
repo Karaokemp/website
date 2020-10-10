@@ -28,12 +28,12 @@ Resources:
             Method: GET
             Path: /songs
   Outputs:
-    ListSongsApi:
+    GetMessagesApi:
       Description: "API Gateway endpoint URL for Test stage for List Songs function"
       Value: !Sub "https://${BoardHttpApi}.execute-api.${AWS::Region}.amazonaws.com/Test/songs/"
-    ListSongsFunction:
+    GetMessagesFunction:
       Description: "List Songs Lambda Function ARN"
       Value: !GetAtt GetMessagesFunction.Arn
-    ListSongsFunctionIamRole:
+    GetMessagesFunctionIamRole:
       Description: "Implicit IAM Role created for List Songs function"
       Value: !GetAtt GetMessagesFunctionRole.Arn
