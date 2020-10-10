@@ -27,7 +27,3 @@ Resources:
             ApiId: !Ref BoardHttpApi
             Method: GET
             Path: /messages
-   
-      Policies:
-   
-        - AmazonDynamoDBFullAccess
