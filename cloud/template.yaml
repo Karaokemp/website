@@ -38,3 +38,7 @@ Resources:
             ApiId: !Ref SongsApi
             Method: GET
             Path: /songs
+Outputs:
+  URL:
+    Description: URL for List Songs Function
+    Value: !Sub "https://${SongsApi}.execute-api.${AWS::Region}.amazonaws.com/Test/songs"

@@ -6,6 +6,5 @@ stack_name = "karaokemp-cloud-services"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-jhbkne7wmc8b"
 s3_prefix = "karaokemp-cloud-services"
 region = "eu-central-1"
-confirm_changeset = true
+confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
-parameter_overrides = "Stage=\"Test\""
