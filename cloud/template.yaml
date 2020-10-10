@@ -8,12 +8,12 @@ Globals:
     Timeout: 3
 
 Resources:
-  BoardHttpApi:
+  KaraokempAPI:
     Type: AWS::Serverless::HttpApi
     Properties:
       #StageName: Test
       CorsConfiguration: True
-  GetMessagesFunction:
+  ListSongsFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: ./functions/list-songs/app.lambdaHandler
@@ -21,9 +21,9 @@ Resources:
       MemorySize: 128
       Timeout: 5
       Events:
-        GetMessages:
+        ListSongs:
           Type: HttpApi
           Properties:
-            ApiId: !Ref BoardHttpApi
+            ApiId: !Ref KaraokempAPI
             Method: GET
-            Path: /messages
+            Path: /songs
