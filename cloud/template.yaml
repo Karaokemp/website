@@ -8,29 +8,26 @@ Globals:
     Timeout: 3
 
 Resources:
-  ListSongsFunction:
+  BoardHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      #StageName: Test
+      CorsConfiguration: True
+  GetMessagesFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./functions/list-songs
-      Handler: app.lambdaHandler
+      Handler: ./functions/list-songs/app.lambdaHandler
       Runtime: nodejs12.x
+      MemorySize: 128
+      Timeout: 5
       Events:
-        ListSongs:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+        GetMessages:
+          Type: HttpApi
           Properties:
-            Path: /list-songs
-            Method: get
-
-Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  ListSongsApi:
-    Description: "API Gateway endpoint URL for Prod stage for List Songs function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/list-songs/"
-  ListSongsFunction:
-    Description: "List Songs Lambda Function ARN"
-    Value: !GetAtt ListSongsFunction.Arn
-  ListSongsFunctionIamRole:
-    Description: "Implicit IAM Role created for List Songs function"
-    Value: !GetAtt ListSongsFunctionRole.Arn
+            ApiId: !Ref BoardHttpApi
+            Method: GET
+            Path: /messages
+   
+      Policies:
+   
+        - AmazonDynamoDBFullAccess
