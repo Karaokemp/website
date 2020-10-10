@@ -11,7 +11,7 @@ pipeline {
         //choice(name: 'TARGET', choices: ['One', 'Two', 'Three'], description: 'Choose Deployment Target')
     }
     stages {
-        stage("Deploy"){
+        stage("Integration"){
             parallel{
                 stage('Static website files') {
                     steps {
@@ -35,7 +35,7 @@ pipeline {
                     dir('cloud'){
                          withAWS(credentials:"aws", region:"eu-central-1"){
                              s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
-                                        sh 'sam deploy'
+                                        sh "sam deploy --parameter-overrides Stage=Integration"
                         }
 
                     }
