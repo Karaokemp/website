@@ -9,7 +9,7 @@ Parameters:
     Default: Test
     AllowedValues: 
       - Test
-      - Prod
+      - Integration
       - $default
     Description: What stage to deploy?
   
