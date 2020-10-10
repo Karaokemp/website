@@ -29,11 +29,11 @@ Resources:
             Path: /songs
   Outputs:
     ListSongsApi:
-      Description: "API Gateway endpoint URL for Prod stage for List Songs function"
-      Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Test/songs/"
+      Description: "API Gateway endpoint URL for Test stage for List Songs function"
+      Value: !Sub "https://${BoardHttpApi}.execute-api.${AWS::Region}.amazonaws.com/Test/songs/"
     ListSongsFunction:
       Description: "List Songs Lambda Function ARN"
-      Value: !GetAtt ListSongsFunction.Arn
+      Value: !GetAtt GetMessagesFunction.Arn
     ListSongsFunctionIamRole:
       Description: "Implicit IAM Role created for List Songs function"
-      Value: !GetAtt ListSongsFunctionRole.Arn
+      Value: !GetAtt GetMessagesFunctionRole.Arn
