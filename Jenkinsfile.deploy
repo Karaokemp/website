@@ -32,13 +32,14 @@ pipeline {
                 }
              stage("Cloud Services") {
                 environment {
-       STACK_NAME = getStackName()
-   }
-   steps {
+                    STACK_NAME = getStackName()
+                }
+                steps {
+                    echo "STACK: ${STACK_NAME}"
                     dir('cloud') {
-                         withAWS(credentials:"aws", region:"eu-central-1") {
-                             s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
-                                        sh "sam deploy --stack-name karaokemp-cloud-services-${ENVIRONMENT}"
+                        withAWS(credentials:"aws", region:"eu-central-1") {
+                            s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
+                            sh "sam deploy --stack-name ${STACK_NAME}"
                         }
                     }
                 }
