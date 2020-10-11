@@ -22,6 +22,9 @@
         "UnnecessaryGString": {
             "enabled": false
         },
+        "UnnecessaryGetter": {
+            "enabled": false
+        },
         "UnnecessaryToString": {
             "enabled": false
         }
