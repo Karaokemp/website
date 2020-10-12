@@ -1,10 +1,12 @@
 version = 0.1
+
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "karaokemp-cloud-services-TEST"
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-jhbkne7wmc8b"
-s3_prefix = "karaokemp-cloud-services"
+stack_name = "kcs-test"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-7hode6wntlu3"
+s3_prefix = "kcs-test"
 region = "eu-central-1"
 confirm_changeset = false
+fail_on_empty_changeset = false
 capabilities = "CAPABILITY_IAM"

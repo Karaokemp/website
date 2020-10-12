@@ -1,21 +1,22 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description:
-  Karaokemp services needed to be available online
+  Karaokemp Cloud Services
 
 Globals:
   Function:
     Timeout: 3
 
 Resources:
-  SongsBucket:
+  KaraokeSongsBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: karaokemp-songs
+      BucketName: !Sub "${AWS::StackName}-karaoke-songs"
+
   FrontendBucket:
     Type:  AWS::S3::Bucket
     Properties:
-      BucketName: karaokemp-website-frontend  
+      BucketName:  !Sub "${AWS::StackName}-website-frontend"  
   SongsApi:
     Type: AWS::Serverless::HttpApi
     Properties:
