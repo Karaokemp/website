@@ -14,7 +14,7 @@ pipeline {
     dockerfile {
         filename 'Dockerfile.agent'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
-        args '-v C:/Users/ophir/dev/jenkins/cache/frontend:/var/jenkins_home/workspace/karaokemp-website_master/frontend/node_modules'
+        args '-v C:/Users/ophir/dev/jenkins/cache/frontend/:/var/jenkins_home/workspace/karaokemp-website_master/frontend/node_modules/'
     }
 }
            environment {
