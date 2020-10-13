@@ -13,6 +13,48 @@
                 "payload": {},
                 "environmentVariables": {}
             }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "cloud:ListSongsFunction",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "cloud/template.yaml",
+                "logicalId": "ListSongsFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "cloud:ListSongsFunction",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "cloud/template.yaml",
+                "logicalId": "ListSongsFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "cloud:ListSongsFunction",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "cloud/template.yaml",
+                "logicalId": "ListSongsFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
         }
     ]
 }

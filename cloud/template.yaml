@@ -8,15 +8,6 @@ Globals:
     Timeout: 3
 
 Resources:
-  KaraokeSongsBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Sub "${AWS::StackName}-karaoke-songs"
-
-  FrontendBucket:
-    Type:  AWS::S3::Bucket
-    Properties:
-      BucketName:  !Sub "${AWS::StackName}-website-frontend"  
   SongsApi:
     Type: AWS::Serverless::HttpApi
     Properties:
@@ -35,7 +26,28 @@ Resources:
             ApiId: !Ref SongsApi
             Method: GET
             Path: /songs
+  KaraokeSongsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${AWS::StackName}-karaoke-songs"
+      AccessControl: PublicRead
+
+  FrontendBucket:
+    Type:  AWS::S3::Bucket
+    Properties:
+      BucketName:  !Sub "${AWS::StackName}-website-frontend"
+      AccessControl: PublicRead
 Outputs:
-  URL:
-    Description: URL for List Songs Function
+  Website:
+    Description: Public Website URL
+    Value: !GetAtt [FrontendBucket, WebsiteURL]
+  SongsBucket:
+    Description: Bucket Phisical Name
+    Value: !Sub "${AWS::StackName}-karaoke-songs"
+  SongsBucketURL:
+    Value: !Join ['', ['https://', !GetAtt [KaraokeSongsBucket, DomainName]]]
+    Description: Name of S3 bucket to hold website content
+  Function:
+    Description: List Songs Function URL
     Value: !Sub "https://${SongsApi}.execute-api.${AWS::Region}.amazonaws.com/songs"
+
