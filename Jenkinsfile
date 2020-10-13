@@ -14,7 +14,9 @@ pipeline {
     dockerfile {
         filename 'Dockerfile.agent'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
-        args '-v ${PWD}/cache/frontend:${PWD}/node_modules'
+        args '-v C:/Users/ophir/dev/jenkins/cache/frontend:/var/jenkins_home/workspace/karaokemp-website_master/frontend/node_modules
+
+'
     }
 }
            environment {
@@ -27,10 +29,10 @@ pipeline {
            stages{
              stage('Install packages') {
           steps {
-            sh 'echo ${pwd}frontend/node_modules'
             dir("${SERVICE}"){
+              sh 'ls node_modules'
               sh 'npm install'
-              sh 'cd node_modules; pwd'
+              sh 'ls node_modules'
             }
           }
         }
