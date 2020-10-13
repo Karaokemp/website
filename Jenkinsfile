@@ -13,7 +13,6 @@ pipeline {
                  agent {
     dockerfile {
         filename 'Dockerfile.agent'
-        //label 'my-defined-label'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
 }
@@ -75,8 +74,8 @@ pipeline {
            agent {
     dockerfile {
         filename 'Dockerfile.agent'
-        //label 'my-defined-label'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
+
     }
 }
             environment {
@@ -127,7 +126,6 @@ pipeline {
                  agent {
     dockerfile {
         filename 'Dockerfile.agent'
-        //label 'my-defined-label'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
 }
