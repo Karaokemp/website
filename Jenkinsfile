@@ -28,9 +28,7 @@ pipeline {
              stage('Install packages') {
           steps {
             dir("${SERVICE}"){
-              sh 'ls node_modules'
               sh 'npm install'
-              sh 'ls node_modules'
             }
           }
         }
@@ -78,13 +76,14 @@ pipeline {
     dockerfile {
         filename 'Dockerfile.agent'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
+                args '-v backend_cache:/var/jenkins_home/workspace/karaokemp-website_master/backend/node_modules/'
+
 
     }
 }
             environment {
               SERVICE='backend'
             }
-
             when {
             changeset "backend/**"
           }
