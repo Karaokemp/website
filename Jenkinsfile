@@ -28,7 +28,9 @@ pipeline {
              stage('Install packages') {
           steps {
             dir("${SERVICE}"){
+              
               sh 'npm install'
+              sh 'cd node_modules; pwd'
             }
           }
         }
