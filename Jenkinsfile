@@ -27,7 +27,7 @@ pipeline {
            stages{
              stage('Install packages') {
           steps {
-            echo "${PWD}/frontend/node_modules"
+            echo "${pwd}/frontend/node_modules"
             dir("${SERVICE}"){
               sh 'npm install'
               sh 'cd node_modules; pwd'
