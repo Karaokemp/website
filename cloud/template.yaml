@@ -37,6 +37,9 @@ Resources:
     Properties:
       BucketName:  !Sub "${AWS::StackName}-website-frontend"
       AccessControl: PublicRead
+      WebsiteConfiguration:
+        ErrorDocument: 'index.html'
+        IndexDocument: 'index.html'
 Outputs:
   Website:
     Description: Public Website URL
