@@ -4,7 +4,6 @@ version = 0.1
 [default.deploy]
 [default.deploy.parameters]
 stack_name = "kcs-test"
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-7hode6wntlu3"
 s3_prefix = "kcs-test"
 region = "eu-central-1"
 confirm_changeset = false
