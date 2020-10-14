@@ -13,11 +13,22 @@ pipeline {
         choice(name: 'ENVIRONMENT', choices: ['test', 'integration', 'production'], description: 'Choose Deployment Target')
     }
     stages {
-        stage("Deploy to environment") {
             environment {
                 STACK_NAME = getStackName()
             }
-            parallel {
+                stage("Cloud Services") {
+                steps {
+                        withAWS(credentials:"aws", region:"eu-central-1") {
+                            s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
+                            s3Download(file:'samconfig.toml',bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/samconfig.toml", force:true)
+                            archiveArtifacts artifacts: "*.yaml"
+                            archiveArtifacts artifacts: "*.toml"
+                            
+                            sh "sam deploy | tee output.txt"
+                            archiveArtifacts artifacts: "*.txt"
+                        }
+                }
+            }
                 stage('Static website files') {
                     steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
@@ -35,23 +46,6 @@ pipeline {
                         }
                     }
                 }
-             stage("Cloud Services") {
-                steps {
-                    dir('cloud') {
-                        withAWS(credentials:"aws", region:"eu-central-1") {
-                            s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
-                            s3Download(file:'samconfig.toml',bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/samconfig.toml", force:true)
-                            archiveArtifacts artifacts: "*.yaml"
-                            archiveArtifacts artifacts: "*.toml"
-
-                            sh "sam deploy | tee output.txt"
-                            archiveArtifacts artifacts: "*.txt"
-                        }
-                    }
-                }
-            }
-        }
-    }
         }
 }
 
