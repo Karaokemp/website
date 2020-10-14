@@ -29,8 +29,7 @@ pipeline {
       steps{
         script{
          def changeLogSet = currentBuild.changeSets[0]
-    def entries = changeLogSet
-        def entry = entries[0]
+    def entry = changeLogSet[0]
         def files = new ArrayList(entry.affectedFiles)
         for (int k = 0; k < files.size(); k++) {
             def file = files[k]
