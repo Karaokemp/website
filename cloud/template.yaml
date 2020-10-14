@@ -1,17 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description:
-  Karaokemp Cloud Services
-
+Description: Karaokemp Cloud Services
 Globals:
   Function:
     Timeout: 3
-
 Resources:
   SongsApi:
     Type: AWS::Serverless::HttpApi
     Properties:
-      CorsConfiguration: True
+      CorsConfiguration: true
   ListSongsFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -23,34 +20,42 @@ Resources:
         ListSongs:
           Type: HttpApi
           Properties:
-            ApiId: !Ref SongsApi
+            ApiId:
+              Ref: SongsApi
             Method: GET
             Path: /songs
+      CodeUri: s3://karaokemp-artifacts/karaokemp-website/9330a7d4cd7be6c578161b8b0d664059b2a6ee95/cloud-services/a8d72afaa979549bdee4d5af72d5c25b
   KaraokeSongsBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub "${AWS::StackName}-karaoke-songs"
+      BucketName:
+        Fn::Sub: ${AWS::StackName}-karaoke-songs
       AccessControl: PublicRead
-
   FrontendBucket:
-    Type:  AWS::S3::Bucket
+    Type: AWS::S3::Bucket
     Properties:
-      BucketName:  !Sub "${AWS::StackName}-website-frontend"
+      BucketName:
+        Fn::Sub: ${AWS::StackName}-website-frontend
       AccessControl: PublicRead
       WebsiteConfiguration:
-        ErrorDocument: 'index.html'
-        IndexDocument: 'index.html'
+        ErrorDocument: index.html
+        IndexDocument: index.html
 Outputs:
   Website:
     Description: Public Website URL
-    Value: !GetAtt [FrontendBucket, WebsiteURL]
+    Value:
+      Fn::GetAtt:
+      - FrontendBucket
+      - WebsiteURL
   SongsBucket:
     Description: Bucket Phisical Name
-    Value: !Sub "${AWS::StackName}-karaoke-songs"
+    Value:
+      Fn::Sub: ${AWS::StackName}-karaoke-songs
   SongsBucketURL:
-    Value: !Sub "https://s3.console.aws.amazon.com/s3/buckets/${AWS::StackName}-karaoke-songs"
+    Value:
+      Fn::Sub: https://s3.console.aws.amazon.com/s3/buckets/${AWS::StackName}-karaoke-songs
     Description: Name of S3 bucket to hold website content
   Function:
     Description: List Songs Function URL
-    Value: !Sub "https://${SongsApi}.execute-api.${AWS::Region}.amazonaws.com/songs"
-
+    Value:
+      Fn::Sub: https://${SongsApi}.execute-api.${AWS::Region}.amazonaws.com/songs

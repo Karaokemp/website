@@ -42,7 +42,7 @@ pipeline {
                             s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
                             archiveArtifacts artifacts: "*.yaml"
 
-                            sh "sam deploy --stack-name ${STACK_NAME}"
+                            sh "sam deploy"
                             archiveArtifacts artifacts: "*.txt"
                         }
                     }
