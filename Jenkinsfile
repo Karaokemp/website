@@ -27,10 +27,6 @@ pipeline {
 
               }
             }
-           /*when {
-            changeset "frontend/**"
-            changeset "*"
-          } */
            stages{
              stage ("print changes"){
       steps{
@@ -96,10 +92,15 @@ pipeline {
         filename 'Dockerfile.agent'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
                 args '-v backend_cache:/var/jenkins_home/workspace/karaokemp-website_master/backend/node_modules/'
-
-
     }
 }
+when {
+              anyOf {
+                changeset "backend/**"
+                changeset "*"
+
+              }
+            }
             environment {
               SERVICE='backend'
             }
@@ -127,7 +128,6 @@ pipeline {
       }
     }
     /*stage('Create Docker image'){
-          when{false}
           steps{
             dir("${SERVICE}"){
                 script{
@@ -150,6 +150,13 @@ pipeline {
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
 }
+when {
+              anyOf {
+                changeset "cloud/**"
+                changeset "*"
+
+              }
+            }
 stages{
   stage("Package changes"){
     steps{
@@ -164,20 +171,14 @@ stages{
                     s3Upload(includePathPattern:"samconfig.toml",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/cloud-services")
                     archiveArtifacts artifacts: "packaged.yaml"
                     archiveArtifacts artifacts: "samconfig.toml"
-
-              }
-                
+              }    
              }
-
            }
   }
 }         
-
          }
        }
      }
- 
-     
        stage('Deploy') {
          agent any
             
