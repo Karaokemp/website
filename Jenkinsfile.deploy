@@ -35,17 +35,6 @@ pipeline {
                     steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
                             sh "aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend/** s3://${STACK_NAME}-website-frontend"
-                            script {
-                                String path = "karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend"
-                                int pathLength = path.length() + 1
-                                files = s3FindFiles(bucket:'karaokemp-artifacts', glob:"${path}/**", onlyFiles: true)
-                                files.each {
-                                    itemObject ->
-                                    String itemPath = itemObject.toString()
-                                    String item = itemPath.drop(pathLength)
-                                    s3Copy(pathStyleAccessEnabled: true, fromBucket:"karaokemp-artifacts", fromPath:"${itemPath}", toBucket:"${STACK_NAME}-website-frontend", toPath:"${item}",acl:'PublicRead')
-                                }
-                            }
                         }
                     }
                 }
