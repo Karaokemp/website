@@ -34,7 +34,7 @@ pipeline {
         def files = new ArrayList(entry.affectedFiles)
         for (int k = 0; k < files.size(); k++) {
             def file = files[k]
-            echo "i: ${i}, j: ${j} - ${file.path}"
+            echo "${file.path}"
         }
     
         }
