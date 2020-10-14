@@ -142,6 +142,7 @@ stages{
                     --s3-bucket karaokemp-artifacts \
                     --s3-prefix karaokemp-website/${GIT_COMMIT}/cloud-services"
                     s3Upload(includePathPattern:"packaged.yaml",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/cloud-services")
+                    archiveArtifacts artifacts: "packaged.yaml"
 
               }
                 
