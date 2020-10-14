@@ -9,7 +9,7 @@ pipeline {
         script{
           def changes = currentBuild.changeSets
           changes.each {
-            echo it
+            item -> echo "found: ${item}" 
           }
 
         }
