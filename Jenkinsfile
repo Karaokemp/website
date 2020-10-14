@@ -24,7 +24,6 @@ pipeline {
               anyOf {
                 changeset "frontend/**"
                 changeset "*"
-
               }
             }
            stages{
@@ -94,19 +93,15 @@ pipeline {
                 args '-v backend_cache:/var/jenkins_home/workspace/karaokemp-website_master/backend/node_modules/'
     }
 }
-when {
+            when {
               anyOf {
                 changeset "backend/**"
                 changeset "*"
-
               }
             }
             environment {
               SERVICE='backend'
             }
-            when {
-            changeset "backend/**"
-          }
               stages{
             stage('Install packages') {
       steps {
@@ -150,13 +145,12 @@ when {
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
 }
-when {
-              anyOf {
-                changeset "cloud/**"
-                changeset "*"
-
-              }
-            }
+                  when {
+                    anyOf {
+                      changeset "cloud/**"
+                      changeset "*"
+                    }
+                  }
 stages{
   stage("Package changes"){
     steps{
