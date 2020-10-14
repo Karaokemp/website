@@ -20,10 +20,17 @@ pipeline {
            environment {
               SERVICE='frontend'
             }
+            when {
+              anyOf {
+                changeset "frontend/**"
+                changeset "*"
+
+              }
+            }
            /*when {
-            //changeset "frontend/**"
+            changeset "frontend/**"
             changeset "*"
-          }*/
+          } */
            stages{
              stage ("print changes"){
       steps{
