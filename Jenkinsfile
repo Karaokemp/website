@@ -9,7 +9,7 @@ pipeline {
         script{
           def changes = currentBuild.changeSets
           changes.each {
-            println it
+            echo it
           }
 
         }
