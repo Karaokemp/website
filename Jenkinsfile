@@ -4,6 +4,13 @@ pipeline {
     pollSCM('* * * * *')
   }
   stages{
+    stage ("print changes"){
+      steps{
+        script{
+          echo currentBuild.changeSets
+        }
+      }
+    }
      stage('Build'){
        environment {
                  JEST_JUNIT_OUTPUT_DIR='../reports'
