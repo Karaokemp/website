@@ -49,7 +49,8 @@ pipeline {
          dir("${SERVICE}"){
               sh 'npm run build'
               withAWS(credentials:"aws", region:"eu-central-1"){
-                  s3Upload(workingDir:"build",includePathPattern:"**",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/${SERVICE}")
+                  //s3Upload(workingDir:"build",includePathPattern:"**",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/${SERVICE}")
+                sh "aws s3 sync build karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/${SERVICE}"
               }
             }
       }
