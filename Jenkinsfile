@@ -7,7 +7,11 @@ pipeline {
     stage ("print changes"){
       steps{
         script{
-          echo currentBuild.changeSets
+          def changes = currentBuild.changeSets
+          changes.each {
+            println it
+          }
+
         }
       }
     }
