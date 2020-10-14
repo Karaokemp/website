@@ -42,6 +42,7 @@ pipeline {
                             s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
                             s3Download(file:'samconfig.toml',bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/samconfig.toml", force:true)
                             archiveArtifacts artifacts: "*.yaml"
+                            archiveArtifacts artifacts: "*.toml"
 
                             sh "sam deploy | tee output.txt"
                             archiveArtifacts artifacts: "*.txt"
