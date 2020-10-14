@@ -48,7 +48,7 @@ Outputs:
     Description: Bucket Phisical Name
     Value: !Sub "${AWS::StackName}-karaoke-songs"
   SongsBucketURL:
-    Value: !Sub "https://s3.console.aws.amazon.com/s3/buckets/${KaraokeSongsBucket}"
+    Value: !Sub "https://s3.console.aws.amazon.com/s3/buckets/${AWS::StackName}-karaoke-songs"
     Description: Name of S3 bucket to hold website content
   Function:
     Description: List Songs Function URL
