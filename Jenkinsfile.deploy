@@ -12,10 +12,12 @@ pipeline {
         string(name: 'DEPLOY_COMMIT', description: 'commit to deploy to website')
         choice(name: 'ENVIRONMENT', choices: ['test', 'integration', 'production'], description: 'Choose Deployment Target')
     }
+
+    environment {
+        STACK_NAME = getStackName()
+    }
     stages {
-            environment {
-                STACK_NAME = getStackName()
-            }
+            
                 stage("Cloud Services") {
                 steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
