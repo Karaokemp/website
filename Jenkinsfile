@@ -26,18 +26,17 @@ pipeline {
           }*/
            stages{
              stage ("print changes"){
-      steps{
-        script{
-          def entries = changeLogSets[i].items
-          def files =  currentBuild.changeSets[0].items[0].affectedFiles
-          for (int i = 0; i < files.size(); i++) {
-            def file = files[k]
-            echo "${file.path}"
-        }
+                steps{
+                  script{
+                    def files =  currentBuild.changeSets[0].items[0].affectedFiles
+                    for (int i = 0; i < files.size(); i++) {
+                      def file = files[k]
+                      echo "${file.path}"
+                    } 
     
-        }
-      }
-    }
+                  }
+                }
+             }
              stage('Install packages') {
           steps {
             dir("${SERVICE}"){
