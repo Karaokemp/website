@@ -28,8 +28,7 @@ pipeline {
              stage ("print changes"){
       steps{
         script{
-    def entry = currentBuild.changeSets[0][0]
-        def files = new ArrayList(entry.affectedFiles)
+        def files = new ArrayList(currentBuild.changeSets[0][0].affectedFiles)
         for (int k = 0; k < files.size(); k++) {
             def file = files[k]
             echo "${file.path}"
