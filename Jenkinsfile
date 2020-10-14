@@ -36,7 +36,7 @@ pipeline {
             def file = files[k]
             echo "i: ${i}, j: ${j} - ${file.path}"
         }
-    }
+    
         }
       }
     }
