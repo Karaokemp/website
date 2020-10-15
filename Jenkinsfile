@@ -16,6 +16,7 @@ pipeline {
       steps{
         sh "echo '${GIT_COMMIT}' > /builder_cache/FRONTEND_LAST_BUILD"
         sh 'export FRONTEND_LAST_BUILD=$(cat /builder_cache/FRONTEND_LAST_BUILD)'
+        echo "${FRONTEND_LAST_BUILD}"
       }
     }
       
