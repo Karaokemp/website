@@ -41,7 +41,7 @@ pipeline {
             JEST_JUNIT_OUTPUT_NAME="${SERVICE}.xml"
           }
       steps {
-        dir("${SERVICE}"){
+        dir("${SERVICE}"){ 
           sh 'npm run test:ci'
         }
         junit "reports/${SERVICE}.xml"
