@@ -56,6 +56,9 @@ pipeline {
                 s3Upload(workingDir:"build",includePathPattern:"**",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/${SERVICE}")
               }
             }
+            sh "echo 'FRONTEND_LAST_BUILD=COMMIT-${GIT_COMMIT}'>> /builder_cache/metadata.properties"
+            sh "source /builder_cache/metadata.properties"
+            sh echo '$FRONTEND_LAST_BUILD'
       }
     }
     /*stage('Create Docker image'){
@@ -66,7 +69,6 @@ pipeline {
                       def image = docker.build("dreckguy/karaokemp-website-${SERVICE}")
                       image.push('latest')
                       image.push("${GIT_COMMIT}")
-
     }
                 }
             }
@@ -120,7 +122,6 @@ pipeline {
                       def image = docker.build("dreckguy/karaokemp-website-${SERVICE}")
                       image.push('latest')
                       image.push("${GIT_COMMIT}")
-
     }
                 }
             }
@@ -169,7 +170,6 @@ stages{
         }   
   }  
 }
-
 boolean needToBeBuilt(String subProject){
   anyOf {
                 changeset "${subProject}/**"
