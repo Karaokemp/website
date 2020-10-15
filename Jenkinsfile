@@ -58,7 +58,6 @@ pipeline {
             }
             sh "echo 'FRONTEND_LAST_BUILD=COMMIT-${GIT_COMMIT}'>> /builder_cache/metadata.properties"
             sh "ls /builder_cache/"
-            sh "cat /builder_cache/metadata.properties"
             script { def props = readProperties file: '/builder_cache/metadata.properties'}
             echo ${FRONTEND_LAST_BUILD}
     }
