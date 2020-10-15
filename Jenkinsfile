@@ -18,7 +18,6 @@ pipeline {
       }
     }
       
-    }
      stage('Build'){
        environment {
                  JEST_JUNIT_OUTPUT_DIR='../reports'
