@@ -75,16 +75,7 @@ pipeline {
               withAWS(credentials:"aws", region:"eu-central-1"){
                 s3Upload(workingDir:"build",includePathPattern:"**",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/${SERVICE}")
               }
-            }
-            sh "echo 'FRONTEND_LAST_BUILD=COMMIT-${GIT_COMMIT}'>> /builder_cache/metadata.properties"
-            //sh "ls /builder_cache/"
-            script {
-              //def props = readProperties file: '/builder_cache/metadata.properties'
-                load '/builder_cache/metadata.properties'
-            }
-            //echo "${props['FRONTEND_LAST_BUILD']}"
-            echo "${FRONTEND_LAST_BUILD}"
-
+          }
       }
     }
     /*stage('Create Docker image'){
