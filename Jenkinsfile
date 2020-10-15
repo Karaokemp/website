@@ -14,10 +14,10 @@ pipeline {
     }
 }
       steps{
-        sh "echo 'FRONTEND_LAST_BUILD=COMMIT-${GIT_COMMIT}'>> /builder_cache/metadata.properties"
+        sh "echo 'FRONTEND_LAST_BUILD=COMMIT-${GIT_COMMIT}'>> /builder_cache/metadata.groovy"
         script {
         //def props = readProperties file: '/builder_cache/metadata.properties'
-          load '/builder_cache/metadata.properties'
+          load '/builder_cache/metadata.groovy'
         }
         //echo "${props['FRONTEND_LAST_BUILD']}"
         echo "${FRONTEND_LAST_BUILD}"
