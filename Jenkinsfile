@@ -19,10 +19,6 @@ pipeline {
     }
 }
 
- anyOf {
-  changeset "${frontend}/**"
-  changeset "*"
-  }
            environment {
               SERVICE='frontend'
             }
@@ -140,8 +136,13 @@ pipeline {
         args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
 }
-                  when {
-                  }
+ when {
+              anyOf {
+                changeset "cloud/**"
+                changeset "*"
+              }
+            }
+                 
 stages{
   stage("Package changes"){
     steps{
