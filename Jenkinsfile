@@ -15,6 +15,7 @@ pipeline {
         filename 'Dockerfile.agent'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
         args '-v frontend_cache:/var/jenkins_home/workspace/karaokemp-website_master/frontend/node_modules/'
+        args '-v builder_cache:/builder_cache'
     }
 }
            environment {
@@ -27,18 +28,7 @@ pipeline {
               }
             }
            stages{
-             stage ("print changes"){
-      steps{
-        script{
-        def files = new ArrayList(currentBuild.changeSets[0][0].affectedFiles)
-        for (int k = 0; k < files.size(); k++) {
-            def file = files[k]
-            echo "${file.path}"
-        }
-    
-        }
-      }
-    }
+             stage("use")
              stage('Install packages') {
           steps {
             dir("${SERVICE}"){
@@ -146,10 +136,7 @@ pipeline {
     }
 }
                   when {
-                    anyOf {
-                      changeset "cloud/**"
-                      changeset "*"
-                    }
+                   needToBeBuilt('frontend')
                   }
 stages{
   stage("Package changes"){
@@ -181,4 +168,11 @@ stages{
             }
         }   
   }  
+}
+
+boolean needToBeBuilt(String subProject){
+  anyOf {
+                changeset "${subProject}/**"
+                changeset "*"
+              }
 }
