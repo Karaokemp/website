@@ -4,6 +4,21 @@ pipeline {
     pollSCM('* * * * *')
   }
   stages{
+    stage('Check'){
+      steps{
+          sh 'npm run build'
+          sh "echo 'FRONTEND_LAST_BUILD=COMMIT-${GIT_COMMIT}'>> /builder_cache/metadata.properties"
+          script {
+              //def props = readProperties file: '/builder_cache/metadata.properties'
+            load '/builder_cache/metadata.properties'
+          }
+            //echo "${props['FRONTEND_LAST_BUILD']}"
+          echo "${FRONTEND_LAST_BUILD}"
+
+      }
+    }
+      
+    }
      stage('Build'){
        environment {
                  JEST_JUNIT_OUTPUT_DIR='../reports'
