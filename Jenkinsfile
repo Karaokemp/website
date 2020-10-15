@@ -57,7 +57,7 @@ pipeline {
               }
             }
             sh "echo 'FRONTEND_LAST_BUILD=COMMIT-${GIT_COMMIT}'>> /builder_cache/metadata.properties"
-            sh "ls /builder_cache/"
+            //sh "ls /builder_cache/"
             script {
               //def props = readProperties file: '/builder_cache/metadata.properties'
                 load '/builder_cache/metadata.properties'
