@@ -18,6 +18,11 @@ pipeline {
         args '-v builder_cache:/builder_cache'
     }
 }
+
+ anyOf {
+                changeset "${frontend}/**"
+                changeset "*"
+              }
            environment {
               SERVICE='frontend'
             }
@@ -137,7 +142,6 @@ pipeline {
     }
 }
                   when {
-                   needToBeBuilt('frontend')
                   }
 stages{
   stage("Package changes"){
