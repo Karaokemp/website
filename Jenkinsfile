@@ -5,6 +5,12 @@ pipeline {
   }
   stages{
     stage('Check'){
+       agent {
+    dockerfile {
+        filename 'Dockerfile.agent'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
+}
       steps{
           sh 'npm run build'
           sh "echo 'FRONTEND_LAST_BUILD=COMMIT-${GIT_COMMIT}'>> /builder_cache/metadata.properties"
