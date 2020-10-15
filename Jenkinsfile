@@ -20,9 +20,9 @@ pipeline {
 }
 
  anyOf {
-                changeset "${frontend}/**"
-                changeset "*"
-              }
+  changeset "${frontend}/**"
+  changeset "*"
+  }
            environment {
               SERVICE='frontend'
             }
@@ -33,7 +33,6 @@ pipeline {
               }
             }
            stages{
-             stage("use")
              stage('Install packages') {
           steps {
             dir("${SERVICE}"){
