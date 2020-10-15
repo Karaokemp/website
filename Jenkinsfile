@@ -57,7 +57,7 @@ pipeline {
               }
             }
             sh "echo 'FRONTEND_LAST_BUILD=COMMIT-${GIT_COMMIT}'>> /builder_cache/metadata.properties"
-            sh "source /builder_cache/metadata.properties"
+            sh "/bin/bash source /builder_cache/metadata.properties"
             sh "echo '$FRONTEND_LAST_BUILD'"
       }
     }
