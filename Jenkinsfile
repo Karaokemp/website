@@ -16,7 +16,7 @@ pipeline {
       steps{
         sh "echo '${GIT_COMMIT}' >> /builder_cache/FRONTEND_LAST_BUILD"
         sh 'cat /builder_cache/FRONTEND_LAST_BUILD'
-        build job: 'check'
+        build job: './check'
 
       }
     }
