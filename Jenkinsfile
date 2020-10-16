@@ -175,7 +175,22 @@ stages{
 }         
          }
        }
+
      }
+       stage('Import Missing Artifacts'){
+         parallel{
+           stage('frontend'){
+             steps{
+               sh "echo $(cat /builder_cache/FRONTEND_LAST_BUILD)"
+             }
+           }
+           stage('backend'){
+             steps{
+               echo 'BACKEND_LAST_BUILD'
+             }
+           }
+         }
+       }
        stage('Deploy') {
          agent any
             
@@ -184,10 +199,4 @@ stages{
             }
         }   
   }  
-}
-boolean needToBeBuilt(String subProject){
-  anyOf {
-                changeset "${subProject}/**"
-                changeset "*"
-              }
 }
