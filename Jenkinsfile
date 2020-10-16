@@ -180,7 +180,7 @@ stages{
        stage('Import Missing Artifacts'){
          
          parallel{
-           stage('frontend'){
+           stage('Frontend'){
               agent {
     dockerfile {
         filename 'Dockerfile.agent'
@@ -193,9 +193,14 @@ stages{
                sh 'echo $(cat /builder_cache/FRONTEND_LAST_BUILD)'
              }
            }
-           stage('backend'){
+           stage('Backend'){
              steps{
                echo 'BACKEND_LAST_BUILD'
+             }
+           }
+           stage('Cloud'){
+             steps{
+               echo 'CLOUD_LAST_BUILD'
              }
            }
          }
