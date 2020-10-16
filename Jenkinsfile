@@ -178,7 +178,10 @@ stages{
 
      }
        stage('Import Missing Artifacts'){
-          agent {
+         
+         parallel{
+           stage('frontend'){
+              agent {
     dockerfile {
         filename 'Dockerfile.agent'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
@@ -186,8 +189,6 @@ stages{
         args '-v builder_cache:/builder_cache'
     }
 }
-         parallel{
-           stage('frontend'){
              steps{
                sh 'echo $(cat /builder_cache/FRONTEND_LAST_BUILD)'
              }
