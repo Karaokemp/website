@@ -19,7 +19,7 @@ pipeline {
     }
      stage('Build'){
        environment {
-                 JEST_JUNIT_OUTPUT_DIR='../reports'
+                 JEST_JUNIT_OUTPUT_DIR='../reports' 
                }
        parallel{
          stage('Frontend'){
