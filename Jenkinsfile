@@ -72,7 +72,7 @@ pipeline {
           }
       }
     }
-    /*stage('Create Docker image'){
+    stage('Create Docker image'){
           steps{
             dir("${SERVICE}"){
                 script{
@@ -84,11 +84,17 @@ pipeline {
                 }
             }
        }
-     }*/
+     }
            }
          }
          
          stage('Backend'){
+            when {
+              anyOf {
+                changeset "backend/**"
+                changeset "*"
+              }
+            }
            agent {
     dockerfile {
         filename 'Dockerfile.agent'
@@ -96,12 +102,6 @@ pipeline {
                 args '-v backend_cache:/var/jenkins_home/workspace/karaokemp-website_master/backend/node_modules/'
     }
 }
-            when {
-              anyOf {
-                changeset "backend/**"
-                changeset "*"
-              }
-            }
             environment {
               SERVICE='backend'
             }
@@ -202,11 +202,27 @@ stages{
              }
            }
            stage('Backend'){
+             when {
+               not{
+                 anyOf {
+                  changeset "backend/**"
+                  changeset "*"
+                }
+              }
+            }
              steps{
                echo 'BACKEND_LAST_BUILD'
              }
            }
            stage('Cloud'){
+             when {
+                not {
+                  anyOf {
+                    changeset "cloud/**"
+                    changeset "*"
+                  }
+                }
+               }
              steps{
                echo 'CLOUD_LAST_BUILD'
              }
