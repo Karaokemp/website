@@ -1,3 +1,4 @@
+#!/usr/bin/env groovy
 pipeline {
   agent none
   triggers {
@@ -24,6 +25,12 @@ pipeline {
                }
        parallel{
          stage('Frontend'){
+            when {
+              anyOf {
+                changeset "frontend/**"
+                changeset "*"
+              }
+            }
                  agent {
     dockerfile {
         filename 'Dockerfile.agent'
@@ -35,12 +42,6 @@ pipeline {
 
            environment {
               SERVICE='frontend'
-            }
-            when {
-              anyOf {
-                changeset "frontend/**"
-                changeset "*"
-              }
             }
            stages{
              stage('Install packages') {
@@ -125,7 +126,7 @@ pipeline {
         junit "reports/${SERVICE}.xml"
       }
     }
-    /*stage('Create Docker image'){
+    stage('Create Docker image'){
           steps{
             dir("${SERVICE}"){
                 script{
@@ -137,22 +138,23 @@ pipeline {
                 }
             }
        }
-     }*/
+     }
          }
            }
             stage('Cloud'){
-                 agent {
-    dockerfile {
-        filename 'Dockerfile.agent'
-        args '-v /var/run/docker.sock:/var/run/docker.sock'
+               when {
+                anyOf {
+                  changeset "cloud/**"
+                  changeset "*"
+                }
+               }
+              agent {
+                dockerfile {
+                  filename 'Dockerfile.agent'
+                  args '-v /var/run/docker.sock:/var/run/docker.sock'
     }
 }
- when {
-              anyOf {
-                changeset "cloud/**"
-                changeset "*"
-              }
-            }
+
                  
 stages{
   stage("Package changes"){
@@ -233,7 +235,8 @@ stages{
          agent any
             
             steps {
-              build job: '../website-deployment/master', parameters:[string(name: "DEPLOY_COMMIT", value:"${GIT_COMMIT}"), string(name: "ENVIRONMENT", value:"integration")]
+              build job: '../website-deployment/master',
+              parameters:[string(name: "DEPLOY_COMMIT", value:"${GIT_COMMIT}"), string(name: "ENVIRONMENT", value:"integration")]
             }
         }   
   }  
