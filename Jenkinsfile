@@ -181,7 +181,7 @@ stages{
          parallel{
            stage('frontend'){
              steps{
-               sh "echo $(cat /builder_cache/FRONTEND_LAST_BUILD)"
+               sh 'echo $(cat /builder_cache/FRONTEND_LAST_BUILD)'
              }
            }
            stage('backend'){
