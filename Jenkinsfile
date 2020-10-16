@@ -11,13 +11,13 @@ pipeline {
         filename 'Dockerfile.agent'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
         args '-v builder_cache:/builder_cache'
-        build job: './check'
-
     }
 }
       steps{
         sh "echo '${GIT_COMMIT}' >> /builder_cache/FRONTEND_LAST_BUILD"
         sh 'cat /builder_cache/FRONTEND_LAST_BUILD'
+        build job: 'check'
+
       }
     }
      stage('Build'){
