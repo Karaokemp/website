@@ -16,7 +16,6 @@ pipeline {
       steps{
         sh "echo '${GIT_COMMIT}' >> /builder_cache/FRONTEND_LAST_BUILD"
         sh 'cat /builder_cache/FRONTEND_LAST_BUILD'
-        build job: './check'
 
       }
     }
@@ -71,6 +70,7 @@ pipeline {
               withAWS(credentials:"aws", region:"eu-central-1"){
                 s3Upload(workingDir:"build",includePathPattern:"**",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/${SERVICE}")
               }
+              sh "echo '${GIT_COMMIT}' >> /builder_cache/FRONTEND_LAST_BUILD"
           }
       }
     }
@@ -201,7 +201,8 @@ stages{
     }
 }
              steps{
-               sh 'echo $(cat /builder_cache/FRONTEND_LAST_BUILD)'
+               sh 'aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-$(cat /builder_cache/FRONTEND_LAST_BUILD)/frontend \
+                   s3://karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/frontend'
              }
            }
            stage('Backend'){
