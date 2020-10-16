@@ -181,6 +181,14 @@ stages{
          
          parallel{
            stage('Frontend'){
+              when {
+                not {
+                  anyOf {
+                    changeset "frontend/**"
+                    changeset "*"
+                  }
+                }
+               }
               agent {
     dockerfile {
         filename 'Dockerfile.agent'
