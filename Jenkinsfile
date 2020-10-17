@@ -79,7 +79,7 @@ pipeline {
                       def image = docker.build("dreckguy/karaokemp-website-${SERVICE}")
                       image.push('latest')
                       image.push("${GIT_COMMIT}")
-    }
+                  }
                 }
             }
        }
@@ -225,7 +225,6 @@ stages{
                   sh 'aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-$(cat /builder_cache/CLOUD_LAST_BUILD)/cloud-services \
                       s3://karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/cloud-services'
              }
-                
                 }
            }
            stage('Backend'){
@@ -238,13 +237,21 @@ stages{
               }
             }
              steps{
-             docker.withRegistry( '', 'dockerhub'){
-               sh 'IMAGE="dreckguy/karaokemp-website-backend" \
+               script{
+                  docker.withRegistry( '', 'dockerhub'){
+                      def builtImage = docker.pull('dreckguy/karaokemp-website-backend:$(cat /builder_cache/BACKEND_LAST_BUILD)')
+                      builtImage.push("${GIT_COMMIT}")
+                  }
+                }
+
+
+             
+               /*sh 'IMAGE="dreckguy/karaokemp-website-backend" \
                    EXISTING="$IMAGE:$(cat /builder_cache/BACKEND_LAST_BUILD) \
                    NEW="$IMAGE:${GIT_COMMIT}"\
                    docker pull $EXISTING \
                    docker tag $EXISTING $NEW \
-                   docker push $NEW'                  
+                   docker push $NEW'   */               
              }
             }
            }
