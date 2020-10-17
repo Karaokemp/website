@@ -37,7 +37,6 @@ pipeline {
         args '-v builder_cache:/builder_cache'
     }
 }
-
            environment {
               SERVICE='frontend'
             }
@@ -170,7 +169,6 @@ stages{
 }         
          }
        }
-
      }
        stage('Import Missing Artifacts'){
          
