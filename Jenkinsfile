@@ -193,7 +193,6 @@ stages{
     dockerfile {
         filename 'Dockerfile.agent'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
-        args '-v frontend_cache:/var/jenkins_home/workspace/karaokemp-website_master/frontend/node_modules/'
         args '-v builder_cache:/builder_cache'
     }
 }
@@ -201,6 +200,30 @@ stages{
                 withAWS(credentials:"aws", region:"eu-central-1"){
                   sh 'aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-$(cat /builder_cache/FRONTEND_LAST_BUILD)/frontend \
                       s3://karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/frontend'
+             }
+                
+                }
+           }
+            stage('Cloud'){
+              when {
+                not {
+                  anyOf {
+                    changeset "cloud/**"
+                    changeset "*"
+                  }
+                }
+               }
+              agent {
+    dockerfile {
+        filename 'Dockerfile.agent'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+        args '-v builder_cache:/builder_cache'
+    }
+}
+             steps{
+                withAWS(credentials:"aws", region:"eu-central-1"){
+                  sh 'aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-$(cat /builder_cache/CLOUD_LAST_BUILD)/cloud-services \
+                      s3://karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/cloud-services'
              }
                 
                 }
@@ -215,8 +238,15 @@ stages{
               }
             }
              steps{
-               echo "need to tag BACKEND_LAST_BUILD as GIT_COMMIT"
+             docker.withRegistry( '', 'dockerhub'){
+               sh 'IMAGE="dreckguy/karaokemp-website-backend" \
+                   EXISTING="$IMAGE:$(cat /builder_cache/BACKEND_LAST_BUILD) \
+                   NEW="$IMAGE:${GIT_COMMIT}"\
+                   docker pull $EXISTING \
+                   docker tag $EXISTING $NEW \
+                   docker push $NEW                  
              }
+            }
            }
          }
        }
@@ -234,7 +264,6 @@ stages{
               build job: '../website-deployment/master',
               parameters:[string(name: "DEPLOY_COMMIT", value:"${GIT_COMMIT}"), string(name: "ENVIRONMENT", value:"production")]
             }
-
         }
   }  
 }
