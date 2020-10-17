@@ -200,7 +200,7 @@ stages{
                 withAWS(credentials:"aws", region:"eu-central-1"){
                   sh 'aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-$(cat /builder_cache/FRONTEND_LAST_BUILD)/frontend \
                       s3://karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/frontend'
-             }
+                }
                 
                 }
            }
@@ -272,5 +272,5 @@ stages{
               parameters:[string(name: "DEPLOY_COMMIT", value:"${GIT_COMMIT}"), string(name: "ENVIRONMENT", value:"production")]
             }
         }
-  }  
+   
 }
