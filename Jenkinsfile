@@ -137,6 +137,8 @@ pipeline {
                       sh "echo '${GIT_COMMIT}' > /builder_cache/BACKEND_LAST_BUILD"
                   }
                 }
+                sh "echo '${GIT_COMMIT}' > /builder_cache/BUILDER_LAST_BUILD"
+
             }
           }
      }
