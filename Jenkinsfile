@@ -145,6 +145,12 @@ pipeline {
          }
            }
             stage('Cloud'){
+               when {
+              anyOf {
+                changeset "cloud/**"
+                changeset "*"
+              }
+            }
               agent {
                 dockerfile {
                   filename 'Dockerfile.agent'
