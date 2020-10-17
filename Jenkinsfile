@@ -141,12 +141,6 @@ pipeline {
          }
            }
             stage('Cloud'){
-               when {
-                anyOf {
-                  changeset "cloud/**"
-                  changeset "*"
-                }
-               }
               agent {
                 dockerfile {
                   filename 'Dockerfile.agent'
@@ -217,19 +211,6 @@ stages{
             }
              steps{
                echo 'BACKEND_LAST_BUILD'
-             }
-           }
-           stage('Cloud'){
-             when {
-                not {
-                  anyOf {
-                    changeset "cloud/**"
-                    changeset "*"
-                  }
-                }
-               }
-             steps{
-               echo 'CLOUD_LAST_BUILD'
              }
            }
          }
