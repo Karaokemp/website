@@ -99,6 +99,8 @@ pipeline {
         filename 'Dockerfile.agent'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
                 args '-v backend_cache:/var/jenkins_home/workspace/karaokemp-website_master/backend/node_modules/'
+                args '-v builder_cache:/builder_cache'
+
     }
 }
             environment {
@@ -132,10 +134,11 @@ pipeline {
                       def image = docker.build("dreckguy/karaokemp-website-${SERVICE}")
                       image.push('latest')
                       image.push("${GIT_COMMIT}")
-    }
+                      sh "echo '${GIT_COMMIT}' > /builder_cache/BACKEND_LAST_BUILD"
+                  }
                 }
             }
-       }
+          }
      }
          }
            }
@@ -144,6 +147,9 @@ pipeline {
                 dockerfile {
                   filename 'Dockerfile.agent'
                   args '-v /var/run/docker.sock:/var/run/docker.sock'
+                  args '-v builder_cache:/builder_cache'
+
+
     }
 }
 
@@ -157,11 +163,12 @@ stages{
                     --template-file template.yaml \
                     --output-template-file packaged.yaml \
                     --s3-bucket karaokemp-artifacts \
-                    --s3-prefix karaokemp-website/${GIT_COMMIT}/cloud-services"
+                    --s3-prefix karaokemp-website/COMMIT-${GIT_COMMIT}/cloud-services"
                     s3Upload(includePathPattern:"packaged.yaml",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/cloud-services")
                     s3Upload(includePathPattern:"samconfig.toml",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/cloud-services")
                     archiveArtifacts artifacts: "packaged.yaml"
                     archiveArtifacts artifacts: "samconfig.toml"
+                    sh "echo '${GIT_COMMIT}' > /builder_cache/CLOUD_LAST_BUILD"
               }    
              }
            }
