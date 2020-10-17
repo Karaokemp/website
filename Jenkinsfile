@@ -208,7 +208,7 @@ stages{
               }
             }
              steps{
-               echo "need to tag BACKEND_LAST_BUILD as ${GIT_COMMIT} as well..."
+               echo "need to tag BACKEND_LAST_BUILD as GIT_COMMIT"
              }
            }
          }
