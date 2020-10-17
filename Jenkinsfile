@@ -14,7 +14,7 @@ pipeline {
     }
 }
       steps{
-        echo "Put here any step to try..."
+        echo "${GIT_COMMIT}"
       }
     }
      stage('Build'){
