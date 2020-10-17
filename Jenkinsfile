@@ -244,7 +244,7 @@ stages{
                    NEW="$IMAGE:${GIT_COMMIT}"\
                    docker pull $EXISTING \
                    docker tag $EXISTING $NEW \
-                   docker push $NEW                  
+                   docker push $NEW'                  
              }
             }
            }
