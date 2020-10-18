@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "module": "CommonJS",
+      "target": "ES2017",
+      "noImplicitAny": true,
+      "preserveConstEnums": true,
+      "outDir": "./dist",
+      "rootDir":"src",
+      "resolveJsonModule": true
+    },
+    "include": ["src/**/*","src/**/*.json"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+  }

@@ -15,7 +15,7 @@ Resources:
   ListSongsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: ./functions/list-songs/app.lambdaHandler
+      Handler: ./lambdas/list-songs/app.lambdaHandler
       Runtime: nodejs12.x
       MemorySize: 128
       Timeout: 5
@@ -38,7 +38,6 @@ Resources:
       BucketName:  !Sub "${AWS::StackName}-website-frontend"
       AccessControl: PublicRead
       WebsiteConfiguration:
-        ErrorDocument: 'index.html'
         IndexDocument: 'index.html'
 Outputs:
   Website:

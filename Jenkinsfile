@@ -163,6 +163,14 @@ pipeline {
 
                  
 stages{
+  stage("compile"){
+    steps{
+      dir('cloud'){
+        sh 'npm install'
+        sh 'npm run build'
+      }
+    }
+  }
   stage("Package changes"){
     steps{
              dir('cloud'){

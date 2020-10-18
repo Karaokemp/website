@@ -14,7 +14,7 @@ let response;
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  * 
  */
-exports.lambdaHandler = async (event, context) => {
+export const lambdaHandler = async () => {
         response = {
             'statusCode': 200,
             'body': JSON.stringify(["nothing but mammals!!!","I like big Butts"])
