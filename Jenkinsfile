@@ -253,22 +253,14 @@ stages{
               }
             }
              steps{
+               echo 'use last built backend...'
                script{
                  String BACKEND_LAST_BUILD = new File('/builder_cache/BACKEND_LAST_BUILD').text
                   docker.withRegistry( '', 'dockerhub'){
                       def builtImage = docker.pull("dreckguy/karaokemp-website-backend:${BACKEND_LAST_BUILD}")
                       builtImage.push("${GIT_COMMIT}")
                   }
-                }
-
-
-             
-               /*sh 'IMAGE="dreckguy/karaokemp-website-backend" \
-                   EXISTING="$IMAGE:$(cat /builder_cache/BACKEND_LAST_BUILD) \
-                   NEW="$IMAGE:${GIT_COMMIT}"\
-                   docker pull $EXISTING \
-                   docker tag $EXISTING $NEW \
-                   docker push $NEW'   */               
+                }       
              }
             }
            }
