@@ -1,0 +1,8 @@
+{
+    "name": "karaokemp-cloud-services",
+    "version": "1.0.0",
+    "description": "hello world sample for NodeJS",
+    "main": "app.js",
+    "license": "MIT",
+    "dependencies": {}
+}
