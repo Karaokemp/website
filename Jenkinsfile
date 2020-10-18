@@ -14,7 +14,7 @@ pipeline {
     }
 }
       steps{
-        sh 'cat /builder_cache/BACKEND_LAST_BUILD'
+        sh 'cat /builder_cache/BACKEND_LAST_BUILD' 
         sh 'docker tag dreckguy/karaokemp-website-backend:$(cat /builder_cache/BACKEND_LAST_BUILD) dreckguy/karaokemp-website-backend:"${GIT_COMMIT}"'
 
       }
