@@ -15,7 +15,7 @@ Resources:
   ListSongsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: ./dist\lambdas\list-songs\app.lambdaHandler
+      Handler: ./dist/lambdas/list-songs/app.lambdaHandler
       Runtime: nodejs12.x
       MemorySize: 128
       Timeout: 5
