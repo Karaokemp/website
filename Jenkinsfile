@@ -50,7 +50,7 @@ pipeline {
         }
              stage('Unit Tests') {
           environment {
-            JEST_JUNIT_OUTPUT_NAME="${SERVICE}.xml"
+            JEST_JUNIT_OUTPUT_NAME="${SERVICE}.xml" 
           }
       steps {
         dir("${SERVICE}"){ 
