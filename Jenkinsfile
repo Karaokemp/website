@@ -134,12 +134,10 @@ pipeline {
                       def image = docker.build("dreckguy/karaokemp-website-${SERVICE}")
                       image.push('latest')
                       image.push("${GIT_COMMIT}")
-                      sh "echo '${GIT_COMMIT}' > /builder_cache/BACKEND_LAST_BUILD"
                   }
                 }
-                sh "echo '${GIT_COMMIT}' > /builder_cache/BUILDER_LAST_BUILD"
-
             }
+            sh "echo '${GIT_COMMIT}' > /builder_cache/BUILDER_LAST_BUILD"
           }
      }
          }
@@ -252,6 +250,13 @@ stages{
                 }
               }
             }
+             agent {
+    dockerfile {
+        filename 'Dockerfile.agent'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+        args '-v builder_cache:/builder_cache'
+    }
+}
              steps{
                echo 'use last built backend...'
                script{
@@ -281,6 +286,4 @@ stages{
             }
         }
        }
-      
-   
 }
