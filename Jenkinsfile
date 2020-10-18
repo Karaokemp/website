@@ -153,6 +153,7 @@ pipeline {
                 dockerfile {
                   filename 'Dockerfile.agent'
                   args '-v /var/run/docker.sock:/var/run/docker.sock'
+                  args '-v cloud_cache:/var/jenkins_home/workspace/karaokemp-website_master/cloud/node_modules/'
                   args '-v builder_cache:/builder_cache'
 
 
