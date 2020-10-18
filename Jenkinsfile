@@ -10,16 +10,11 @@ pipeline {
     dockerfile {
         filename 'Dockerfile.agent'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
-        args '-v builder_cache:/var/jenkins_home/workspace/karaokemp-website_master/backend/builder_cache/'
+        args '-v builder_cache:/builder_cache'
     }
 }
       steps{
         sh 'cat /builder_cache/BACKEND_LAST_BUILD'
-        script{
-          String BACKEND_LAST_BUILD = new File('/builder_cache/BACKEND_LAST_BUILD').text
-          println BACKEND_LAST_BUILD
-        }
-
       }
     }
      stage('Build'){
