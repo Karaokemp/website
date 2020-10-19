@@ -3,6 +3,9 @@ pipeline {
   agent none
   triggers {
     pollSCM('* * * * *')
+    environment{
+      WEBSITE_URL = getWebsite("kcs-integration")      }
+    }
   }
   stages{
     stage('Check'){
@@ -14,7 +17,7 @@ pipeline {
     }
 }
       steps{
-        echo getWebsite("kcs-integration")      }
+          echo "${WEBSITE_URL}"
       }
      stage('Build'){
        environment {
