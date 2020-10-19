@@ -5,7 +5,7 @@ version = 0.1
 [default.deploy.parameters]
 stack_name = "kcs-test" 
 region = "eu-central-1"
-confirm_changeset = true
+confirm_changeset = false
 fail_on_empty_changeset = false
 capabilities = "CAPABILITY_IAM"
 s3_bucket = "karaokemp-artifacts"
