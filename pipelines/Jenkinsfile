@@ -20,9 +20,6 @@ pipeline {
           echo 'B'
             },
 failFast: true
-        sh 'cat /builder_cache/BACKEND_LAST_BUILD' 
-        sh 'docker tag dreckguy/karaokemp-website-backend:$(cat /builder_cache/BACKEND_LAST_BUILD) dreckguy/karaokemp-website-backend:"${GIT_COMMIT}"'
-
       }
     }
      stage('Build'){
