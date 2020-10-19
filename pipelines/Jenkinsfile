@@ -14,7 +14,7 @@ pipeline {
     }
 }
       steps{
-        getWebsite()      }
+        echo getWebsite("kcs-integration")      }
       }
      stage('Build'){
        environment {
@@ -300,11 +300,10 @@ stages{
         }
        }
 }
-String getWebsite(){
+String getWebsiteURL(String stackName){
     withAWS(credentials:"aws", region:"eu-central-1"){
           script{
-            BUILD_FULL = sh (script: "aws cloudformation describe-stacks --stack-name kcs-integration --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text",returnStdout : true)
-echo "output: ${BUILD_FULL}"
+            url = sh (script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text",returnStdout : true)
           }
           
     }
