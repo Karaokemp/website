@@ -14,7 +14,7 @@ pipeline {
     }
 }
       steps{
-        String getWebsite()      }
+        getWebsite()      }
       }
      stage('Build'){
        environment {
