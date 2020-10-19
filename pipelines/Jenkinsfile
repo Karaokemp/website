@@ -4,9 +4,6 @@ pipeline {
   triggers {
     pollSCM('* * * * *')
   }
-  environment{
-      WEBSITE_URL = getWebsiteURL("kcs-integration")
-  }
   stages{
     stage('Check'){
        agent {
@@ -16,6 +13,9 @@ pipeline {
         args '-v builder_cache:/builder_cache'
     }
 }
+ environment{
+      WEBSITE_URL = getWebsiteURL("kcs-integration")
+    }
         steps{
           echo "URL: ${WEBSITE_URL}"
         }
@@ -305,10 +305,10 @@ stages{
        }
 }
 String getWebsiteURL(String stackName){
-  script{
     withAWS(credentials:"aws", region:"eu-central-1"){
-      String url = sh (script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text",returnStdout : true)
-      return url
-    }     
-  }
+          script{
+            url = sh (script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text",returnStdout : true)
+          }
+          
+    }
 }
