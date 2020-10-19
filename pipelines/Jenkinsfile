@@ -190,7 +190,7 @@ stages{
                     s3Upload(includePathPattern:"samconfig.toml",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/cloud-services")
                     archiveArtifacts artifacts: "packaged.yaml"
                     archiveArtifacts artifacts: "samconfig.toml"
-                    sh "echo '${GIT_COMMIT}' > /builder_cache/CLOUD_LAST_BUILD"
+                    sh "echo '${GIT_COMMIT}' > /builder_cache/CLOUD_LAST_BUILD" 
               }    
              }
            }
