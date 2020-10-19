@@ -29,6 +29,7 @@ pipeline {
               anyOf {
                 changeset "frontend/**"
                 changeset "*"
+                changeset "pipelines/*"
               }
             }
                  agent {
@@ -94,6 +95,7 @@ pipeline {
               anyOf {
                 changeset "backend/**"
                 changeset "*"
+                changeset "pipelines/*"
               }
             }
            agent {
@@ -150,6 +152,8 @@ pipeline {
               anyOf {
                 changeset "cloud/**"
                 changeset "*"
+                changeset "pipelines/*"
+
               }
             }
               agent {
@@ -204,6 +208,8 @@ stages{
                   anyOf {
                     changeset "frontend/**"
                     changeset "*"
+                    changeset "pipelines/*"
+
                   }
                 }
                }
@@ -228,6 +234,7 @@ stages{
                   anyOf {
                     changeset "cloud/**"
                     changeset "*"
+                    changeset "pipelines/*"
                   }
                 }
                }
@@ -251,6 +258,8 @@ stages{
                  anyOf {
                   changeset "backend/**"
                   changeset "*"
+                  changeset "pipelines/*"
+
                 }
               }
             }
