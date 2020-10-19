@@ -306,7 +306,7 @@ stages{
 }
 String getWebsiteURL(String stackName){
   script{
-    def ret = sh(script: 'uname', returnStdout: true)
+    def ret = sh(script:"aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text", returnStdout: true)
 return ret
     /*withAWS(credentials:"aws", region:"eu-central-1"){
       String url = sh (script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text",returnStdout : true)
