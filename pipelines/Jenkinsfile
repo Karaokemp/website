@@ -4,6 +4,9 @@ pipeline {
   triggers {
     pollSCM('* * * * *')
   }
+  environment{
+      WEBSITE_URL = getWebsiteURL("kcs-integration")
+  }
   stages{
     stage('Check'){
        agent {
@@ -13,9 +16,6 @@ pipeline {
         args '-v builder_cache:/builder_cache'
     }
 }
- environment{
-      WEBSITE_URL = getWebsiteURL("kcs-integration")
-    }
         steps{
           echo "URL: ${WEBSITE_URL}"
         }
