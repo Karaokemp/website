@@ -12,10 +12,10 @@ pipeline {
         args '-v /var/run/docker.sock:/var/run/docker.sock'
         args '-v builder_cache:/builder_cache'
     }
-    environment{
+}
+ environment{
       WEBSITE_URL = getWebsiteURL("kcs-integration")
     }
-}
         steps{
           echo "URL: ${WEBSITE_URL}"
         }
