@@ -15,8 +15,11 @@ pipeline {
 }
       steps{
         withAWS(credentials:"aws", region:"eu-central-1"){
-          BUILD_FULL = sh (script: "git log -1 --pretty=%B | grep '\\[jenkins-full]'",returnStatus: true) == 0
+          script{
+            BUILD_FULL = sh (script: "git log -1 --pretty=%B | grep '\\[jenkins-full]'",returnStatus: true) == 0
 echo "Build full flag: ${BUILD_FULL}"
+          }
+          
           sh  "aws cloudformation describe-stacks --stack-name kcs-integration --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text"
         }
       }
