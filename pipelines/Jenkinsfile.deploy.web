@@ -32,7 +32,7 @@ pipeline {
                 stage('Static website files') {
                     steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
-                            sh "aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend/** s3://${STACK_NAME}-website-frontend"
+                            sh "aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend s3://${STACK_NAME}-website-frontend"
                         }
                     }
                 }

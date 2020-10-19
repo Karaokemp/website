@@ -226,7 +226,7 @@ stages{
                       s3://karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/frontend'
                 }
                 
-                }
+              }
            }
             stage('Cloud'){
               when {
