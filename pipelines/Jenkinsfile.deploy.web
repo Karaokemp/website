@@ -25,8 +25,8 @@ pipeline {
                             archiveArtifacts artifacts: "*.toml"
 
                             sh "sam deploy --stack-name ${STACK_NAME}"
-                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output table tee output.txt"
-                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output json tee output.json"
+                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output table | tee output.txt"
+                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output json | tee output.json"
                             script{
                                 def outputs = readJSON(file: 'output.json')
                                 outputs.each { key, value ->
