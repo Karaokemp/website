@@ -169,7 +169,7 @@ pipeline {
 
                  
 stages{
-  stage("compile"){
+  stage("Build"){
     steps{
       dir('cloud'){
         sh 'npm install'
@@ -177,7 +177,7 @@ stages{
       }
     }
   }
-  stage("Package changes"){
+  stage("Create S3 Artifacts"){
     steps{
              dir('cloud'){
                withAWS(credentials:"aws", region:"eu-central-1"){
