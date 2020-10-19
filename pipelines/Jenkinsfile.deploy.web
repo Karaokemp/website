@@ -26,6 +26,12 @@ pipeline {
 
                             sh "sam deploy --stack-name ${STACK_NAME}"
                             sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output table tee output.txt"
+                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output json tee output.json"
+                            def outputs = readJSON(file: 'output.json')
+                            echo outputs
+                            
+
+                            
                             archiveArtifacts artifacts: "output.txt"
 
                         }
