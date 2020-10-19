@@ -6,7 +6,7 @@ pipeline {
     }
 }
     options {
-        skipDefaultCheckout true
+        skipDefaultCheckout false
   }
     parameters {
         string(name: 'DEPLOY_COMMIT', description: 'commit to deploy to website')
