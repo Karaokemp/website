@@ -295,7 +295,7 @@ stages{
             }
             post{
               always{
-                copyArtifacts(projectName: 'web-deployment');
+                copyArtifacts(projectName: 'web-deployment/master');
 
               }
             }
