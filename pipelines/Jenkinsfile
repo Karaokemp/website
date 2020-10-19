@@ -47,23 +47,7 @@ failFast: true
               SERVICE='frontend'
             }
            stages{
-             stage('Check'){
-       agent {
-    dockerfile {
-        filename 'agents/Dockerfile.agent'
-        args '-v /var/run/docker.sock:/var/run/docker.sock'
-        args '-v builder_cache:/builder_cache'
-    }
-}
-      steps{
-        parallel A: {
-          echo 'A'
-        }, B: {
-          echo 'B'
-            },
-failFast: true
-      }
-    }
+             
              stage('Install packages') {
           steps {
             dir("${SERVICE}"){
