@@ -15,7 +15,7 @@ pipeline {
 }
       steps{
         sh "ps -ef | grep python | grep -v grep | awk \'{print \$2}\'"
-        sh  "aws cloudformation describe-stacks --stack-name kcs-integration --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text\""
+        sh  "aws cloudformation describe-stacks --stack-name kcs-integration --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text"
       }
     }
      stage('Build'){
