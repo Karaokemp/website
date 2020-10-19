@@ -312,10 +312,3 @@ String getWebsiteURL(String stackName){
     }     
   }
 }
-String getStackName() {
-    script {
-        def baseName = 'kcs'
-        String stackName = "${ENVIRONMENT}" == 'production' ? baseName : "${baseName}-${ENVIRONMENT}"
-        return stackName
-    }
-}
