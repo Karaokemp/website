@@ -18,7 +18,7 @@ pipeline {
     stages {
                 stage("Cloud Services") {
                 steps {
-                        withAWS(credentials:"aws", region:"eu-central-1") {
+                        withAWS(credentials:"aws", region:"eu-central-1") { 
                             s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
                             s3Download(file:'samconfig.toml',bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/samconfig.toml", force:true)
                             archiveArtifacts artifacts: "*.yaml"
