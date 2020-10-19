@@ -228,7 +228,7 @@ stages{
                 
               }
            }
-            stage('Cloud'){
+            stage('Cloud'){ 
               when {
                 not {
                   anyOf {
