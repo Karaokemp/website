@@ -274,14 +274,14 @@ stages{
          agent any
             
             steps {
-              build job: '../website-deployment/master',
+              build job: '../web-deployment/master',
               parameters:[string(name: "DEPLOY_COMMIT", value:"${GIT_COMMIT}"), string(name: "ENVIRONMENT", value:"integration")]
             }
         }
         stage('Production'){
           agent any
            steps {
-              build job: '../website-deployment/master',
+              build job: '../web-deployment/master',
               parameters:[string(name: "DEPLOY_COMMIT", value:"${GIT_COMMIT}"), string(name: "ENVIRONMENT", value:"production")]
             }
         }
