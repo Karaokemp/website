@@ -14,16 +14,8 @@ pipeline {
     }
 }
       steps{
-        withAWS(credentials:"aws", region:"eu-central-1"){
-          script{
-            BUILD_FULL = sh (script: "aws cloudformation describe-stacks --stack-name kcs-integration --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text",returnStdout : true)
-echo "output: ${BUILD_FULL}"
-          }
-          
-          //sh  "aws cloudformation describe-stacks --stack-name kcs-integration --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text"
-        }
+        String getWebsite()      }
       }
-    }
      stage('Build'){
        environment {
                  JEST_JUNIT_OUTPUT_DIR='../reports' 
@@ -307,4 +299,13 @@ stages{
             }
         }
        }
+}
+String getWebsite(){
+    withAWS(credentials:"aws", region:"eu-central-1"){
+          script{
+            BUILD_FULL = sh (script: "aws cloudformation describe-stacks --stack-name kcs-integration --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text",returnStdout : true)
+echo "output: ${BUILD_FULL}"
+          }
+          
+    }
 }

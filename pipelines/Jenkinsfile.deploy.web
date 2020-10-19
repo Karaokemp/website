@@ -56,4 +56,3 @@ String getStackName() {
         return stackName
     }
 }
-
