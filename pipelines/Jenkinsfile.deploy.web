@@ -32,7 +32,7 @@ pipeline {
                             
 
                             
-                            archiveArtifacts artifacts: "output.txt"
+                            archiveArtifacts artifacts: "output.txt" 
 
                         }
                 }
