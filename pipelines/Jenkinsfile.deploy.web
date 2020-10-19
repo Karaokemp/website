@@ -24,9 +24,7 @@ pipeline {
                             archiveArtifacts artifacts: "*.yaml"
                             archiveArtifacts artifacts: "*.toml"
 
-                            sh "sam deploy --stack-name ${STACK_NAME} | tee output.txt"
-                            sh 'ls'
-                            archiveArtifacts artifacts: "*.txt"
+                            sh "sam deploy --stack-name ${STACK_NAME}"
                         }
                 }
             }
