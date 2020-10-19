@@ -305,10 +305,17 @@ stages{
        }
 }
 String getWebsiteURL(String stackName){
+  script{
     withAWS(credentials:"aws", region:"eu-central-1"){
-          script{
-            String url = sh (script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text",returnStdout : true)
-            return url
-          }  
+      String url = sh (script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text",returnStdout : true)
+      return url
+    }     
+  }
+}
+String getStackName() {
+    script {
+        def baseName = 'kcs'
+        String stackName = "${ENVIRONMENT}" == 'production' ? baseName : "${baseName}-${ENVIRONMENT}"
+        return stackName
     }
 }
