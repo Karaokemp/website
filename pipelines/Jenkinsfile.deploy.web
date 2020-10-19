@@ -26,7 +26,6 @@ pipeline {
 
                             sh "sam deploy --stack-name ${STACK_NAME}"
                             sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME}"
-"
                         }
                 }
             }
