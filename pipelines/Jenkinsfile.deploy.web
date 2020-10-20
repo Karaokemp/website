@@ -14,6 +14,7 @@ pipeline {
     }
     environment {
         STACK_NAME = getStackName()
+        WEBSITE_URL = getWebsiteURL($STACK_NAME)
     }
     stages {
                 stage("Cloud Services") {
