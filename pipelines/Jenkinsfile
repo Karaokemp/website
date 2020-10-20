@@ -18,8 +18,8 @@ pipeline {
         }
         steps{
           echo "URL: ${WEBSITE_URL}"
-          buildName "name: ${WEBSITE_URL}"
-          buildDescription  "<a href=\"${WEBSITE_URL}\">Check Website!</a>"
+          //buildName "name: ${WEBSITE_URL}"
+          buildDescription  "check: ${WEBSITE_URL}"
   }
 }
      stage('Build'){
