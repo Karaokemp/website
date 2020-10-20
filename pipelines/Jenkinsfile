@@ -14,7 +14,7 @@ pipeline {
     }
 }
         steps{
-          echo "URL: ${WEBSITE_URL}"
+          //echo "URL: ${WEBSITE_URL}"
           //buildName "name: ${WEBSITE_URL}"
           //buildDescription  "${WEBSITE_URL}"
   }

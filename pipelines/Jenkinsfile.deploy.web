@@ -49,7 +49,7 @@ pipeline {
         }
         post{
               always{
-                buildDescription "${getWebsiteURL($STACK_NAME)}"
+                buildDescription "${WEBSITE_URL}"
               }
             }
 }
