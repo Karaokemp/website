@@ -13,13 +13,10 @@ pipeline {
         args '-v builder_cache:/builder_cache'
     }
 }
-        environment{
-          WEBSITE_URL = getWebsiteURL("kcs-integration")
-        }
         steps{
           echo "URL: ${WEBSITE_URL}"
           //buildName "name: ${WEBSITE_URL}"
-          buildDescription  "${WEBSITE_URL}"
+          //buildDescription  "${WEBSITE_URL}"
   }
 }
      stage('Build'){
@@ -300,19 +297,8 @@ stages{
             post{
               always{
                 copyArtifacts(projectName: 'web-deployment/master');
-
               }
             }
         }
        }
-}
-String getWebsiteURL(String stackName){
-  script{
-        withAWS(credentials:"aws", region:"eu-central-1"){
-
-    def ret = sh(script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text", returnStdout: true)
-          //String url = sh (script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text",returnStdout : true)
-    return ret
-    }        
-  } 
 }
