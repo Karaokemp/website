@@ -19,7 +19,7 @@ pipeline {
         steps{
           echo "URL: ${WEBSITE_URL}"
           //buildName "name: ${WEBSITE_URL}"
-          buildDescription  "check: ${WEBSITE_URL}"
+          buildDescription  "${WEBSITE_URL}"
   }
 }
      stage('Build'){
