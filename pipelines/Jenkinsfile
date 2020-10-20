@@ -13,15 +13,16 @@ pipeline {
         args '-v builder_cache:/builder_cache'
     }
 }
-    environment{
-      WEBSITE_URL = getWebsiteURL("kcs-integration")
-    }
-    steps{
-      echo "URL: ${WEBSITE_URL}"
-      buildName "name: ${WEBSITE_URL}"
-      buildDescription  "description: ${WEBSITE_URL}"
-    }
-    stage('Build'){
+        environment{
+          WEBSITE_URL = getWebsiteURL("kcs-integration")
+        }
+        steps{
+          echo "URL: ${WEBSITE_URL}"
+          buildName "name: ${WEBSITE_URL}"
+          buildDescription  "description: ${WEBSITE_URL}"
+  }
+}
+     stage('Build'){
        environment {
                  JEST_JUNIT_OUTPUT_DIR='../reports' 
                }
