@@ -15,6 +15,9 @@ pipeline {
 }
  environment{
       WEBSITE_URL = getWebsiteURL("kcs-integration")
+      buildName "name: ${WEBSITE_URL}"
+      buildDescription  "description: {WEBSITE_URL}"
+
     }
         steps{
           echo "URL: ${WEBSITE_URL}"
