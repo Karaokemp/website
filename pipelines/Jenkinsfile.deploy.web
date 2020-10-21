@@ -1,5 +1,4 @@
 pipeline {
-    
     agent {
     dockerfile {
         filename 'agents/Dockerfile.agent'
@@ -14,10 +13,8 @@ pipeline {
         choice(name: 'ENVIRONMENT', choices: ['test', 'integration', 'production'], description: 'Choose Deployment Target')
     }
     environment {
-        DNS = "www.karaokemp.freeddns.org"
         STACK_NAME = getStackName()
         WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
-        FRONTEND_BUCKET = getFrontendBucket()
     }
     stages {
                 stage("Cloud Services") {
@@ -46,7 +43,7 @@ pipeline {
                 stage('Static website files') {
                     steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
-                            sh "aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend s3://${FRONTEND_BUCKET} --acl public-read"
+                            sh "aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend s3://${STACK_NAME}-website-frontend --acl public-read"
                         }
                     }
                 }
@@ -73,10 +70,4 @@ String getWebsiteURL(String stackName){
     return ret
     }        
   } 
-}
-String getFrontendBucket() {
-    script {
-        String bucketName = "${ENVIRONMENT}" == 'production' ? "${DNS}" : "${STACK_NAME}-website-frontend"
-        return bucketName
-    }
 }
