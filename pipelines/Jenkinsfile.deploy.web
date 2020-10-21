@@ -13,7 +13,9 @@ pipeline {
         choice(name: 'ENVIRONMENT', choices: ['test', 'integration', 'production'], description: 'Choose Deployment Target')
     }
     environment {
+        DNS = "www.karaokemp.freeddns.org"
         STACK_NAME = getStackName()
+        FRONTEND_BUCKET = getFrontendBucket()
         WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
     }
     stages {
@@ -43,7 +45,7 @@ pipeline {
                 stage('Static website files') {
                     steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
-                            sh "aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend s3://${STACK_NAME}-website-frontend --acl public-read"
+                            sh "aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend s3://${FRONTEND_BUCKET} --acl public-read"
                         }
                     }
                 }
@@ -59,6 +61,12 @@ String getStackName() {
     script {
         def baseName = 'kcs'
         String stackName = "${ENVIRONMENT}" == 'production' ? baseName : "${baseName}-${ENVIRONMENT}"
+        return stackName
+    }
+}
+String getFrontendBucket() {
+    script {
+        String bucketName = "${ENVIRONMENT}" == 'production' ? "${DNS}" : "${STACK_NAME}-website-frontend"
         return stackName
     }
 }
