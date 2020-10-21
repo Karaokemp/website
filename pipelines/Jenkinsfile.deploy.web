@@ -68,7 +68,7 @@ String getStackName() {
 String getFrontendBucket() {
     script {
         String bucketName = "${ENVIRONMENT}" == 'production' ? "${DNS}" : "${STACK_NAME}-website-frontend"
-        return stackName
+        return bucketName
     }
 }
 String getWebsiteURL(String stackName){
