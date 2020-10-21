@@ -273,9 +273,14 @@ stages{
 }
              steps{
                echo 'use last built backend...'
-               sh 'docker pull dreckguy/karaokemp-website-backend:$(cat /builder_cache/BACKEND_LAST_BUILD)'
-               sh 'docker tag dreckguy/karaokemp-website-backend:$(cat /builder_cache/BACKEND_LAST_BUILD) dreckguy/karaokemp-website-backend:"${GIT_COMMIT}"'
-               sh "docker push dreckguy/karaokemp-website-backend:${GIT_COMMIT}"
+               sh '#!/bin/bash \
+                   FILE=/builder_cache/BACKEND_LAST_BUILD \
+                   if [ -f "$FILE" ] \
+                   then \
+                      docker pull dreckguy/karaokemp-website-backend:$(cat $FILE) \
+                      docker tag dreckguy/karaokemp-website-backend:$(cat $FILE) dreckguy/karaokemp-website-backend:"${GIT_COMMIT}" \
+                      docker push dreckguy/karaokemp-website-backend:"${GIT_COMMIT}" \
+                    fi'
              }
             }
            }
