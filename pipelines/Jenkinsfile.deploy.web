@@ -15,7 +15,7 @@ pipeline {
     environment {
         DNS = "www.karaokemp.freeddns.org"
         STACK_NAME = getStackName()
-        FRONTEND_BUCKET = getFrontendBucket()
+        //FRONTEND_BUCKET = getFrontendBucket()
         WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
     }
     stages {
@@ -45,7 +45,7 @@ pipeline {
                 stage('Static website files') {
                     steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
-                            sh "aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend s3://${FRONTEND_BUCKET} --acl public-read"
+                            sh "aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend s3://${getFrontendBucket()} --acl public-read"
                         }
                     }
                 }
