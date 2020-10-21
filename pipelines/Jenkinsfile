@@ -15,8 +15,6 @@ pipeline {
 }
         steps{
           echo "Put steps here!"
-          //buildName "name: ${WEBSITE_URL}"
-          //buildDescription  "${WEBSITE_URL}"
   }
 }
      stage('Build'){
@@ -63,7 +61,6 @@ pipeline {
         junit "reports/${SERVICE}.xml"
       }
     }
-
     stage("Create S3 Artifacts"){
       steps{
          dir("${SERVICE}"){
@@ -89,65 +86,7 @@ pipeline {
        }
      }
            }
-         }
-         
-         stage('Backend'){
-            when {
-              anyOf {
-                changeset "backend/**"
-                changeset "*"
-                changeset "pipelines/*"
-              }
-            }
-           agent {
-    dockerfile {
-        filename 'agents/Dockerfile.agent'
-        args '-v /var/run/docker.sock:/var/run/docker.sock'
-                args '-v backend_cache:/var/jenkins_home/workspace/karaokemp-website_master/backend/node_modules/'
-                args '-v builder_cache:/builder_cache'
-
-    }
-}
-            environment {
-              SERVICE='backend'
-            }
-              stages{
-            stage('Install packages') {
-      steps {
-        dir("${SERVICE}"){
-          sh 'npm install'
-        }      
-    }
-  }
-    stage('Unit tests'){
-      environment {
-          JEST_JUNIT_OUTPUT_NAME="${SERVICE}.xml"
-      }
-      steps{
-        dir("${SERVICE}"){
-          sh 'npm run test:ci'
-
-        }
-        junit "reports/${SERVICE}.xml"
-      }
-    }
-    stage('Create Docker image'){
-          steps{
-            dir("${SERVICE}"){
-                script{
-                  docker.withRegistry( '', 'dockerhub'){
-                      def image = docker.build("dreckguy/karaokemp-website-${SERVICE}")
-                      image.push('latest')
-                      image.push("${GIT_COMMIT}")
-                  }
-                }
-            }
-              sh "echo '${GIT_COMMIT}' > /builder_cache/BACKEND_LAST_BUILD"
-            sh 'cat /builder_cache/BACKEND_LAST_BUILD'
-          }
-     }
-         }
-           }
+         }   
             stage('Cloud'){
                when {
               anyOf {
@@ -163,12 +102,8 @@ pipeline {
                   args '-v /var/run/docker.sock:/var/run/docker.sock'
                   args '-v cloud_cache:/var/jenkins_home/workspace/karaokemp-website_master/cloud/node_modules/'
                   args '-v builder_cache:/builder_cache'
-
-
     }
-}
-
-                 
+}                
 stages{
   stage("Build"){
     steps{
@@ -210,7 +145,6 @@ stages{
                     changeset "frontend/**"
                     changeset "*"
                     changeset "pipelines/*"
-
                   }
                 }
                }
@@ -226,7 +160,6 @@ stages{
                   sh 'aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-$(cat /builder_cache/FRONTEND_LAST_BUILD)/frontend \
                       s3://karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/frontend --acl public-read'
                 }
-                
               }
            }
             stage('Cloud'){ 
@@ -253,36 +186,6 @@ stages{
              }
                 }
            }
-           stage('Backend'){
-             when {
-               not{
-                 anyOf {
-                  changeset "backend/**"
-                  changeset "*"
-                  changeset "pipelines/*"
-
-                }
-              }
-            }
-             agent {
-    dockerfile {
-        filename 'agents/Dockerfile.agent'
-        args '-v /var/run/docker.sock:/var/run/docker.sock'
-        args '-v builder_cache:/builder_cache/'
-    }
-}
-             steps{
-               echo 'use last built backend...'
-               sh '#!/bin/bash \
-                   FILE=/builder_cache/BACKEND_LAST_BUILD \
-                   if [ -f "$FILE" ] \
-                   then \
-                      docker pull dreckguy/karaokemp-website-backend:$(cat $FILE) \
-                      docker tag dreckguy/karaokemp-website-backend:$(cat $FILE) dreckguy/karaokemp-website-backend:"${GIT_COMMIT}" \
-                      docker push dreckguy/karaokemp-website-backend:"${GIT_COMMIT}" \
-                    fi'
-             }
-            }
            }
          }
           stage('Integration') {
