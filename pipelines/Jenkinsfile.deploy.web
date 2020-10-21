@@ -16,7 +16,7 @@ pipeline {
         DNS = "www.karaokemp.freeddns.org"
         STACK_NAME = getStackName()
         //FRONTEND_BUCKET = getFrontendBucket()
-        WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
+        //WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
     }
     stages {
                 stage("Cloud Services") {
@@ -52,7 +52,7 @@ pipeline {
         }
         post{
               success{
-                buildDescription "${WEBSITE_URL}" 
+                buildDescription "${getWebsiteURL($STACK_NAME)}" 
               }
             }
 }
