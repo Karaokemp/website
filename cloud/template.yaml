@@ -7,6 +7,15 @@ Globals:
   Function:
     Timeout: 3
 
+Parameters:
+ DNS: 
+    Type: String
+    Description: DNS to use for production Website
+    
+
+Conditions: 
+  UseDNS: !Equals [ !Ref AWS::StackName,kcs]
+
 Resources:
   SongsApi:
     Type: AWS::Serverless::HttpApi
@@ -35,7 +44,8 @@ Resources:
   FrontendBucket:
     Type:  AWS::S3::Bucket
     Properties:
-      BucketName:  !Sub "${AWS::StackName}-website-frontend"
+      BucketName: !If [UseDNS, !Ref DNS,!Sub "${AWS::StackName}-website-frontend"]
+
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: 'index.html'
