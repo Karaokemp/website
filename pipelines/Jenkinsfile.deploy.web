@@ -62,7 +62,7 @@ pipeline {
                 }
                 stage("Smoke Test"){
                     steps{
-                        sh  "curl -i ${getFrontendBucket()}"
+                        sh  "curl -i ${getWebsiteURL(getStackName())}"
 
                     }
                 }
