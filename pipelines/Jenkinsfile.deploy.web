@@ -61,7 +61,10 @@ pipeline {
                     }
                 }
                 stage("Smoke Test"){
-                    sh  "curl -i ${getFrontendBucket()}"
+                    steps{
+                        sh  "curl -i ${getFrontendBucket()}"
+
+                    }
                 }
         }
         post{
