@@ -91,7 +91,8 @@ export default class SongsSearchComponent extends Component<{}, {
     return(<div className="container">
   <div className="row">
     <div className="col-6 col-lg-6">
-      <h1>Welcome to The Karaokemp!</h1>
+  <h1>Welcome to The Karaokemp! </h1>
+  <p>Secret: {process.env.REACT_APP_SECRET}</p>
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px'}}/></div> <br/><hr/>
         
         <div className='instructions'>Steal Video from &nbsp;<img src={youtubeLogo}alt=''/>

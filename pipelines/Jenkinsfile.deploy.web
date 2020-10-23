@@ -42,11 +42,19 @@ pipeline {
                         }
                 }
             }
-                stage('Static website files') {
+                stage('Website files') {
+                    // Able to use environment variables for the build
+                    enviroment{
+                        SECRET='Tusik'
+                    }
                     steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
-                            echo "${getFrontendBucket()}"
-                            sh "aws s3 sync s3://karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend s3://${getFrontendBucket()} --acl public-read"
+                            sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
+                            dir('frontend'){
+                                sh 'npm run build'
+                            }
+
+                            sh "aws s3 sync build s3://karaokemp-artifacts/karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend s3://${getFrontendBucket()} --acl public-read"
                         }
                     }
                 }

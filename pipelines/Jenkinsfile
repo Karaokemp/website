@@ -63,13 +63,10 @@ pipeline {
     }
     stage("Create S3 Artifacts"){
       steps{
-         dir("${SERVICE}"){
-              sh 'npm run build'
               withAWS(credentials:"aws", region:"eu-central-1"){
-                s3Upload(workingDir:"build",includePathPattern:"**",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/${SERVICE}")
+                s3Upload(workingDir:"frontend",includePathPattern:"**",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/${SERVICE}")
               }
               sh "echo '${GIT_COMMIT}' > /builder_cache/FRONTEND_LAST_BUILD"
-          }
       }
     }
            }
