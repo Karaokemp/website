@@ -18,8 +18,9 @@ Conditions:
 
 Resources:
   SongsApi:
-    Type: AWS::Serverless::Api
+    Type: AWS::Serverless::HttpApi
     Properties:
+      CorsConfiguration: True
   ListSongsFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -29,9 +30,9 @@ Resources:
       Timeout: 5
       Events:
         ListSongs:
-          Type: Api
+          Type: HttpApi
           Properties:
-            RestApiId: !Ref SongsApi
+            ApiId: !Ref SongsApi
             Method: GET
             Path: /songs
   KaraokeSongsBucket:
@@ -61,4 +62,3 @@ Outputs:
   Function:
     Description: List Songs Function URL
     Value: !Sub "https://${SongsApi}.execute-api.${AWS::Region}.amazonaws.com/songs"
-
