@@ -51,6 +51,7 @@ pipeline {
                         withAWS(credentials:"aws", region:"eu-central-1") {
                             sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
                             dir('frontend'){
+                                sh 'npm install'
                                 sh 'npm run build'
                                 sh "aws s3 sync build s3://${getFrontendBucket()} --acl public-read"
                             }
