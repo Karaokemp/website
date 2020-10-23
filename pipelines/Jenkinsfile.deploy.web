@@ -45,7 +45,7 @@ pipeline {
                 stage('Website files') {
                     // Able to use environment variables for the build
                     environment{
-                        REACT_APP__SECRET='Tusik'
+                        REACT_APP_SECRET='Tusik'
                     }
                     steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
