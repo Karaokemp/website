@@ -43,7 +43,7 @@ pipeline {
             }
            stages{
              
-             stage('Install packages') {
+             stage('Install packages') { 
           steps {
             dir("${SERVICE}"){
               sh 'npm install'
