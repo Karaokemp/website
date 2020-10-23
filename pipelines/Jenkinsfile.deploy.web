@@ -44,7 +44,7 @@ pipeline {
             }
                 stage('Website files') {
                     // Able to use environment variables for the build
-                    enviroment{
+                    environment{
                         SECRET='Tusik'
                     }
                     steps {
