@@ -20,60 +20,61 @@ pipeline {
         //WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
     }
     stages {
-        stage("Cloud Services") {
-            steps {
-                withAWS(credentials:"aws", region:"eu-central-1") { 
-                    s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
-                    s3Download(file:'samconfig.toml',bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/samconfig.toml", force:true)
-                    archiveArtifacts artifacts: "*.yaml"
-                    archiveArtifacts artifacts: "*.toml"
+                stage("Cloud Services") {
+                steps {
+                        withAWS(credentials:"aws", region:"eu-central-1") { 
+                            s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
+                            s3Download(file:'samconfig.toml',bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/samconfig.toml", force:true)
+                            archiveArtifacts artifacts: "*.yaml"
+                            archiveArtifacts artifacts: "*.toml"
 
-                    sh "sam deploy --stack-name ${STACK_NAME} > output.yaml"
-                    archiveArtifacts artifacts: "output.yaml" 
-
-                    
+                            sh "sam deploy --stack-name ${STACK_NAME}"
+                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output table | tee output.txt"
+                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output json | tee output.json"
+                            script{
+                                def outputs = readJSON(file: 'output.json')
+                                outputs.each { key, value ->
+                                    echo "Walked through key $key and value $value"
+                                }
+                            }             
+                            archiveArtifacts artifacts: "output.txt" 
+                        }
                 }
             }
-        }      
-        stage('Transfer Website files') {
-            steps{
-
-                script{
-                    def outputs = readYaml(file: 'output.yaml')
-                    outputs.each { key, value ->
-                        echo "Walked through key $key and value $value"
+            environment {
+        FRONTEND_BUCKET = getFrontendBucket()
+        WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
+    }
+                stage('Transfer Website files') {
+                    // Able to use environment variables for the build
+                    environment{
+                        REACT_APP_SECRET="${WEBSITE_URL}"
                     }
-                }             
-            /*environment{
-            REACT_APP_KARAOKEMP_API="${WEBSITE_URL}"
-            RONTEND_BUCKET = getFrontendBucket()
-            WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
-            }*/
-                withAWS(credentials:"aws", region:"eu-central-1") {
-                    sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
-                    dir('frontend'){
-                        sh 'npm install'
-                        sh 'npm run build'
-                        sh "aws s3 sync build s3://${getFrontendBucket()} --acl public-read"
+                    steps {
+                        withAWS(credentials:"aws", region:"eu-central-1") {
+                            sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
+                            dir('frontend'){
+                                sh 'npm install'
+                                sh 'npm run build'
+                                sh "aws s3 sync build s3://${getFrontendBucket()} --acl public-read"
+                            }
+                        }
                     }
                 }
-            }
-    }
-    stage("Smoke Test"){
-        steps{
-            sh  "curl -i ${getWebsiteURL(getStackName())}"
+                stage("Smoke Test"){
+                    steps{
+                        sh  "curl -i ${getWebsiteURL(getStackName())}"
 
+                    }
+                }
         }
-    }
-        
-   
-    }
-     post{
-        success{
-            buildDescription "${getWebsiteURL(getStackName())}" 
-        }
-    }
+        post{
+              success{
+                buildDescription "${getWebsiteURL(getStackName())}" 
+              }
+            }
 }
+
 String getStackName() {
     script {
         def baseName = 'kcs'
@@ -88,13 +89,10 @@ String getFrontendBucket() {
     }
 }
 String getWebsiteURL(String stackName){
-  return getStackParameter($STACK_NAME,'Website')
-}
-String getStackParameter(String stackName,String parameter){
   script{
         withAWS(credentials:"aws", region:"eu-central-1"){
 
-    def ret = sh(script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'${parameter}\'].OutputValue\" --output text", returnStdout: true)
+    def ret = sh(script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text", returnStdout: true)
     return ret
     }        
   } 
