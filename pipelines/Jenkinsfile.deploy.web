@@ -11,7 +11,7 @@ pipeline {
         skipDefaultCheckout false
   }
     parameters {
-        string(name: 'DEPLOY_COMMIT', defaultValue: "${GIT_COMMIT}", description: 'commit to deploy to website')
+        string(name: 'DEPLOY_COMMIT', defaultValue: "${GIT_PREVIOUS_SUCCESSFUL_COMMIT}", description: 'commit to deploy to website')
         choice(name: 'ENVIRONMENT', choices: ['test', 'integration', 'production'], description: 'Choose Deployment Target')
     }
     environment {
