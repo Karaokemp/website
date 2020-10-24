@@ -41,40 +41,38 @@ pipeline {
                 }
             }
         }
-    }            
-            environment {
-               
-            }
-                stage('Transfer Website files') {
-                    // Able to use environment variables for the build
-                    environment{
-                        REACT_APP_SECRET="${WEBSITE_URL}"
-                         FRONTEND_BUCKET = getFrontendBucket()
-                        WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
-                    }
-                    steps {
-                        withAWS(credentials:"aws", region:"eu-central-1") {
-                            sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
-                            dir('frontend'){
-                                sh 'npm install'
-                                sh 'npm run build'
-                                sh "aws s3 sync build s3://${getFrontendBucket()} --acl public-read"
-                            }
-                        }
-                    }
-                }
-                stage("Smoke Test"){
-                    steps{
-                        sh  "curl -i ${getWebsiteURL(getStackName())}"
-
-                    }
-                }
+              
+    stage('Transfer Website files') {
+        environment{
+            REACT_APP_SECRET="${WEBSITE_URL}"
+            RONTEND_BUCKET = getFrontendBucket()
+            WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
         }
-        post{
-              success{
-                buildDescription "${getWebsiteURL(getStackName())}" 
-              }
+        steps {
+            withAWS(credentials:"aws", region:"eu-central-1") {
+                sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
+                dir('frontend'){
+                    sh 'npm install'
+                    sh 'npm run build'
+                    sh "aws s3 sync build s3://${getFrontendBucket()} --acl public-read"
+                }
             }
+        }
+    }
+    stage("Smoke Test"){
+        steps{
+            sh  "curl -i ${getWebsiteURL(getStackName())}"
+
+        }
+    }
+        
+   
+    }
+     post{
+        success{
+            buildDescription "${getWebsiteURL(getStackName())}" 
+        }
+    }
 }
 String getStackName() {
     script {
