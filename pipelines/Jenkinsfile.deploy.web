@@ -36,27 +36,28 @@ pipeline {
             }
         }      
         stage('Transfer Website files') {
-            script{
-                        def outputs = readYaml(file: 'output.yaml')
-                        outputs.each { key, value ->
-                            echo "Walked through key $key and value $value"
-                        }
-                    }             
-        environment{
+            steps{
+
+                script{
+                    def outputs = readYaml(file: 'output.yaml')
+                    outputs.each { key, value ->
+                        echo "Walked through key $key and value $value"
+                    }
+                }             
+            /*environment{
             REACT_APP_KARAOKEMP_API="${WEBSITE_URL}"
             RONTEND_BUCKET = getFrontendBucket()
             WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
-        }
-        steps {
-            withAWS(credentials:"aws", region:"eu-central-1") {
-                sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
-                dir('frontend'){
-                    sh 'npm install'
-                    sh 'npm run build'
-                    sh "aws s3 sync build s3://${getFrontendBucket()} --acl public-read"
+            }*/
+                withAWS(credentials:"aws", region:"eu-central-1") {
+                    sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
+                    dir('frontend'){
+                        sh 'npm install'
+                        sh 'npm run build'
+                        sh "aws s3 sync build s3://${getFrontendBucket()} --acl public-read"
+                    }
                 }
             }
-        }
     }
     stage("Smoke Test"){
         steps{
