@@ -4,7 +4,6 @@ pipeline {
         filename 'agents/Dockerfile.agent'
         //args '-v /var/run/docker.sock:/var/run/docker.sock'
         args '-v frontend_cache:/var/jenkins_home/workspace/web-deployment_master/frontend/node_modules/'
-
     }
 }
     options {
@@ -37,17 +36,19 @@ pipeline {
                                 outputs.each { key, value ->
                                     echo "Walked through key $key and value $value"
                                 }
-                            }
-                            
+                            }             
                             archiveArtifacts artifacts: "output.txt" 
-
                         }
                 }
             }
+            environment {
+        FRONTEND_BUCKET = getFrontendBucket()
+        WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
+    }
                 stage('Transfer Website files') {
                     // Able to use environment variables for the build
                     environment{
-                        REACT_APP_SECRET='Tusik'
+                        REACT_APP_SECRET="${WEBSITE_URL}"
                     }
                     steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
