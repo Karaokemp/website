@@ -20,31 +20,37 @@ pipeline {
         //WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
     }
     stages {
-                stage("Cloud Services") {
-                steps {
-                        withAWS(credentials:"aws", region:"eu-central-1") { 
-                            s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
-                            s3Download(file:'samconfig.toml',bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/samconfig.toml", force:true)
-                            archiveArtifacts artifacts: "*.yaml"
-                            archiveArtifacts artifacts: "*.toml"
+                stage('Deploy'){
+                    stages{
+                        stage("Cloud Services") {
+                            steps {
+                                withAWS(credentials:"aws", region:"eu-central-1") { 
+                                    s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
+                                    s3Download(file:'samconfig.toml',bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/samconfig.toml", force:true)
+                                    archiveArtifacts artifacts: "*.yaml"
+                                    archiveArtifacts artifacts: "*.toml"
 
-                            sh "sam deploy --stack-name ${STACK_NAME}"
-                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output table | tee output.txt"
-                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output json | tee output.json"
-                            script{
-                                def outputs = readJSON(file: 'output.json')
-                                outputs.each { key, value ->
-                                    echo "Walked through key $key and value $value"
+                                    sh "sam deploy --stack-name ${STACK_NAME}"
+                                    sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output table | tee output.txt"
+                                    sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output json | tee output.json"
+                                    script{
+                                        def outputs = readJSON(file: 'output.json')
+                                        outputs.each { key, value ->
+                                            echo "Walked through key $key and value $value"
+                                        }
+                                    }             
+                                    archiveArtifacts artifacts: "output.txt" 
                                 }
-                            }             
-                            archiveArtifacts artifacts: "output.txt" 
+                            }
                         }
+                    }
+
                 }
-            }
+                
             environment {
-        FRONTEND_BUCKET = getFrontendBucket()
-        WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
-    }
+                FRONTEND_BUCKET = getFrontendBucket()
+                WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
+            }
                 stage('Transfer Website files') {
                     // Able to use environment variables for the build
                     environment{
