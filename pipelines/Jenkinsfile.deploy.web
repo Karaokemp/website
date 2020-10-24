@@ -44,7 +44,7 @@ pipeline {
               
     stage('Transfer Website files') {
         environment{
-            REACT_APP_SECRET="${WEBSITE_URL}"
+            REACT_APP_KARAOKEMP_API="${WEBSITE_URL}"
             RONTEND_BUCKET = getFrontendBucket()
             WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
         }
@@ -88,10 +88,13 @@ String getFrontendBucket() {
     }
 }
 String getWebsiteURL(String stackName){
+  return getStackParameter($STACK_NAME,'Website')
+}
+String getStackParameter(String stackName,String parameter){
   script{
         withAWS(credentials:"aws", region:"eu-central-1"){
 
-    def ret = sh(script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'Website\'].OutputValue\" --output text", returnStdout: true)
+    def ret = sh(script: "aws cloudformation describe-stacks --stack-name ${stackName} --query \"Stacks[0].Outputs[?OutputKey==\'${parameter}\'].OutputValue\" --output text", returnStdout: true)
     return ret
     }        
   } 
