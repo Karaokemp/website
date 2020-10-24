@@ -28,21 +28,20 @@ pipeline {
                     archiveArtifacts artifacts: "*.yaml"
                     archiveArtifacts artifacts: "*.toml"
 
-                    sh "sam deploy --stack-name ${STACK_NAME}"
-                    sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output table | tee output.txt"
-                    sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output json | tee output.json"
-                    script{
-                        def outputs = readJSON(file: 'output.json')
+                    sh "sam deploy --stack-name ${STACK_NAME} > output.yaml"
+                    archiveArtifacts artifacts: "output.yaml" 
+
+                    
+                }
+            }
+        }      
+        stage('Transfer Website files') {
+            script{
+                        def outputs = readYaml(file: 'output.yaml')
                         outputs.each { key, value ->
                             echo "Walked through key $key and value $value"
                         }
                     }             
-                    archiveArtifacts artifacts: "output.txt" 
-                }
-            }
-        }
-              
-    stage('Transfer Website files') {
         environment{
             REACT_APP_KARAOKEMP_API="${WEBSITE_URL}"
             RONTEND_BUCKET = getFrontendBucket()
