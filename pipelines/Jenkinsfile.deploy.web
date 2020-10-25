@@ -39,20 +39,17 @@ pipeline {
                 }
             }
                 stage('Transfer Website files') {
-                    steps{
+                    // Able to use environment variables for the build
+                    environment{
+                        REACT_APP_SECRET="http://karaokemp-api-url"
+                    }
+                    steps {
                         script{
                             def props = readJSON file: 'output.json'
                             props.each { key, value ->
                                 echo "Walked through key $key and value $value"
                             }
                         }
-                        echo "found something?"
-                    }
-                    // Able to use environment variables for the build
-                    environment{
-                        REACT_APP_SECRET="http://karaokemp-api-url"
-                    }
-                    steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
                             sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
                             dir('frontend'){
