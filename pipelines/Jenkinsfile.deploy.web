@@ -17,7 +17,7 @@ pipeline {
         skipDefaultCheckout false
   }
     parameters {
-        string(name: 'DEPLOY_COMMIT',defaultValue:"7a7d9b2f81a5b4bee69e8bdb89d95e7235e85d05", description: 'commit to deploy to website')
+        string(name: 'DEPLOY_COMMIT',/*defaultValue:"7a7d9b2f81a5b4bee69e8bdb89d95e7235e85d05", */description: 'commit to deploy to website')
         choice(name: 'ENVIRONMENT', choices: ['test', 'integration', 'production'],description: 'Choose Deployment Target')
     }
     stages {
