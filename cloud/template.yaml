@@ -62,7 +62,7 @@ Outputs:
   Function:
     Description: List Songs Function URL
     Value: !Sub "https://${SongsApi}.execute-api.${AWS::Region}.amazonaws.com/songs"
-  Karaokemp API:
+  Karaokemp_API_URL:
     Description: Karaokemp API URL
     Value: !Sub "https://${SongsApi}.execute-api.${AWS::Region}.amazonaws.com"
 
