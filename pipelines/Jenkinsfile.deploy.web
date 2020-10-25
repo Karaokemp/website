@@ -39,7 +39,7 @@ pipeline {
                 stage('Transfer Website files') {
                     // Able to use environment variables for the build
                     environment{
-                        REACT_APP_SECRET="${getStackOutput('KaraokempAPI')}"
+                        REACT_APP_KARAOKEMP_API="${getStackOutput('KaraokempAPI')}"
                     }
                     steps {
                         echo "${REACT_APP_SECRET}"
