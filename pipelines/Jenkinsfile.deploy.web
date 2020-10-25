@@ -42,7 +42,6 @@ pipeline {
                         REACT_APP_KARAOKEMP_API="${getStackOutput('KaraokempAPI')}"
                     }
                     steps {
-                        echo "${REACT_APP_KARAOKEMP_API}"
                         withAWS(credentials:"aws", region:"eu-central-1") {
                             sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
                             dir('frontend'){

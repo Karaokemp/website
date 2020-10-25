@@ -1,10 +1,12 @@
-import { observable,action, computed} from "mobx";
+import { observable,action, computed, set} from "mobx";
 import React from "react";
 import { KaraokempSong, MessageTheme, SecondaryComponentMode, Song} from "../types";
 
+const KARAOKEMP_API = process.env.REACT_APP_KARAOKEMP_API || 'http://localhost:4000'
+
 export class Store {
   @observable
-  songSuggestions = new Array<Song>()
+  songs:string[] = []
   @observable
   requests = new Array<Song>()
   @observable
@@ -21,7 +23,6 @@ export class Store {
   }
   @action
   toggleTheme(){
-
     this.message.theme = this.message.theme == MessageTheme.ERROR ? MessageTheme.SUCCESS: MessageTheme.ERROR
   }
    @computed
@@ -32,8 +33,18 @@ export class Store {
           case MessageTheme.SUCCESS:
           return "alert alert-success"
           }
-
     }
+  @action
+  updateSongs(){
+    fetch(`${KARAOKEMP_API}/songs`)
+    .then(response => response.json())
+    .then(songs =>{
+      console.log(`Fetched Songs!`)
+      this.songs = songs  
+    });
+  }
+
 }
+
 
 export const Context = React.createContext(new Store())
