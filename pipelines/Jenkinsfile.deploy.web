@@ -42,7 +42,7 @@ pipeline {
                         REACT_APP_KARAOKEMP_API="${getStackOutput('KaraokempAPI')}"
                     }
                     steps {
-                        echo "${REACT_APP_SECRET}"
+                        echo "${REACT_APP_KARAOKEMP_API}"
                         withAWS(credentials:"aws", region:"eu-central-1") {
                             sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
                             dir('frontend'){
@@ -92,6 +92,6 @@ String getWebsiteURL(String stackName){
 String getStackOutput(String key){
    script{
     def outputs = readJSON file: 'output.json'
-                            return outputs.find { it.OutputKey == key }.OutputValue
-                        }
+        return outputs.find { it.OutputKey == key}.OutputValue
+    }
 }
