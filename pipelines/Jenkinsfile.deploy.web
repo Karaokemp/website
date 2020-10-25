@@ -31,24 +31,16 @@ pipeline {
                             sh "sam deploy --stack-name ${STACK_NAME}"
                             sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output table | tee output.txt"
                             sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output json | tee output.json"
-                            script{
-                                def outputs = readJSON(file: 'output.json')
-                                outputs.each { key, value ->
-                                    echo "Walked through key $key and value $value"
-                                }
-                            }             
-                            archiveArtifacts artifacts: "output.txt" 
+                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs | tee output.yaml"
+                            archiveArtifacts artifacts: "output.*"
                         }
                 }
             }
-            environment {
-        FRONTEND_BUCKET = getFrontendBucket()
-        WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
     }
                 stage('Transfer Website files') {
                     // Able to use environment variables for the build
                     environment{
-                        REACT_APP_SECRET="${WEBSITE_URL}"
+                        //REACT_APP_SECRET="${WEBSITE_URL}"
                     }
                     steps {
                         withAWS(credentials:"aws", region:"eu-central-1") {
