@@ -20,50 +20,50 @@ pipeline {
         string(name: 'DEPLOY_COMMIT',/*defaultValue:"7a7d9b2f81a5b4bee69e8bdb89d95e7235e85d05", */description: 'commit to deploy to website')
         choice(name: 'ENVIRONMENT', choices: ['test', 'integration', 'production'],description: 'Choose Deployment Target')
     }
-    stages {
-                stage("Cloud Services") {
-                steps {
-                        withAWS(credentials:"aws", region:"eu-central-1") { 
-                            s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
-                            s3Download(file:'samconfig.toml',bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/samconfig.toml", force:true)
-                            archiveArtifacts artifacts: "*.yaml"
-                            archiveArtifacts artifacts: "*.toml"
+    stages{
+        stage("Cloud Services") {
+            steps {
+                withAWS(credentials:"aws", region:"eu-central-1") { 
+                    s3Download(file:'template.yaml', bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/packaged.yaml", force:true)
+                    s3Download(file:'samconfig.toml',bucket:'karaokemp-artifacts', path:"karaokemp-website/COMMIT-${DEPLOY_COMMIT}/cloud-services/samconfig.toml", force:true)
+                    archiveArtifacts artifacts: "*.yaml"
+                    archiveArtifacts artifacts: "*.toml"
 
-                            sh "sam deploy --stack-name ${STACK_NAME}"
-                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output table | tee output.txt"
-                            sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs | tee output.json"
-                            archiveArtifacts artifacts: "output.*"
-                        }
+                    sh "sam deploy --stack-name ${STACK_NAME}"
+                    sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output table | tee output.txt"
+                    sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs | tee output.json"
+                    archiveArtifacts artifacts: "output.*"
                 }
             }
-                stage('Transfer Website files') {
-                    // Able to use environment variables for the build
-                    environment{
-                        REACT_APP_KARAOKEMP_API="${getStackOutput('KaraokempAPI')}"
-                    }
-                    steps {
-                        withAWS(credentials:"aws", region:"eu-central-1") {
-                            sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
-                            dir('frontend'){
-                                sh 'npm install'
-                                sh 'npm run build'
-                                sh "aws s3 sync build s3://${getFrontendBucket()} --acl public-read"
-                            }
-                        }
+        }
+        stage('Transfer Website files') {
+            // Able to use environment variables for the build
+            environment{
+                REACT_APP_KARAOKEMP_API="${getStackOutput('KaraokempAPI')}"
+            }
+            steps {
+                withAWS(credentials:"aws", region:"eu-central-1") {
+                    sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
+                    dir('frontend'){
+                        sh 'npm install'
+                        sh 'npm run build'
+                        sh "aws s3 sync build s3://${getFrontendBucket()} --acl public-read"
                     }
                 }
-                stage("Smoke Test"){
-                    steps{
-                        sh  "curl -i ${getWebsiteURL(getStackName())}"
+            }
+        }
+        stage("Smoke Test"){
+            steps{
+                sh  "curl -i ${getWebsiteURL(getStackName())}"
 
-                    }
-                }
+            }
+        }
     }
-    /*post{
+    post{
         success{
             buildDescription "${getWebsiteURL(getStackName())}" 
         }
-    }*/  
+    }
 }
 String getStackName() {
     script {
