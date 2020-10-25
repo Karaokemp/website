@@ -45,9 +45,9 @@ pipeline {
                     }
                     steps {
                         script{
-                            def props = readJSON file: 'output.json'
-                            props.each { key, value ->
-                                echo "Walked through key $key and value $value"
+                            def outputs = readJSON file: 'output.json'
+                            outputs.each {output ->
+                                echo "${output.OutputKey}: ${output.OutputValue}"
                             }
                         }
                         withAWS(credentials:"aws", region:"eu-central-1") {
