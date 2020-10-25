@@ -3,9 +3,9 @@ pipeline {
         DNS = "www.karaokemp.freeddns.org"
         STACK_NAME = getStackName()
     }
-    triggers {
+    /*triggers {
         pollSCM('* * * * *')
-    }
+    }*/
     agent {
     dockerfile {
         filename 'agents/Dockerfile.agent'
