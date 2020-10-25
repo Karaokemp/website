@@ -39,7 +39,6 @@ pipeline {
                         }
                 }
             }
-    }
                 stage('Transfer Website files') {
                     // Able to use environment variables for the build
                     environment{
@@ -62,14 +61,15 @@ pipeline {
 
                     }
                 }
-        }
+    }
         post{
               success{
                 buildDescription "${getWebsiteURL(getStackName())}" 
               }
             }
+    }
+    
 }
-
 String getStackName() {
     script {
         def baseName = 'kcs'
