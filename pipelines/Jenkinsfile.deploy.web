@@ -20,12 +20,6 @@ pipeline {
         string(name: 'DEPLOY_COMMIT',defaultValue:"7a7d9b2f81a5b4bee69e8bdb89d95e7235e85d05", description: 'commit to deploy to website')
         choice(name: 'ENVIRONMENT', choices: ['test', 'integration', 'production'],description: 'Choose Deployment Target')
     }
-    environment {
-        DNS = "www.karaokemp.freeddns.org"
-        STACK_NAME = getStackName()
-        //FRONTEND_BUCKET = getFrontendBucket()
-        //WEBSITE_URL = getWebsiteURL("${STACK_NAME}")
-    }
     stages {
                 stage("Cloud Services") {
                 steps {
@@ -46,7 +40,6 @@ pipeline {
                     // Able to use environment variables for the build
                     environment{
                         REACT_APP_SECRET="${getStackOutput('Karaokemp API')}"
-                        
                     }
                     steps {
                         echo "${REACT_APP_SECRET}"
