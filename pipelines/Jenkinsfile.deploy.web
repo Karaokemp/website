@@ -62,11 +62,11 @@ pipeline {
                     }
                 }
     }
-    post{
+    /*post{
         success{
             buildDescription "${getWebsiteURL(getStackName())}" 
         }
-    }    
+    }*/  
 }
 String getStackName() {
     script {
