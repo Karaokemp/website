@@ -67,8 +67,7 @@ pipeline {
                 buildDescription "${getWebsiteURL(getStackName())}" 
               }
             }
-    }
-    
+      
 }
 String getStackName() {
     script {
