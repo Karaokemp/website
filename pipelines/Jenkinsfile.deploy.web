@@ -34,7 +34,7 @@ pipeline {
                             sh "sam deploy --stack-name ${STACK_NAME}"
                             sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs --output table | tee output.txt"
                             sh "aws cloudformation describe-stacks --stack-name ${STACK_NAME} --query Stacks[0].Outputs | tee output.json"
-                            archiveArtifacts artifacts: "output.txt"
+                            archiveArtifacts artifacts: "output.*"
                         }
                 }
             }
