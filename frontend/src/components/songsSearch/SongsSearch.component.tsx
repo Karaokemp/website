@@ -12,7 +12,7 @@ import {Context} from '../../store/store';
 import MSG from '../message.component'
 
 const DEFAULT_VIDEO_ID = 'FxyQTb6n4_I'
-const KARAOKEMP_BACKEND = process.env.REACT_APP_KARAOKEMP_BACKEND || 'http://localhost:4000'
+const KARAOKEMP_API = process.env.REACT_APP_KARAOKEMP_API || 'http://localhost:4000'
 
 
 @observer
@@ -52,7 +52,7 @@ export default class SongsSearchComponent extends Component<{}, {
       this.setState({message: {text:'',theme:MessageTheme.NOTHING}})
 
       
-      fetch(`${KARAOKEMP_BACKEND}/songs?term=${value}`)
+      fetch(`${KARAOKEMP_API}/songs?term=${value}`)
       .then(res => res.json())
       .then((newSuggestions:Song[]) => {
         this.setState({suggestions:newSuggestions})
