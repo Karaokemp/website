@@ -3,6 +3,7 @@
 let response;
 //import * as songs from '../../static/songs.json'
 import {listSongs} from '../../functions/s3Functions'
+import packageResponse from '../../helpers/packageResponse';
 
 /**
  *
@@ -23,10 +24,7 @@ console.log(`got bucket ${S3_BUCKET} from environment.`)
 
 
     const songs = await listSongs()
-    response = {
-        'statusCode': 200,
-        'body': JSON.stringify(songs)
-    }
+   
 
-    return response
+    return packageResponse(songs)
 }
