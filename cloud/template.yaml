@@ -6,6 +6,8 @@ Description:
 Globals:
   Function:
     Timeout: 3
+    Policies:
+        - AmazonS3FullAccess
     Environment:
       Variables: 
         S3_BUCKET : !Ref KaraokeSongsBucket
@@ -27,7 +29,7 @@ Resources:
   ListSongsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: ./dist/lambdas/list-songs/app.lambdaHandler
+      Handler: ./dist/lambdas/list-songs/app.handler
       Runtime: nodejs12.x
       MemorySize: 128
       Timeout: 5
@@ -38,8 +40,6 @@ Resources:
             ApiId: !Ref SongsApi
             Method: GET
             Path: /songs
-      Policies:
-        - AmazonS3ReadOnlyAccess
   KaraokeSongsBucket:
     Type: AWS::S3::Bucket
     Properties:

@@ -2,7 +2,7 @@
 // const url = 'http://checkip.amazonaws.com/';
 let response;
 //import * as songs from '../../static/songs.json'
-import listSongs from '../../functions/listSongs'
+import {listSongs} from '../../functions/s3Functions'
 
 /**
  *
@@ -16,7 +16,7 @@ import listSongs from '../../functions/listSongs'
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  * 
  */
-export const lambdaHandler = async () => {
+export const handler = async () => {
 
 const  S3_BUCKET = process.env['S3_BUCKET']
 console.log(`got bucket ${S3_BUCKET} from environment.`)
