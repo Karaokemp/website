@@ -1,7 +1,8 @@
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 let response;
-import * as songs from '../../static/songs.json'
+//import * as songs from '../../static/songs.json'
+import listSongs from '../../functions/listSongs'
 
 /**
  *
@@ -18,7 +19,7 @@ import * as songs from '../../static/songs.json'
 export const lambdaHandler = async () => {
         response = {
             'statusCode': 200,
-            'body': JSON.stringify(songs)
+            'body': JSON.stringify(listSongs())
         }
     return response
 };

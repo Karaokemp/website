@@ -1,10 +1,14 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.lambdaHandler = void 0;
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 let response;
-const songs = require("../../static/songs.json");
+//import * as songs from '../../static/songs.json'
+const list_songs_1 = __importDefault(require("../../functions/list-songs"));
 /**
  *
  * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
@@ -20,7 +24,7 @@ const songs = require("../../static/songs.json");
 exports.lambdaHandler = async () => {
     response = {
         'statusCode': 200,
-        'body': JSON.stringify(songs)
+        'body': JSON.stringify(list_songs_1.default())
     };
     return response;
 };
