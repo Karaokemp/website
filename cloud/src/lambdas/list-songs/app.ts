@@ -18,7 +18,7 @@ import listSongs from '../../functions/listSongs'
  */
 export const lambdaHandler = async () => {
 
-    const  S3_BUCKET = process.env['S3_BUCKET']
+const  S3_BUCKET = process.env['S3_BUCKET']
 console.log(`got bucket ${S3_BUCKET} from environment.`)
 
 

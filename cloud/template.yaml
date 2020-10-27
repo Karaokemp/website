@@ -38,6 +38,8 @@ Resources:
             ApiId: !Ref SongsApi
             Method: GET
             Path: /songs
+      Policies:
+        - AmazonS3ReadOnlyAccess
   KaraokeSongsBucket:
     Type: AWS::S3::Bucket
     Properties:
