@@ -17,9 +17,16 @@ import listSongs from '../../functions/listSongs'
  * 
  */
 export const lambdaHandler = async () => {
-        response = {
-            'statusCode': 200,
-            'body': JSON.stringify(listSongs())
-        }
+
+    const  S3_BUCKET = process.env['S3_BUCKET']
+console.log(`got bucket ${S3_BUCKET} from environment.`)
+
+
+    const songs = await listSongs()
+    response = {
+        'statusCode': 200,
+        'body': JSON.stringify(songs)
+    }
+
     return response
-};
+}

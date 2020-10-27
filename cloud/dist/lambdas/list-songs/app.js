@@ -8,7 +8,7 @@ exports.lambdaHandler = void 0;
 // const url = 'http://checkip.amazonaws.com/';
 let response;
 //import * as songs from '../../static/songs.json'
-const list_songs_1 = __importDefault(require("../../functions/list-songs"));
+const listSongs_1 = __importDefault(require("../../functions/listSongs"));
 /**
  *
  * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
@@ -24,7 +24,7 @@ const list_songs_1 = __importDefault(require("../../functions/list-songs"));
 exports.lambdaHandler = async () => {
     response = {
         'statusCode': 200,
-        'body': JSON.stringify(list_songs_1.default())
+        'body': JSON.stringify(listSongs_1.default())
     };
     return response;
 };
