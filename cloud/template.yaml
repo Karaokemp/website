@@ -38,20 +38,33 @@ Resources:
             Path: /songs
       Policies:
         - AmazonS3ReadOnlyAccess
+  UploadFromYoutubeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      MemorySize: 128
+      Handler: ./dist/app.uploadFromYoutube
+      Events:
+        ListSongs:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref SongsApi
+            Method: PUT
+            Path: /upload-from-youtube
+      Policies:
+        - AmazonS3FullAccess
   KaraokeSongsBucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub "${AWS::StackName}-karaoke-songs"
       AccessControl: PublicRead
-
   FrontendBucket:
     Type:  AWS::S3::Bucket
     Properties:
       BucketName: !If [UseDNS, !Ref DNS,!Sub "${AWS::StackName}-website-frontend"]
-
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: 'index.html'
+
 Outputs:
   Website:
     Description: Public Website URL
@@ -62,7 +75,7 @@ Outputs:
   SongsBucketURL:
     Value: !Sub "https://s3.console.aws.amazon.com/s3/buckets/${AWS::StackName}-karaoke-songs"
     Description: Name of S3 bucket to hold website content
-  Function:
+  ListFunction:
     Description: List Songs Function URL
     Value: !Sub "https://${SongsApi}.execute-api.${AWS::Region}.amazonaws.com/songs"
   KaraokempAPI:

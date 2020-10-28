@@ -16,8 +16,11 @@ import packageResponse from './helpers/packageResponse';
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  * 
  */
-// import individual service
 import AWS from 'aws-sdk'
+import  youtubedl from 'youtube-dl'
+import { Event } from 'aws-sdk/clients/s3';
+import { Context } from 'aws-sdk/clients/costexplorer';
+
 const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
 const {S3_BUCKET} = process.env
@@ -30,4 +33,10 @@ export async function  listSongs() {
    let songs = objects.map(object=>object.Key)
    
    return packageResponse(songs)
+ }
+
+ export async function uploadFromYoutube(event:AWSLambda.APIGatewayEvent){
+     let {videoId} = event.queryStringParameters
+     return packageResponse(videoId)
+
  }

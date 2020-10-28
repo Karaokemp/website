@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.listSongs = void 0;
+exports.uploadFromYoutube = exports.listSongs = void 0;
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 let response;
@@ -21,7 +21,6 @@ const packageResponse_1 = __importDefault(require("./helpers/packageResponse"));
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  *
  */
-// import individual service
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const s3 = new aws_sdk_1.default.S3({ apiVersion: '2006-03-01' });
 const { S3_BUCKET } = process.env;
@@ -34,3 +33,8 @@ async function listSongs() {
     return packageResponse_1.default(songs);
 }
 exports.listSongs = listSongs;
+async function uploadFromYoutube(event, context) {
+    let { videoId } = event.queryStringParameters;
+    return packageResponse_1.default(videoId);
+}
+exports.uploadFromYoutube = uploadFromYoutube;
