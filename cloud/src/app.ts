@@ -2,8 +2,7 @@
 // const url = 'http://checkip.amazonaws.com/';
 let response;
 //import * as songs from '../../static/songs.json'
-import {listSongs} from '../../functions/s3Functions'
-import packageResponse from '../../helpers/packageResponse';
+import packageResponse from './helpers/packageResponse';
 
 /**
  *
@@ -17,14 +16,18 @@ import packageResponse from '../../helpers/packageResponse';
  * @returns {Object} object - API Gateway Lambda Proxy Output Format
  * 
  */
-export const handler = async () => {
+// import individual service
+import AWS from 'aws-sdk'
+const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
-const  S3_BUCKET = process.env['S3_BUCKET']
-console.log(`got bucket ${S3_BUCKET} from environment.`)
+const {S3_BUCKET} = process.env
 
-
-    const songs = await listSongs()
+export async function  listSongs() {
+  let result = await s3.listObjectsV2({
+    Bucket: S3_BUCKET,
+   }).promise()
+   let objects = result.Contents
+   let songs = objects.map(object=>object.Key)
    
-
-    return packageResponse(songs)
-}
+   return packageResponse(songs)
+ }

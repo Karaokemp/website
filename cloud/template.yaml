@@ -28,8 +28,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       MemorySize: 128
-      Handler: ./dist/lambdas/list-songs/app.handler
-
+      Handler: ./dist/app.listSongs
       Events:
         ListSongs:
           Type: HttpApi
