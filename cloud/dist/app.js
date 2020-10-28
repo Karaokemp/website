@@ -33,8 +33,8 @@ async function listSongs() {
     return packageResponse_1.default(songs);
 }
 exports.listSongs = listSongs;
-async function uploadFromYoutube(event, context) {
-    let { videoId } = event.queryStringParameters;
+async function uploadFromYoutube(event) {
+    let { id: videoId } = event.queryStringParameters;
     return packageResponse_1.default(videoId);
 }
 exports.uploadFromYoutube = uploadFromYoutube;
