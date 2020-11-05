@@ -19,7 +19,6 @@ import packageResponse from './helpers/packageResponse';
 import AWS from 'aws-sdk'
 import  youtubedl from 'youtube-dl'
 import { Event } from 'aws-sdk/clients/s3';
-import { Context } from 'aws-sdk/clients/costexplorer';
 
 const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
@@ -36,8 +35,9 @@ export async function  listSongs() {
  }
 
  export async function upload(event:AWSLambda.APIGatewayEvent){
-     //let {id: id} = event.queryStringParameters
-     let {videoId,source} = event.pathParameters
-     return packageResponse(`need to download video ID: ${videoId} from ${source}`)
+     let {video} = event.queryStringParameters
+     let {source} = event.pathParameters
+
+     return packageResponse(`need to download video ID: ${video} from ${source}`)
 
  }

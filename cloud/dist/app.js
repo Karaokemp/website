@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadFromYoutube = exports.listSongs = void 0;
+exports.upload = exports.listSongs = void 0;
 // const axios = require('axios')
 // const url = 'http://checkip.amazonaws.com/';
 let response;
@@ -33,9 +33,9 @@ async function listSongs() {
     return packageResponse_1.default(songs);
 }
 exports.listSongs = listSongs;
-async function uploadFromYoutube(event) {
-    //let {id: id} = event.queryStringParameters
-    let { videoId, source } = event.pathParameters;
-    return packageResponse_1.default(`need to download video ID: ${videoId} from ${source}`);
+async function upload(event) {
+    let { video } = event.queryStringParameters;
+    let { source } = event.pathParameters;
+    return packageResponse_1.default(`need to download video ID: ${video} from ${source}`);
 }
-exports.uploadFromYoutube = uploadFromYoutube;
+exports.upload = upload;

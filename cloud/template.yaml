@@ -49,7 +49,7 @@ Resources:
           Properties:
             ApiId: !Ref SongsApi
             Method: PUT
-            Path: /songs/{source}/{videoId}
+            Path: /songs/{source}
       Policies:
         - AmazonS3FullAccess
   KaraokeSongsBucket:
