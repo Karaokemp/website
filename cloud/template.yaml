@@ -38,11 +38,11 @@ Resources:
             Path: /songs
       Policies:
         - AmazonS3ReadOnlyAccess
-  UploadFromYoutubeFunction:
+  UploadFunction:
     Type: AWS::Serverless::Function
     Properties:
       MemorySize: 128
-      Handler: ./dist/app.uploadFromYoutube
+      Handler: ./dist/app.upload
       Events:
         UploadRequest:
           Type: HttpApi
