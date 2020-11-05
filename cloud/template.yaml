@@ -44,12 +44,12 @@ Resources:
       MemorySize: 128
       Handler: ./dist/app.uploadFromYoutube
       Events:
-        ListSongs:
+        UploadRequest:
           Type: HttpApi
           Properties:
             ApiId: !Ref SongsApi
             Method: PUT
-            Path: /upload/youtube
+            Path: /songs/{source}/{videoId}
       Policies:
         - AmazonS3FullAccess
   KaraokeSongsBucket:

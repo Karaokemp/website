@@ -36,7 +36,8 @@ export async function  listSongs() {
  }
 
  export async function uploadFromYoutube(event:AWSLambda.APIGatewayEvent){
-     let {id: id} = event.queryStringParameters
-     return packageResponse(id)
+     //let {id: id} = event.queryStringParameters
+     let {videoId,source} = event.pathParameters
+     return packageResponse(`need to download video ID: ${videoId} from ${source}`)
 
  }

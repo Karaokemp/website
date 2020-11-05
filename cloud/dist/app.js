@@ -34,7 +34,8 @@ async function listSongs() {
 }
 exports.listSongs = listSongs;
 async function uploadFromYoutube(event) {
-    let { id: videoId } = event.queryStringParameters;
-    return packageResponse_1.default(videoId);
+    //let {id: id} = event.queryStringParameters
+    let { videoId, source } = event.pathParameters;
+    return packageResponse_1.default(`need to download video ID: ${videoId} from ${source}`);
 }
 exports.uploadFromYoutube = uploadFromYoutube;
