@@ -2,7 +2,6 @@ import  youtubedl from 'youtube-dl'
 import AWS from 'aws-sdk'
 import {KaraokempSong, S3URL, Song,YoutubeURL} from '../types'
 
-const  S3_BUCKET = process.env['S3_BUCKET']
 
 AWS.config.update({region: 'eu-central-1'});
 const s3 = new AWS.S3({apiVersion: '2006-03-01'});

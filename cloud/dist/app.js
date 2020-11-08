@@ -9,6 +9,7 @@ exports.upload = exports.listSongs = void 0;
 let response;
 //import * as songs from '../../static/songs.json'
 const packageResponse_1 = __importDefault(require("./helpers/packageResponse"));
+const uploadYoutubeVideo_1 = __importDefault(require("./functions/uploadYoutubeVideo"));
 /**
  *
  * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
@@ -22,6 +23,7 @@ const packageResponse_1 = __importDefault(require("./helpers/packageResponse"));
  *
  */
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
+const packageError_1 = __importDefault(require("./helpers/packageError"));
 const s3 = new aws_sdk_1.default.S3({ apiVersion: '2006-03-01' });
 const { S3_BUCKET } = process.env;
 async function listSongs() {
@@ -34,8 +36,16 @@ async function listSongs() {
 }
 exports.listSongs = listSongs;
 async function upload(event) {
-    let { video } = event.queryStringParameters;
     let { source } = event.pathParameters;
-    return packageResponse_1.default(`need to download video ID: ${video} from ${source}`);
+    switch (source) {
+        case 'youtube':
+            let { video } = event.queryStringParameters;
+            if (!video) {
+                return packageError_1.default(400, 'Request must contain youtube videoId as query video param!');
+            }
+            return uploadYoutubeVideo_1.default(video);
+        case 'file':
+            return packageError_1.default(501, 'File Uploadings are not implemented yet :( \nask Ophirus Magnivus to add this feature!');
+    }
 }
 exports.upload = upload;

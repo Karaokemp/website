@@ -3,6 +3,7 @@
 let response;
 //import * as songs from '../../static/songs.json'
 import packageResponse from './helpers/packageResponse';
+import uploadYoutubeVideo from './functions/uploadYoutubeVideo'
 
 /**
  *
@@ -19,6 +20,7 @@ import packageResponse from './helpers/packageResponse';
 import AWS from 'aws-sdk'
 import  youtubedl from 'youtube-dl'
 import { Event } from 'aws-sdk/clients/s3';
+import packageError from './helpers/packageError';
 
 const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
@@ -35,9 +37,15 @@ export async function  listSongs() {
  }
 
  export async function upload(event:AWSLambda.APIGatewayEvent){
-     let {video} = event.queryStringParameters
      let {source} = event.pathParameters
-
-     return packageResponse(`need to download video ID: ${video} from ${source}`)
-
+     switch(source){
+        case 'youtube':
+                    let {video} = event.queryStringParameters
+                    if(!video){
+                      return packageError(400,'Request must contain youtube videoId as query video param!')
+                    }
+                    return uploadYoutubeVideo(video)
+        case 'file':
+          return packageError(501,'File Uploadings are not implemented yet :( \nask Ophirus Magnivus to add this feature!')
+    }    
  }
