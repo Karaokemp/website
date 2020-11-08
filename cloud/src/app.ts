@@ -4,6 +4,7 @@ let response;
 //import * as songs from '../../static/songs.json'
 import packageResponse from './helpers/packageResponse';
 import uploadYoutubeVideo from './functions/uploadYoutubeVideo'
+import uploadSimple from './functions/uploadSimple'
 
 /**
  *
@@ -19,20 +20,16 @@ import uploadYoutubeVideo from './functions/uploadYoutubeVideo'
  */
 import AWS from 'aws-sdk'
 import  youtubedl from 'youtube-dl'
-import { Event } from 'aws-sdk/clients/s3';
 import packageError from './helpers/packageError';
+import { KaraokempSong } from './types';
+import { listS3Songs } from './functions/listS3Songs';
 
 const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
 const {S3_BUCKET} = process.env
 
 export async function  listSongs() {
-  let result = await s3.listObjectsV2({
-    Bucket: S3_BUCKET,
-   }).promise()
-   let objects = result.Contents
-   let songs = objects.map(object=>object.Key)
-   
+   let songs = await listS3Songs()
    return packageResponse(songs)
  }
 
@@ -44,7 +41,13 @@ export async function  listSongs() {
                     if(!video){
                       return packageError(400,'Request must contain youtube videoId as query video param!')
                     }
-                    return uploadYoutubeVideo(video)
+                    try{
+                      let song: KaraokempSong = await /*uploadYoutubeVideo(video)*/ uploadSimple()
+                      return packageResponse(song)
+                    }catch(err:any){
+                        return packageError(500,err)
+                    }
+        break;
         case 'file':
           return packageError(501,'File Uploadings are not implemented yet :( \nask Ophirus Magnivus to add this feature!')
     }    

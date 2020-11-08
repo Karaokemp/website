@@ -3,20 +3,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// import individual service
+exports.listS3Songs = void 0;
+const { S3_BUCKET } = process.env;
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const s3 = new aws_sdk_1.default.S3({ apiVersion: '2006-03-01' });
-const S3_BUCKET = process.env['S3_BUCKET'];
-console.log(`got bucket ${S3_BUCKET} from environment.`);
-async function listSongs() {
+async function listS3Songs() {
     let result = await s3.listObjectsV2({
-        Bucket: 'karaoke-songs',
+        Bucket: S3_BUCKET,
     }).promise();
     let objects = result.Contents;
     let songs = objects.map(object => object.Key);
     return songs;
 }
-exports.default = listSongs;
-listSongs().then(songs => {
+exports.listS3Songs = listS3Songs;
+listS3Songs().then(songs => {
     console.log(songs);
+}).catch((err) => {
+    console.error(err.message);
 });
