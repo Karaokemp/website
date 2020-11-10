@@ -23,13 +23,13 @@ pipeline {
                }
        parallel{
          stage('Frontend'){
-            when {
+            /*when {
               anyOf {
                 changeset "frontend/**"
                 changeset "*"
                 changeset "pipelines/*"
               }
-            }
+            }*/
                  agent {
     dockerfile {
         filename 'agents/Dockerfile.agent'
@@ -72,14 +72,14 @@ pipeline {
            }
          }   
             stage('Cloud'){
-               when {
+               /*when {
               anyOf {
                 changeset "cloud/**"
                 changeset "*"
                 changeset "pipelines/*"
 
               }
-            }
+            }*/
               agent {
                 dockerfile {
                   filename 'agents/Dockerfile.lambda'
