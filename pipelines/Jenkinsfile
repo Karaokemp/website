@@ -83,6 +83,7 @@ pipeline {
               agent {
                 dockerfile {
                   filename 'agents/Dockerfile.lambda'
+                  args '-v builder_cache:/builder_cache'
                 }
               }                
 stages{
