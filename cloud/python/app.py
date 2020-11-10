@@ -1,9 +1,9 @@
 import json
 import youtube_dl 
 
-
-ydl_opts = {} 
-
+ydl_opts = {
+    'outtmpl': '/tmp/videos/video.mp4'
+} 
 
 def upload(event, context):
     download('AUjmpbd-U2Q')
