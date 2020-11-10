@@ -82,11 +82,9 @@ pipeline {
             }
               agent {
                 dockerfile {
-                  filename 'agents/Dockerfile.agent'
-                  args '-v /var/run/docker.sock:/var/run/docker.sock'
-                  args '-v builder_cache:/builder_cache'
-    }
-}                
+                  filename 'agents/Dockerfile.lambda'
+                }
+              }                
 stages{
   stage("Build"){
     steps{
