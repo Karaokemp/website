@@ -39,7 +39,7 @@ pipeline {
     }
 }
            environment {
-              SERVICE='frontend'
+              SERVICE='frontend' 
             }
            stages{
              
