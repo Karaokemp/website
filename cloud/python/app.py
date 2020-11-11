@@ -1,9 +1,6 @@
 import json
 import youtube_dl 
-
-ydl_opts = {
-    'outtmpl': '/tmp/videos/video.mp4'
-} 
+import boto3
 
 def upload(event, context):
     download('AUjmpbd-U2Q')
@@ -12,7 +9,13 @@ def upload(event, context):
         "body": json.dumps(event)
     }
 
-def download(videoId): 
+def download(videoId):
+    filename = '/tmp/videos/video.mp4'
+    ydl_opts = {
+    'outtmpl': filename
+} 
     link = 'https://www.youtube.com/watch?v=' + videoId
     with youtube_dl.YoutubeDL(ydl_opts) as ydl: 
 	    ydl.download([link])
+    s3 = boto3.resource('s3')
+    s3.meta.client.upload_file(filename, 'kcs-test-karaoke-songs', 'video.mp4')
