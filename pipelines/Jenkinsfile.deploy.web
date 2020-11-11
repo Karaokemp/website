@@ -23,7 +23,7 @@ pipeline {
     stages{
         stage("Cloud Services") {
             steps {
-                dir('python'){                
+                dir('cloud/python'){                
                     sh 'pip install -r requirements.txt -t .'
                 }
                 withAWS(credentials:"aws", region:"eu-central-1") { 
