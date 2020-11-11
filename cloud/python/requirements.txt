@@ -1,2 +1,2 @@
 youtube_dl
-boto3=1.14.23
+boto3==1.14.23
