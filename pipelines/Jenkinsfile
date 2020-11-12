@@ -63,7 +63,7 @@ pipeline {
     }
     stage("Create S3 Artifacts"){
       steps{
-              zip zipFile: "frontend.zip", archive: true, dir:"${SERVICE}",glob: '{src/,*}'
+              zip zipFile: "frontend.zip", archive: true, dir:"${SERVICE}",glob: '*'
               withAWS(credentials:"aws", region:"eu-central-1"){
                 //s3Upload(workingDir:"frontend",includePathPattern:"**",excludePathPattern:"node_modules/**",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/frontend")
               }
