@@ -65,7 +65,7 @@ pipeline {
       steps{
               zip zipFile: "frontend.zip", archive: true, dir:"${SERVICE}",glob: '{src/,*}'
               withAWS(credentials:"aws", region:"eu-central-1"){
-                s3Upload(workingDir:"frontend",includePathPattern:"**",excludePathPattern:"node_modules/**",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/frontend")
+                //s3Upload(workingDir:"frontend",includePathPattern:"**",excludePathPattern:"node_modules/**",bucket:"karaokemp-artifacts/karaokemp-website/COMMIT-${GIT_COMMIT}/frontend")
               }
               sh "echo '${GIT_COMMIT}' > /builder_cache/FRONTEND_LAST_BUILD"
       }
