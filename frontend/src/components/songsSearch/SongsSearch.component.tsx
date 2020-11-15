@@ -90,7 +90,7 @@ export default class SongsSearchComponent extends Component<{}, {
     return(<div className="container">
   <div className="row">
     <div className="col-6 col-lg-6">
-  <h1>Welcome to The Karaokemp! </h1>
+  <h1>Welcome to The Karaokemp!!! </h1>
   <p>Song: {this.context!.songs[0]}</p>
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px'}}/></div> <br/><hr/>
         

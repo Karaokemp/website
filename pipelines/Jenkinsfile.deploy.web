@@ -46,7 +46,8 @@ pipeline {
             }
             steps {
                 withAWS(credentials:"aws", region:"eu-central-1") {
-                    sh "aws s3 sync  s3://karaokemp-artifacts/karaokemp-website/${DEPLOY_COMMIT}/frontend frontend"
+                    s3Download(file: 'frontend.zip', bucket: 'karaokemp-artifacts', path: "karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend.zip")
+                    unzip zipFile: 'frontend.zip', dir: 'frontend'
                     dir('frontend'){
                         sh 'npm install'
                         sh 'npm run build'
