@@ -5,6 +5,7 @@ Description:
 
 Globals:
   Function:
+    Runtime: python3.8
     Environment:
       Variables: 
         S3_BUCKET : !Ref KaraokeSongsBucket
@@ -26,9 +27,11 @@ Resources:
   ListSongsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Runtime: nodejs12.x
-      MemorySize: 128
-      Handler: ./dist/app.listSongs
+      MemorySize: 3008 
+      Timeout: 180
+      CodeUri: ./
+      Handler: app.listSongs
+      Runtime: python3.8
       Events:
         ListSongs:
           Type: HttpApi
@@ -41,10 +44,9 @@ Resources:
   UploadFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Runtime: python3.8
       MemorySize: 3008 
       Timeout: 180
-      CodeUri: python/
+      CodeUri: ./
       Handler: app.upload
       Runtime: python3.8      
       Events:
