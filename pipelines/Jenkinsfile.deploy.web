@@ -57,6 +57,8 @@ pipeline {
         stage("Smoke Test"){
             steps{
                 sh  "curl -i ${getWebsiteURL(getStackName())}"
+                sh  "curl -i ${getListFunctionURL(getStackName())}"
+
 
             }
         }
@@ -81,6 +83,15 @@ String getFrontendBucket() {
     }
 }
 String getWebsiteURL(String stackName){
+  script{
+    return getStackOutput('Website')
+  } 
+}
+String String getWebsiteURL(String stackName){
+  script{
+    return getStackOutput('ListFunction')
+  } 
+}(String stackName){
   script{
     return getStackOutput('Website')
   } 
