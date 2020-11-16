@@ -1,12 +1,15 @@
+import os
 import json
 from requirements import youtube_dl 
 from requirements import boto3
+
+S3_BUCKET = os.environ.get('S3_BUCKET')
 
 s3 = boto3.resource('s3')
 
 def listSongs(event, context):
     response = s3.meta.client.list_objects_v2(
-    Bucket='kcs-test-karaoke-songs',
+    Bucket = S3_BUCKET,
 )
     songs = list(map(lambda x: x['Key'],response['Contents']))
     return packageResponse(songs)
