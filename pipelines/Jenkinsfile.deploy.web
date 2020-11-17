@@ -87,7 +87,7 @@ String getWebsiteURL(String stackName){
     return getStackOutput('Website')
   } 
 }
-String String getWebsiteURL(String stackName){
+String getListFunctionURL(String stackName){
   script{
     return getStackOutput('ListFunction')
   } 
