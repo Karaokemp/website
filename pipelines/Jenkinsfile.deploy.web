@@ -89,14 +89,10 @@ String getWebsiteURL(String stackName){
 }
 String getListFunctionURL(String stackName){
   script{
-    return getStackOutput('ListFunction')
-  } 
-}(String stackName){
-  script{
-    return getStackOutput('Website')
-  } 
+        return getStackOutput('ListFunction')
+  }
 }
-//assume there is output json made of stack defined outputs
+//assume there is output.json made of stack defined outputs
 String getStackOutput(String key){
    script{
     def outputs = readJSON file: 'output.json'
