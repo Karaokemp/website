@@ -47,7 +47,7 @@ Resources:
       MemorySize: 3008 
       Timeout: 180
       CodeUri: ./
-      Handler: app.upload
+      Handler: app.uploadSong
       Runtime: python3.8      
       Events:
         UploadRequest:

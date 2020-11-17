@@ -14,24 +14,43 @@ def listSongs(event, context):
         songs.append(obj.key)
     return packageResponse(songs)
 
-def upload(event, context):
-    download('AUjmpbd-U2Q')
-    return packageResponse(event)
+def uploadSong(event, context):
+    source = event['pathParameters']['source']
+    payload = 'Nothing'
+    if(source == 'youtube'):
+            print('Bla!')
+            videoId = event['queryStringParameters']['video']
+            payload = uploadSongFromYoutube(videoId)
+    return packageResponse(payload)
 
 def download(videoId):
-    filename = '/tmp/videos/video.mp4'
+    filename = '/tmp/videos/' + videoId + '.mp4'
     ydl_opts = {
     'outtmpl': filename
 } 
     link = 'https://www.youtube.com/watch?v=' + videoId
     with youtube_dl.YoutubeDL(ydl_opts) as ydl: 
 	    ydl.download([link])
-    s3.meta.client.upload_file(filename, 'kcs-test-karaoke-songs', 'video.mp4')
+    s3.meta.client.upload_file(filename, 'kcs-test-karaoke-songs', videoId + '.mp4')
 
 def packageResponse(payload):
     return {
         "statusCode": 200,
         "body": json.dumps(payload)
     }
-response = listSongs({},{})
-print(response)
+def uploadSongFromYoutube(videoId):
+    url = 'https://www.youtube.com/watch?v=' + videoId
+    filename = '/tmp/videos/' + videoId + '.mp4'
+    ydl_opts = {
+    'outtmpl': filename
+}
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            songInfo = ydl.extract_info(url, download=True)
+            key = videoId + '.mp4'
+            s3.meta.client.upload_file(filename, S3_BUCKET, key)
+            return {
+                'title' : songInfo['title'],
+                'videoId': videoId
+            }
+songs = listSongs({},{})
+print(songs)
