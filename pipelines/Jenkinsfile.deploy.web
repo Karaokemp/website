@@ -56,8 +56,8 @@ pipeline {
         }
         stage("Smoke Test"){
             steps{
-                sh  "curl -i ${getWebsiteURL(getStackName())}"
-                sh  "curl -i ${getListFunctionURL(getStackName())}"
+                sh  "curl -i ${getWebsiteURL(getStackName())} | grep 200"
+                sh  "curl -i ${getListFunctionURL(getStackName())} | grep 200"
 
 
             }
