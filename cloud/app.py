@@ -20,7 +20,6 @@ def uploadSong(event, context):
     source = event['pathParameters']['source']
     payload = 'Nothing'
     if(source == 'youtube'):
-            print('Bla!')
             videoId = event['queryStringParameters']['video']
             payload = uploadSongFromYoutube(videoId)
     return packageResponse(payload)
@@ -38,9 +37,9 @@ def uploadSongFromYoutube(videoId):
 }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             songInfo = ydl.extract_info(url, download=True)
-            #key = helper.format_filename(songInfo['title'])
-            key = videoId + '.mp4'
-            s3.meta.client.upload_file(filename, S3_BUCKET, key)
+            key = helper.format_filename(songInfo['title'])
+            #key = videoId + '.mp4'
+            s3.meta.client.upload_file(filename, S3_BUCKET, key, ExtraArgs={'ACL': 'public-read','ContentType': 'video/mp4','Metadata':{'secret':'Tusik!'}})
             return {
                 'title' : songInfo['title'],
                 'videoId': videoId
