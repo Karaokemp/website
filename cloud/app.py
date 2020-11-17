@@ -8,12 +8,11 @@ S3_BUCKET = os.environ.get('S3_BUCKET')
 s3 = boto3.resource('s3')
 
 def listSongs(event, context):
-    response = s3.meta.client.list_objects_v2(
-    Bucket = S3_BUCKET,
-)
-    songs = list(map(lambda x: x['Key'],response['Contents']))
+    bucket = s3.Bucket(S3_BUCKET)
+    songs = list()
+    for obj in bucket.objects.all():
+        songs.append(obj.key)
     return packageResponse(songs)
-
 
 def upload(event, context):
     download('AUjmpbd-U2Q')
