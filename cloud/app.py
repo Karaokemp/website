@@ -34,3 +34,5 @@ def packageResponse(payload):
         "statusCode": 200,
         "body": json.dumps(payload)
     }
+response = listSongs({},{})
+print(response)
