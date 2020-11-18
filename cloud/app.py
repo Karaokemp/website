@@ -29,6 +29,8 @@ def packageResponse(payload):
         "statusCode": 200,
         "body": json.dumps(payload)
     }
+def format_cloudUrl(key):
+    return 'https://{}.s3.eu-central-1.amazonaws.com/{}'.format(S3_BUCKET,key)
 def uploadSongFromYoutube(videoId):
     url = 'https://www.youtube.com/watch?v=' + videoId
     filename = '/tmp/videos/' + videoId + '.mp4'
@@ -38,9 +40,10 @@ def uploadSongFromYoutube(videoId):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             songInfo = ydl.extract_info(url, download=True)
             key = helper.format_filename(songInfo['title'])
-            #key = videoId + '.mp4'
-            s3.meta.client.upload_file(filename, S3_BUCKET, key, ExtraArgs={'ACL': 'public-read','ContentType': 'video/mp4','Metadata':{'secret':'Tusik!'}})
-            return {
+            song = {
+                'videoId':videoId,
                 'title' : songInfo['title'],
-                'videoId': videoId
+                'cloudUrl': format_cloudUrl(key)
             }
+            s3.meta.client.upload_file(filename, S3_BUCKET, key, ExtraArgs={'ACL': 'public-read','ContentType': 'video/mp4','Metadata':song})
+            return song
