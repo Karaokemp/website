@@ -39,7 +39,7 @@ def uploadSongFromYoutube(videoId):
 }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             songInfo = ydl.extract_info(url, download=True)
-            key = helper.format_filename(songInfo['title'])
+            key = helper.format_filename(songInfo['title']) + '.mp4'
             song = {
                 'videoId':videoId,
                 'title' : songInfo['title'],
