@@ -3,7 +3,6 @@ import React from "react";
 import { KaraokempSong, MessageTheme, SecondaryComponentMode, Song} from "../types";
 
 const KARAOKEMP_API = process.env.REACT_APP_KARAOKEMP_API || 'http://localhost:4000'
-const {YOUTUBE_API_KEY} = process.env
 
 export class Store {
   @observable
