@@ -13,7 +13,6 @@ import MSG from '../message.component'
 
 const DEFAULT_VIDEO_ID = 'FxyQTb6n4_I'
 const KARAOKEMP_API = process.env.REACT_APP_KARAOKEMP_API || 'http://localhost:4000'
-const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY || 'http://localhost:4000'
 
 
 
@@ -93,7 +92,6 @@ export default class SongsSearchComponent extends Component<{}, {
   <div className="row">
     <div className="col-6 col-lg-6">
   <h1>Welcome to The Karaokemp!!! </h1>
-  <p>Key: {YOUTUBE_API_KEY}</p>
   <p>Song: {this.context!.songs[0]}</p>
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px'}}/></div> <br/><hr/>
         
@@ -119,6 +117,5 @@ export default class SongsSearchComponent extends Component<{}, {
   componentDidMount(){
     this.context!.updateSongs()
   }
-
 
 }

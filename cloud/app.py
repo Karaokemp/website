@@ -8,12 +8,21 @@ import helper
 S3_BUCKET = os.environ.get('S3_BUCKET')
 
 s3 = boto3.resource('s3')
+client = boto3.client('s3')
+
 
 def listSongs(event, context):
     bucket = s3.Bucket(S3_BUCKET)
     songs = list()
     for obj in bucket.objects.all():
-        songs.append(obj.key)
+        response = client.head_object(Bucket=S3_BUCKET,Key=obj.key)
+        objData = response['ResponseMetadata']['HTTPHeaders']
+        song = {
+            'videoId' : objData['x-amz-meta-videoid'],
+            'title' : objData['x-amz-meta-title'],
+            'cloudUrl' : objData["x-amz-meta-cloudurl"]
+        }
+        songs.append(song)
     return packageResponse(songs)
 
 def uploadSong(event, context):

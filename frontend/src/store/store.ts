@@ -3,14 +3,13 @@ import React from "react";
 import { KaraokempSong, MessageTheme, SecondaryComponentMode, Song} from "../types";
 
 const KARAOKEMP_API = process.env.REACT_APP_KARAOKEMP_API || 'http://localhost:4000'
+const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY || 'NO KEY'
+
+
 
 export class Store {
   @observable
-  songs:string[] = []
-  @observable
-  requests = new Array<Song>()
-  @observable
-  readySongs =  new Array<KaraokempSong>()
+  songs:Song[] = []
   @observable
   selectedVideoId = 'FxyQTb6n4_I'
   @observable
@@ -40,7 +39,7 @@ export class Store {
     .then(response => response.json())
     .then(songs =>{
       console.log(`Fetched Songs!`)
-      this.songs = songs  
+      console.log(songs)  
     });
   }
 
