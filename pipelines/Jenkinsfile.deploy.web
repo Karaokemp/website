@@ -46,7 +46,7 @@ pipeline {
                     s3Download(file: 'frontend.zip', bucket: 'karaokemp-artifacts', path: "karaokemp-website/COMMIT-${DEPLOY_COMMIT}/frontend.zip")
                     unzip zipFile: 'frontend.zip', dir: 'frontend'
                     dir('frontend'){
-                        sh 'npm cache clean --force'
+                        //sh 'npm cache clean --force'
                         sh 'npm install'
                         sh 'npm run build'
                         sh "aws s3 sync build s3://${getFrontendBucket()} --acl public-read"
