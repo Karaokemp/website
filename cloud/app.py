@@ -56,5 +56,3 @@ def uploadSongFromYoutube(videoId):
             }
             s3.meta.client.upload_file(filename, S3_BUCKET, key, ExtraArgs={'ACL': 'public-read','ContentType': 'video/mp4','Metadata':song})
             return song
-response = listSongs({},{})
-print(response['body'])
