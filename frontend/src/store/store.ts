@@ -1,49 +1,40 @@
 import { observable,action, computed, set} from "mobx";
+import { title } from "process";
 import React from "react";
-import { KaraokempSong, MessageTheme, SecondaryComponentMode, Song} from "../types";
-
-const KARAOKEMP_API = process.env.REACT_APP_KARAOKEMP_API || 'http://localhost:4000'
-const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY || 'NO KEY'
-
+import {KaraokempSong, SecondaryComponentMode, Song} from "../types";
+import SongsService from '../services/SongsService'
 
 
 export class Store {
   @observable
-  songs:Song[] = []
+  songsInventory:KaraokempSong[] = new Array<KaraokempSong>()
   @observable
-  selectedVideoId = 'FxyQTb6n4_I'
+  suggestions: Song[] = new Array<Song>()
   @observable
-  message = {text:'Here is some text!',theme:MessageTheme.SUCCESS}
+  selectedSong: Song = new KaraokempSong('1234','Baby got back','https://kcs-test-karaoke-songs.s3.eu-central-1.amazonaws.com/Baby_Got_Back_in_the_Style_of_Sir_Mix-A-Lot_karaoke_video_lyrics_(no_lead_vocal).mp4')
   @observable
-  secondaryComponent = SecondaryComponentMode.BACKEND_STATE      
+  secondaryComponent = SecondaryComponentMode.SONGS_INVENTORY      
   @action
-  selectSong(videoId: string) {
-    this.selectedVideoId = videoId
-  }
-  @action
-  toggleTheme(){
-    this.message.theme = this.message.theme == MessageTheme.ERROR ? MessageTheme.SUCCESS: MessageTheme.ERROR
-  }
-   @computed
-   get messageThemeBootstrapClasses() {
-        switch(this.message.theme){
-          case MessageTheme.ERROR:
-          return "alert alert-danger alert-dismissible fade show"
-          case MessageTheme.SUCCESS:
-          return "alert alert-success"
-          }
-    }
-  @action
-  updateSongs(){
-    fetch(`${KARAOKEMP_API}/songs`)
-    .then(response => response.json())
-    .then(songs =>{
-      console.log(`Fetched Songs!`)
-      console.log(songs)  
-    });
+  selectSong(song: Song) {
+    this.selectedSong = song
   }
 
+    @action
+    
+  @action
+  updateSuggestions(term:string){
+    SongsService.getYoutubeResults(term).then(songs=>{
+      this.suggestions = songs;
+    })
+  }
+  @action
+  updateSongsInventory(){
+    SongsService.getBucketSongs().then(songs=>{
+      this.songsInventory = songs
+      console.log(this.songsInventory.length)
+    }).catch(err=>{
+      console.error(err.message)
+    })
+  }
 }
-
-
 export const Context = React.createContext(new Store())

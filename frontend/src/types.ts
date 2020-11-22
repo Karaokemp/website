@@ -1,22 +1,18 @@
 export class Song{
     videoId:string
     title:string
-    imageUrl:URL | null
 
-    constructor(videoId:string,title:string,imagePath:string){
+    constructor(videoId:string,title:string){
         this.videoId = videoId
         this.title = title
-            this.imageUrl = imagePath ? new URL(imagePath) : null
     }
 }
 
 export class KaraokempSong extends Song{
-    filename: string
-    cloudUrl:S3URL
+    cloudUrl:string
 
-    constructor(videoId:string,title:string,imagePath:string,filename:string,cloudUrl:S3URL){
-       super(videoId,title,imagePath)
-        this.filename = filename
+    constructor(videoId:string,title:string,cloudUrl:string){
+       super(videoId,title)
         this.cloudUrl = cloudUrl
     }
 
@@ -27,7 +23,7 @@ export class SongSet{
         this.list = new Array<KaraokempSong>()
     }
     public add(song:KaraokempSong){
-        if(!this.list.map(song=>song.filename).includes(song.filename)){
+        if(!this.list.map(song=>song.videoId).includes(song.videoId)){
             this.list.push(song);
         }
     }
@@ -76,7 +72,7 @@ export class YoutubeURLTypeError extends TypeError{
 }
 
 export enum SecondaryComponentMode {
-    BACKEND_STATE,
+    SONGS_INVENTORY,
     SONG_SUGGESTIONS,
     NOTHING
   }
