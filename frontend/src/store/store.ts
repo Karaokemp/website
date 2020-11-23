@@ -19,8 +19,8 @@ export class Store {
     this.selectedSong = song
   }
   @action
-  processSelectedSong(youtubeSong:Song){
-    SongsService.processSong(youtubeSong).then(karaokempSong=>{
+  processSelectedSong(){
+    SongsService.processSong(this.selectedSong).then(karaokempSong=>{
       console.log(karaokempSong)
     })
   }   
@@ -38,5 +38,6 @@ export class Store {
       console.error(err.message)
     })
   }
+  
 }
 export const Context = React.createContext(new Store())

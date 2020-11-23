@@ -5,12 +5,10 @@ import './SongsSearch.css'
 import karaokempLogo from '../../pics/logo.png';
 import youtubeLogo from '../../pics/youtube-logo.svg';
 
-import ReactPlayer from 'react-player'
 import SecondaryComponent from '../secondary.component'
 import {Context} from '../../store/store';
 import MSG from '../message.component'
 import SongsService from '../../services/SongsService';
-import ValidMark from '../validMark.component'
 import SongDisplayer from '../SongDisplayer';
 
 @observer
@@ -37,6 +35,7 @@ export default class SongsSearchComponent extends Component<{}, {
   <div className="row">
     <div className="col-6 col-lg-6">
   <h1>Karaokemp Website </h1>
+  <p>{this.context.songsInventory.length}</p>
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px',width:'100px'}}/></div> <br/><hr/>
         
         <div className='instructions'><p>Steal Video from &nbsp;<img src={youtubeLogo}alt=''/>
@@ -47,7 +46,7 @@ export default class SongsSearchComponent extends Component<{}, {
       
        <MSG message ={this.state.message} />
         </p></div>
-        <SongDisplayer song = {this.context.selectedSong}/>
+        <SongDisplayer song = {this.context.selectedSong} onClick={this.handleClickDisplayedSong.bind(this)}/>
   
 
     </div>
@@ -76,6 +75,10 @@ export default class SongsSearchComponent extends Component<{}, {
     }else{
       this.reportTerm()
   }
+}
+
+handleClickDisplayedSong(){
+  this.context.processSelectedSong()
 }
 handleKeyPressed(event:any){
   if(event.key==='Enter'){
@@ -117,8 +120,9 @@ handleKeyPressed(event:any){
       message:{text: '', theme: MessageTheme.NOTHING}
     })
   }
-  onPlaySelectedSong(){
-    console.log('select song!')
+
+  componentDidMount(){
+    this.context.updateSongsInventory()
   }
 
 }

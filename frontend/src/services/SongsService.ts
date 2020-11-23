@@ -20,13 +20,12 @@ export default class{
       static async getBucketSongs(): Promise<KaraokempSong[]>{
             let bucketSongs = new Array<KaraokempSong>()
 
-            await fetch(`${KARAOKEMP_API}/songs`)
+            const objects:KaraokempSong[] = await fetch(`${KARAOKEMP_API}/songs`)
             .then(res => res.json())
-            .then((objects:KaraokempSong[]) => {
             let songs = objects.map(obj=> new KaraokempSong(obj.videoId,obj.title,'https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg',obj.cloudUrl))
             console.log()
             bucketSongs = songs
-            });
+
       return bucketSongs;
       }
 
@@ -43,7 +42,7 @@ export default class{
             return result
       }
       static async processSong(song:Song): Promise<KaraokempSong>{
-            let result = await fetch(`${KARAOKEMP_API}/songs/youtube?video=${song.videoId}`,{method:'PUT'})
+            let result = await fetch(`${KARAOKEMP_API}/songs/youtube?video=${song.videoId}`,{method:'POST'})
             .then(response => response.json())
             return result
       } 
