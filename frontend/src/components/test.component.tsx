@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import ReactPlayer from 'react-player'
+import { KaraokempSong, Song } from '../types';
+import SongDisplayer from './SongDisplayer';
 
 
 export default class App extends Component{
@@ -7,17 +9,9 @@ export default class App extends Component{
     super(props);
   }
   render () {
+    const song = new KaraokempSong('"AUjmpbd-U2Q','The Bad Touch - The Bloodhound Gang | Karaoke Version | KaraFun','https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg','https://kcs-test-karaoke-songs.s3.eu-central-1.amazonaws.com/Baby_Got_Back_in_the_Style_of_Sir_Mix-A-Lot_karaoke_video_lyrics_(no_lead_vocal).mp4')
     return (
-    <div className='player-wrapper'>
-        <ReactPlayer
-        className='react-player fixed-bottom'
-        url= 'https://karaoke-songs.s3.eu-central-1.amazonaws.com/The+Bad+Touch+-+The+Bloodhound+Gang+_+Karaoke+Version+_+KaraFun-AUjmpbd-U2Q.mp4'
-        width='100%'
-        height='100%'
-        controls = {true}
-
-        />
-    </div>
+        <SongDisplayer song = {song}/>
     )
 }
 }

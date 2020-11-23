@@ -11,16 +11,19 @@ export class Store {
   @observable
   suggestions: Song[] = new Array<Song>()
   @observable
-  selectedSong: Song = new KaraokempSong('1234','Baby got back','https://kcs-test-karaoke-songs.s3.eu-central-1.amazonaws.com/Baby_Got_Back_in_the_Style_of_Sir_Mix-A-Lot_karaoke_video_lyrics_(no_lead_vocal).mp4')
+  selectedSong: Song = new Song('FxyQTb6n4_I','MIKA - Love Today (Karaoke)','https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg')
   @observable
   secondaryComponent = SecondaryComponentMode.SONGS_INVENTORY      
   @action
   selectSong(song: Song) {
     this.selectedSong = song
   }
-
-    @action
-    
+  @action
+  processSelectedSong(youtubeSong:Song){
+    SongsService.processSong(youtubeSong).then(karaokempSong=>{
+      console.log(karaokempSong)
+    })
+  }   
   @action
   updateSuggestions(term:string){
     SongsService.getYoutubeResults(term).then(songs=>{
@@ -31,7 +34,6 @@ export class Store {
   updateSongsInventory(){
     SongsService.getBucketSongs().then(songs=>{
       this.songsInventory = songs
-      console.log(this.songsInventory.length)
     }).catch(err=>{
       console.error(err.message)
     })

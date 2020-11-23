@@ -1,18 +1,20 @@
 export class Song{
     videoId:string
     title:string
+    image: string
 
-    constructor(videoId:string,title:string){
+    constructor(videoId:string,title:string, image:string){
         this.videoId = videoId
         this.title = title
+        this.image = image
     }
 }
 
 export class KaraokempSong extends Song{
     cloudUrl:string
 
-    constructor(videoId:string,title:string,cloudUrl:string){
-       super(videoId,title)
+    constructor(videoId:string,title:string,image:string,cloudUrl:string){
+       super(videoId,title,image)
         this.cloudUrl = cloudUrl
     }
 

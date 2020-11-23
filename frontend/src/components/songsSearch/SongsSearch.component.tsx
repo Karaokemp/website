@@ -7,9 +7,11 @@ import youtubeLogo from '../../pics/youtube-logo.svg';
 
 import ReactPlayer from 'react-player'
 import SecondaryComponent from '../secondary.component'
-import ValidMark from '../validMark.component'
 import {Context} from '../../store/store';
 import MSG from '../message.component'
+import SongsService from '../../services/SongsService';
+import ValidMark from '../validMark.component'
+import SongDisplayer from '../SongDisplayer';
 
 @observer
 export default class SongsSearchComponent extends Component<{}, {
@@ -34,24 +36,19 @@ export default class SongsSearchComponent extends Component<{}, {
     return(<div className="container">
   <div className="row">
     <div className="col-6 col-lg-6">
-  <h1>Welcome to The Karaokemp!!! </h1>
-      <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px'}}/></div> <br/><hr/>
+  <h1>Karaokemp Website </h1>
+      <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px',width:'100px'}}/></div> <br/><hr/>
         
-        <div className='instructions'>Steal Video from &nbsp;<img src={youtubeLogo}alt=''/>
+        <div className='instructions'><p>Steal Video from &nbsp;<img src={youtubeLogo}alt=''/>
         <input type="text" ref = {this.inputRef}
         onChange={this.handleInputChange.bind(this)}
         onKeyDown={this.handleKeyPressed.bind(this)}
-        style={{ width: "80%" }} placeholder='title, artist, link'/>
-        <ValidMark valid={!this.state.message && this.state.term.length >0 }/>
-
+        style={{ width: "90%" }} placeholder='title, artist, link'/>
+      
        <MSG message ={this.state.message} />
-        </div>
-        <ReactPlayer url="https://kcs-test-karaoke-songs.s3.eu-central-1.amazonaws.com/Baby_Got_Back_in_the_Style_of_Sir_Mix-A-Lot_karaoke_video_lyrics_(no_lead_vocal).mp4" 
-        playing
-  /> <h4>{this.context.selectedSong.title}</h4>
-                <button  className="btn btn-primary" onClick={this.handleRequest.bind(this)}>Request song!</button>
-
-        <hr/>
+        </p></div>
+        <SongDisplayer song = {this.context.selectedSong}/>
+  
 
     </div>
     <div className="col-6 col-lg-6">
@@ -63,35 +60,36 @@ export default class SongsSearchComponent extends Component<{}, {
 
   handleInputChange(change:ChangeEvent<HTMLInputElement> ){
     let value = this.inputRef.current!.value
-    if(value.length < 4){
+    if(value.length < 3){
       this.cleanMessage()
     } else if(isYoutubePath(value)){
       let link = new YoutubeURL(value)
-      let videoId = link.searchParams.get('v')
+      let videoId = link!.searchParams.get('v')
+      if(videoId){
+        SongsService.getYoutubeSong(videoId).then(song=>{
+          this.context.selectSong(song)
+        })
+      }
+      
       this.reportLink()
 
     }else{
       this.reportTerm()
   }
 }
-
 handleKeyPressed(event:any){
   if(event.key==='Enter'){
+    
     const term = this.inputRef.current?.value
-    console.log(`Search "${term}" on Youtube!`)
   }
-
 }
-
   handleRequest(){
-    if(this.context.selectedSong.videoId){
+    if(this.context.selectedSong){
       this.sendRequest();
     }else{
       this.setState({message: {text:"Could not send request!",theme:MessageTheme.ERROR}})
     }
-
   }
-
   sendRequest(){
     console.log('sending request!')
   }
@@ -118,7 +116,9 @@ handleKeyPressed(event:any){
     this.setState({
       message:{text: '', theme: MessageTheme.NOTHING}
     })
-
+  }
+  onPlaySelectedSong(){
+    console.log('select song!')
   }
 
 }

@@ -10,7 +10,7 @@ export default class{
             await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&type=video&q=${term}&part=snippet&fields=items(id/videoId,snippet/title)&maxResults=3`)
             .then(res => res.json())
             .then((response:{items:{id:{videoId:string},snippet:{title:string}}[]}) => {
-            const songs = response.items.map(item=>new Song(item.id.videoId,item.snippet.title))
+            const songs = response.items.map(item=>new Song(item.id.videoId,item.snippet.title,'https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg'))
             results = songs
             }).catch(err=>{
                   console.error(err.message)
@@ -23,9 +23,28 @@ export default class{
             await fetch(`${KARAOKEMP_API}/songs`)
             .then(res => res.json())
             .then((objects:KaraokempSong[]) => {
-            let songs = objects.map(obj=> new KaraokempSong(obj.videoId,obj.title,obj.cloudUrl))
+            let songs = objects.map(obj=> new KaraokempSong(obj.videoId,obj.title,'https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg',obj.cloudUrl))
+            console.log()
             bucketSongs = songs
             });
       return bucketSongs;
       }
+
+      static async getYoutubeSong(videoId: string) : Promise<Song>{
+            let result: Song = new Song('AUjmpbd-U2Q','The Bad Touch - The Bloodhound Gang','https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg')
+            fetch(`https://www.googleapis.com/youtube/v3/videos?key=${YOUTUBE_API_KEY}&type=video&id=${videoId}&part=snippet&fields=items(id,snippet/title)`)
+            .then(res => res.json())
+            .then((response:{items:{id:string,snippet:{title:string}}[]}) => {
+                  result = new Song(response.items[0].id,response.items[0].snippet.title,'https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg')
+                  console.log(result)
+            }).catch(err=>{
+                  console.error(err.message)
+            }) 
+            return result
+      }
+      static async processSong(song:Song): Promise<KaraokempSong>{
+            let result = await fetch(`${KARAOKEMP_API}/songs/youtube?video=${song.videoId}`,{method:'PUT'})
+            .then(response => response.json())
+            return result
+      } 
 }

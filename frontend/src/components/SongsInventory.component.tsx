@@ -16,7 +16,10 @@ export default class SongsInventoryComponent extends Component{
 
         <hr/>
         <ol>
-        {this.context.songsInventory.map((song:KaraokempSong,index:number) => <li key={index}><a href ={song.cloudUrl}>{song.title}</a></li>)}
+        {this.context.songsInventory.map((song:KaraokempSong,index:number) => <li key={index}><a 
+        href ={song.cloudUrl}
+        target="_blank"
+        >{song.title}</a></li>)}
           </ol>
       </div>)
     }
