@@ -34,7 +34,7 @@ export default class SongsSearchComponent extends Component<{}, {
     return(<div className="container">
   <div className="row">
     <div className="col-6 col-lg-6">
-  <h1>Karaokemp Website </h1>
+  <h1>Karaokemp Website!</h1>
   <p>{this.context.songsInventory.length}</p>
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px',width:'100px'}}/></div> <br/><hr/>
         

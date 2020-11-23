@@ -4,6 +4,6 @@ import App from './App';
 
 test('page shows greetings', () => {
   const { getByText } = render(<App />);
-  const title = getByText(/Welcome to The Karaokemp!/i);
+  const title = getByText(/>Karaokemp Website!/i);
   expect(title).toBeInTheDocument();
 });
