@@ -9,6 +9,7 @@ export default class SongDisplayer extends Component<{song:Song,onClick:any},{}>
 
     render(){
         const songType = this.props.song.constructor.name
+        console.log(`Selected Song Type: ${songType}`)
         let window
         if( songType === 'KaraokempSong'){
             let playable = this.props.song as KaraokempSong
