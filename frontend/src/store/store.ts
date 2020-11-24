@@ -11,7 +11,7 @@ export class Store {
   @observable
   suggestions: Song[] = new Array<Song>()
   @observable
-  selectedSong: Song = new Song('FxyQTb6n4_I','MIKA - Love Today (Karaoke)','https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg')
+  selectedSong: Song = new Song('FxyQTb6n4_I','MIKA - Love Today (Karaoke)','https://i.ytimg.com/vi/FxyQTb6n4_I/maxresdefault.jpg')
   @observable
   secondaryComponent = SecondaryComponentMode.SONGS_INVENTORY      
   @action
