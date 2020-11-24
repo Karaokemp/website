@@ -102,7 +102,7 @@ handleKeyPressed(event:any){
 
   reportLink(){
     this.setState({
-      message:{text: 'Found Youtube Link!', theme: MessageTheme.SUCCESS}
+      message:{text: 'Found Youtube Link! click on the image to upload it', theme: MessageTheme.SUCCESS}
     })
   }
 
