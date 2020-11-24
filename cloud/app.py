@@ -35,7 +35,12 @@ def uploadSong(event, context):
 
 def packageResponse(payload):
     return {
-        "statusCode": 200,
+        'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'PUT,POST,GET'
+        },
         "body": json.dumps(payload)
     }
 def format_cloudUrl(key):
@@ -49,9 +54,12 @@ def uploadSongFromYoutube(videoId):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             songInfo = ydl.extract_info(url, download=True)
             key = helper.format_filename(songInfo['title']) + '.mp4'
+            songImage = songInfo['thumbnails'].pop()['url']
+
             song = {
                 'videoId':videoId,
                 'title' : songInfo['title'],
+                'image' : songImage,
                 'cloudUrl': format_cloudUrl(key)
             }
             s3.meta.client.upload_file(filename, S3_BUCKET, key, ExtraArgs={'ACL': 'public-read','ContentType': 'video/mp4','Metadata':song})

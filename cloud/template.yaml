@@ -54,7 +54,7 @@ Resources:
           Type: HttpApi
           Properties:
             ApiId: !Ref SongsApi
-            Method: PUT
+            Method: POST
             Path: /songs/{source}
       Policies:
         - AmazonS3FullAccess

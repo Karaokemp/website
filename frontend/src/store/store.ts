@@ -21,7 +21,7 @@ export class Store {
   @action
   processSelectedSong(){
     SongsService.processSong(this.selectedSong).then(karaokempSong=>{
-      console.log(karaokempSong)
+      this.selectedSong = karaokempSong
     })
   }   
   @action

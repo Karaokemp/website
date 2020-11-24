@@ -42,8 +42,9 @@ export default class{
             return result
       }
       static async processSong(song:Song): Promise<KaraokempSong>{
-            let result = await fetch(`${KARAOKEMP_API}/songs/youtube?video=${song.videoId}`,{method:'POST'})
+            let result:any = await fetch(`${KARAOKEMP_API}/songs/youtube?video=${song.videoId}`,{method:'POST'})
             .then(response => response.json())
-            return result
+            const cloudSong: KaraokempSong = new KaraokempSong(result.videoId,result.title,result.image,result.cloudUrl)
+            return cloudSong
       } 
 }
