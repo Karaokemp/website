@@ -62,12 +62,11 @@ export default class SongsSearchComponent extends Component<{}, {
       this.cleanMessage()
     } else if(isYoutubePath(value)){
       let link = new YoutubeURL(value)
-      let videoId = link!.searchParams.get('v')
-      if(videoId){
-        SongsService.getYoutubeSong(videoId).then(song=>{
+      
+        SongsService.getYoutubeSong(link).then(song=>{
           this.context.selectSong(song)
         })
-      }
+      
       
       this.reportLink()
 

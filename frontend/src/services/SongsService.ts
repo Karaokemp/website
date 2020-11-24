@@ -1,4 +1,5 @@
-import { Song,KaraokempSong} from "../types";
+import { classicNameResolver } from "typescript";
+import { Song,KaraokempSong, YoutubeURL} from "../types";
 
 const KARAOKEMP_API = process.env.REACT_APP_KARAOKEMP_API
 const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY
@@ -29,17 +30,14 @@ export default class{
       return bucketSongs;
       }
 
-      static async getYoutubeSong(videoId: string) : Promise<Song>{
-            let result: Song = new Song('AUjmpbd-U2Q','The Bad Touch - The Bloodhound Gang','https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg')
-            fetch(`https://www.googleapis.com/youtube/v3/videos?key=${YOUTUBE_API_KEY}&type=video&id=${videoId}&part=snippet&fields=items(id,snippet/title)`)
+      static async getYoutubeSong(link: YoutubeURL) : Promise<Song>{
+            let videoId = link!.searchParams.get('v')
+            if(videoId){}
+            
+            const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${YOUTUBE_API_KEY}&type=video&id=${videoId}&part=snippet&fields=items(id,snippet(title,thumbnails/maxres/url))`)
             .then(res => res.json())
-            .then((response:{items:{id:string,snippet:{title:string}}[]}) => {
-                  result = new Song(response.items[0].id,response.items[0].snippet.title,'https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg')
-                  console.log(result)
-            }).catch(err=>{
-                  console.error(err.message)
-            }) 
-            return result
+            .then((res:{items:{id:string,snippet:{title:string,thumbnails:{maxres:{url:string}}}}[]}) => res.items.pop())
+            return new Song(res!.id,res!.snippet.title,res!.snippet.thumbnails.maxres.url)
       }
       static async processSong(song:Song): Promise<KaraokempSong>{
             let result:any = await fetch(`${KARAOKEMP_API}/songs/youtube?video=${song.videoId}`,{method:'POST'})
