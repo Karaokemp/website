@@ -1,5 +1,4 @@
 import { observable,action, computed, set} from "mobx";
-import { title } from "process";
 import React from "react";
 import {KaraokempSong, SecondaryComponentMode, Song} from "../types";
 import SongsService from '../services/SongsService'
@@ -20,8 +19,9 @@ export class Store {
   }
   @action
   processSelectedSong(){
-    SongsService.processSong(this.selectedSong).then(karaokempSong=>{
-      this.selectedSong = karaokempSong
+    SongsService.processSong(this.selectedSong).then(newKaraokempSong=>{
+      this.selectedSong = newKaraokempSong
+      this.songsInventory.push(newKaraokempSong)
     }).catch(err=>{
       console.error(err.message)
     })
