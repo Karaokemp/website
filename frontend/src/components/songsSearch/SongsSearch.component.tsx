@@ -41,7 +41,7 @@ export default class SongsSearchComponent extends Component<{}, {
         <input type="text" ref = {this.inputRef}
         onChange={this.handleInputChange.bind(this)}
         onKeyDown={this.handleKeyPressed.bind(this)}
-        style={{ width: "90%" }} placeholder='title, artist, link'/>
+        style={{ width: "90%" }} placeholder={`https://www.youtube.com/watch?v=${this.context.selectedSong.videoId}`}/>
       
        <MSG message ={this.state.message} />
         </p></div>
