@@ -1,6 +1,10 @@
 img{
     height:20px
 }
+
+img:hover {
+    cursor: pointer;
+}
 img.big{
     height:200px
 }

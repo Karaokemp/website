@@ -37,7 +37,7 @@ export default class SongsSearchComponent extends Component<{}, {
   <h1>Karaokemp Website!</h1>
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px',width:'100px'}}/></div> <br/><hr/>
         
-        <div className='instructions'><p>Steal Video from &nbsp;<img src={youtubeLogo}alt=''/>
+        <div className='instructions'><p>Paste link from &nbsp;<img src={youtubeLogo}alt=''/>
         <input type="text" ref = {this.inputRef}
         onChange={this.handleInputChange.bind(this)}
         onKeyDown={this.handleKeyPressed.bind(this)}
