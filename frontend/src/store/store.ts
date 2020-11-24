@@ -22,7 +22,6 @@ export class Store {
   processSelectedSong(){
     SongsService.processSong(this.selectedSong).then(karaokempSong=>{
       this.selectedSong = karaokempSong
-      console.log(this.selectedSong)
     }).catch(err=>{
       console.error(err.message)
     })
