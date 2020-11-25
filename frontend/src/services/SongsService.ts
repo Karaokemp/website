@@ -23,7 +23,7 @@ export default class{
 
             const objects:KaraokempSong[] = await fetch(`${KARAOKEMP_API}/songs`)
             .then(res => res.json())
-            let songs = objects.map(obj=> new KaraokempSong(obj.videoId,obj.title,'https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg',obj.cloudUrl))
+            let songs = objects.map(obj=> new KaraokempSong(obj.videoId,obj.title,obj.image,obj.cloudUrl))
             console.log()
             bucketSongs = songs
 
@@ -34,10 +34,10 @@ export default class{
             let videoId = link!.searchParams.get('v')
             if(videoId){}
             
-            const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${YOUTUBE_API_KEY}&type=video&id=${videoId}&part=snippet&fields=items(id,snippet(title,thumbnails/maxres/url))`)
+            const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${YOUTUBE_API_KEY}&type=video&id=${videoId}&part=snippet&fields=items(id,snippet(title,thumbnails))`)
             .then(res => res.json())
-            .then((res:{items:{id:string,snippet:{title:string,thumbnails:{maxres:{url:string}}}}[]}) => res.items.pop())
-            return new Song(res!.id,res!.snippet.title,res!.snippet.thumbnails.maxres.url)
+            .then((res:{items:{id:string,snippet:{title:string,thumbnails:{standard:{url:string}}}}[]}) => res.items.pop())
+            return new Song(res!.id,res!.snippet.title,res!.snippet.thumbnails.standard.url)
       }
       static async processSong(song:Song): Promise<KaraokempSong>{
             let result:any = await fetch(`${KARAOKEMP_API}/songs/youtube?video=${song.videoId}`,{method:'POST'})
