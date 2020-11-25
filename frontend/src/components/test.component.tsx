@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactPlayer from 'react-player'
 import { KaraokempSong, Song } from '../types';
-import SongDisplayer from './SongDisplayer';
+import SongDisplayer from './SongDisplayer/SongDisplayer';
 
 
 export default class App extends Component{

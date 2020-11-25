@@ -27,3 +27,4 @@ frontend/node_modules/@types/jest/package.json
 *.mp4
 frontend/build/static/js/runtime-main.76c1576f.js
 credentials/
+*.log

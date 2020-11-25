@@ -9,12 +9,11 @@ import SecondaryComponent from '../secondary.component'
 import {Context} from '../../store/store';
 import MSG from '../message.component'
 import SongsService from '../../services/SongsService';
-import SongDisplayer from '../SongDisplayer';
+import SongDisplayer from '../SongDisplayer/SongDisplayer';
 
 @observer
 export default class SongsSearchComponent extends Component<{}, {
-   term: string,
-   message:{text:string,theme:MessageTheme}
+   message:{text:string,theme:MessageTheme},
   }>{
 
     static contextType = Context
@@ -23,7 +22,6 @@ export default class SongsSearchComponent extends Component<{}, {
     constructor(props:any) {
       super(props)
       this.state = {
-        term :'',
         message: {text:'',theme:MessageTheme.NOTHING},
     }
     this.inputRef = React.createRef();
@@ -45,8 +43,9 @@ export default class SongsSearchComponent extends Component<{}, {
       
        <MSG message ={this.state.message} />
         </p></div>
-        <SongDisplayer song = {this.context.selectedSong} onClick={this.handleClickDisplayedSong.bind(this)}/>
-  
+        <SongDisplayer song = {this.context.selectedSong} 
+        onClick={this.handleClickDisplayedSong.bind(this)}
+        />  
 
     </div>
     <div className="col-6 col-lg-6">

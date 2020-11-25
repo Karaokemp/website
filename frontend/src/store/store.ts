@@ -12,6 +12,8 @@ export class Store {
   @observable
   selectedSong: Song = new Song('FxyQTb6n4_I','MIKA - Love Today (Karaoke)','https://i.ytimg.com/vi/FxyQTb6n4_I/maxresdefault.jpg')
   @observable
+  processingSelectedSong:boolean = false
+  @observable
   secondaryComponent = SecondaryComponentMode.SONGS_INVENTORY      
   @action
   selectSong(song: Song) {
@@ -19,9 +21,11 @@ export class Store {
   }
   @action
   processSelectedSong(){
+    this.processingSelectedSong = true
     SongsService.processSong(this.selectedSong).then(newKaraokempSong=>{
       this.selectedSong = newKaraokempSong
       this.songsInventory.push(newKaraokempSong)
+      this.processingSelectedSong = false
     }).catch(err=>{
       console.error(err.message)
     })
@@ -40,6 +44,6 @@ export class Store {
       console.error(err.message)
     })
   }
-  
 }
+  
 export const Context = React.createContext(new Store())

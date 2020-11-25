@@ -5,6 +5,9 @@ img{
 img:hover {
     cursor: pointer;
 }
+img:hover.processing{
+    curser: 
+}
 img.big{
     height:200px
 }
