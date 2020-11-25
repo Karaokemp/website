@@ -19,7 +19,7 @@ export default class SongDisplayer extends Component<{song:any,onClick:any},{}>{
             window = <ReactPlayer url={this.props.song.cloudUrl} playing controls/>
         }else{
             window = <img src={this.props.song.image} onClick={this.props.onClick} style={style}
-            title="click her to store the song"
+            title="click here to add this song"
             className={this.context.processingSelectedSong ? 'processing' : ''}/>
         }
         return (<div>
