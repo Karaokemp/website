@@ -31,7 +31,7 @@ export default class SongsInventoryComponent extends Component{
       
     }
 
-    handleInventorySongClick(s:Song){
+    handleInventorySongClick(s:KaraokempSong){
       this.context.selectSong(s)    
     }
 }

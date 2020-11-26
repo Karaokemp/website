@@ -43,7 +43,7 @@ export default class SongsSearchComponent extends Component<{}, {
       
        <MSG message ={this.state.message} />
         </p></div>
-        <SongDisplayer song = {this.context.selectedSong} 
+        <SongDisplayer
         onClick={this.handleClickDisplayedSong.bind(this)}
         />  
 

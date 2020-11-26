@@ -10,7 +10,7 @@ export class Store {
   @observable
   suggestions: Song[] = new Array<Song>()
   @observable
-  selectedSong: Song = new Song('FxyQTb6n4_I','MIKA - Love Today (Karaoke)','https://i.ytimg.com/vi/FxyQTb6n4_I/maxresdefault.jpg')
+  selectedSong: Song = new KaraokempSong('FxyQTb6n4_I','MIKA - Love Today (Karaoke)','https://i.ytimg.com/vi/FxyQTb6n4_I/maxresdefault.jpg','https://kcs-test-karaoke-songs.s3.eu-central-1.amazonaws.com/MIKA_-_Love_Today_(Karaoke).mp4')
   @observable
   processingSelectedSong:boolean = false
   @observable
@@ -45,6 +45,7 @@ export class Store {
   updateSongsInventory(){
     SongsService.getBucketSongs().then(songs=>{
       this.songsInventory = songs
+      //this.selectedSong = songs[0]
     }).catch(err=>{
       console.error(err.message)
     })
