@@ -17,7 +17,12 @@ export class Store {
   secondaryComponent = SecondaryComponentMode.SONGS_INVENTORY      
   @action
   selectSong(song: Song) {
-    this.selectedSong = song
+    const existed = this.songsInventory.find(existedSong=> existedSong.videoId === song.videoId)
+    if(existed){
+      this.selectedSong = existed
+    }else{
+      this.selectedSong = song
+    }
   }
   @action
   processSelectedSong(){
