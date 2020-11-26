@@ -16,7 +16,8 @@ export default class SongDisplayer extends Component<{song:any,onClick:any},{}>{
         console.log(this.context.selectedSong)
         let window
         if(this.props.song.cloudUrl){
-            window = <ReactPlayer url={this.props.song.cloudUrl} playing controls/>
+            window = <ReactPlayer url={this.props.song.cloudUrl} width={style.width} height = {style.height}
+            playing controls/>
         }else{
             window = <img src={this.props.song.image} onClick={this.props.onClick} style={style}
             title="click here to add this song"
