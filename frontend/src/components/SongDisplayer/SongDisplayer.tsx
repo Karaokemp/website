@@ -13,7 +13,6 @@ export default class SongDisplayer extends Component<{song:any,onClick:any},{}>{
 
 
     render(){
-        console.log(this.context.selectedSong)
         let window
         if(this.props.song.cloudUrl){
             window = <ReactPlayer url={this.props.song.cloudUrl} width={style.width} height = {style.height}

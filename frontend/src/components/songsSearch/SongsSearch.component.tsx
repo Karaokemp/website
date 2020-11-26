@@ -64,10 +64,14 @@ export default class SongsSearchComponent extends Component<{}, {
       
         SongsService.getYoutubeSong(link).then(song=>{
           this.context.selectSong(song)
+          this.reportLink()
+        }).catch(err=>{
+          console.error('Could not process link!')
+          console.error(err.message)
+          this.cleanMessage()
         })
       
       
-      this.reportLink()
 
     }else{
       this.reportTerm()
