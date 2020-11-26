@@ -24,6 +24,7 @@ pipeline {
             agent {
               dockerfile {
                 filename 'agents/Dockerfile.agent'
+                args '-v frontend_cache:/var/jenkins_home/workspace/web-deployment_master/frontend/node_modules/'
     }
 }
            environment {

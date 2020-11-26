@@ -9,8 +9,7 @@ pipeline {
     agent {
     dockerfile {
         filename 'agents/Dockerfile.agent'
-        //args '-v /var/run/docker.sock:/var/run/docker.sock'
-        //args '-v frontend_cache:/var/jenkins_home/workspace/web-deployment_master/frontend/node_modules/'
+        args '-v frontend_cache:/var/jenkins_home/workspace/web-deployment_master/frontend/node_modules/'
     }
 }
     options {
