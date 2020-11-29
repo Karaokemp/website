@@ -39,7 +39,7 @@ export default class SongsSearchComponent extends Component<{}, {
         <input type="text" ref = {this.inputRef}
         onChange={this.handleInputChange.bind(this)}
         onKeyDown={this.handleKeyPressed.bind(this)}
-        style={{ width: "90%" }} placeholder="link, artist, title"/>
+        style={{ width: "90%" }} placeholder="artist, title, link"/>
       
        <MSG message ={this.state.message} />
         </p></div>

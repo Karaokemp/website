@@ -30,6 +30,8 @@ export class Store {
     SongsService.processSong(this.selectedSong).then(newKaraokempSong=>{
       this.selectedSong = newKaraokempSong
       this.songsInventory.push(newKaraokempSong)
+      this.secondaryComponent = SecondaryComponentMode.SONGS_INVENTORY
+
       this.processingSelectedSong = false
     }).catch(err=>{
       console.error(err.message)
@@ -37,7 +39,6 @@ export class Store {
   }   
   @action
   updateSuggestions(term:string){
-    const query = '+' + term.trim()
     SongsService.getYoutubeKaraokeResults(term).then(songs=>{
       this.suggestions.splice(0, this.suggestions.length)
       this.suggestions.push(...songs)
@@ -48,7 +49,6 @@ export class Store {
   updateSongsInventory(){
     SongsService.getBucketSongs().then(songs=>{
       this.songsInventory = songs
-      //this.selectedSong = songs[0]
     }).catch(err=>{
       console.error(err.message)
     })

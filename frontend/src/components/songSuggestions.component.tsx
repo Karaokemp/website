@@ -29,7 +29,6 @@ export default class SongSuggestionsComponent extends Component<{}, {}>{
     }
 
     handleSuggestionClick(s:Song){
-      console.log(s)
       this.context.selectSong(s)    
     }
 }

@@ -11,7 +11,7 @@ export default class SongsInventoryComponent extends Component{
     render(){
         return (<div>
        
-          <h4>Songs for The Next Event</h4>
+          <h4>Requests for The Next Event</h4>
           <p>{this.context?.songsInventory.length} karaoke songs</p>
 
         <hr/>
