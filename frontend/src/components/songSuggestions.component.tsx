@@ -17,9 +17,19 @@ export default class SongSuggestionsComponent extends Component<{}, {}>{
         <h4>Suggestions</h4>
         <ol>
           {this.context.suggestions.map((suggestion: Song,index: number)=>
-            <li key = {index}><a href ={`https://www.youtube.com/watch?v=${suggestion.videoId}`}>{suggestion.title}"</a></li>
+            <li key = {index}><a href ={`https://www.youtube.com/watch?v=${suggestion.videoId}`}
+                                  onClick={(e)=>{
+              e.preventDefault();
+              this.handleSuggestionClick(suggestion)
+              }}
+            >{suggestion.title}</a></li>
           )}
           </ol>
         </div>)
+    }
+
+    handleSuggestionClick(s:Song){
+      console.log(s)
+      this.context.selectSong(s)    
     }
 }

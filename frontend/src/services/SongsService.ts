@@ -13,10 +13,10 @@ export default class{
 
       static async getYoutubeResults(term:string) : Promise<Song[]>{
             let results = new Array<Song>()
-            await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&type=video&q=${term}&part=snippet&fields=items(id/videoId,snippet/title)&maxResults=20`)
+            await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&type=video&q=${term}&part=snippet&fields=items(id/videoId,snippet(title,thumbnails/high/url))&maxResults=10`)
             .then(res => res.json())
-            .then((response:{items:{id:{videoId:string},snippet:{title:string}}[]}) => {
-            const songs = response.items.map(item=>new Song(item.id.videoId,item.snippet.title,'https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg'))
+            .then((response:{items:{id:{videoId:string},snippet:{title:string,thumbnails:{high:{url:string}}}}[]}) => {
+            const songs = response.items.map(item=>new Song(item.id.videoId,item.snippet.title,item.snippet.thumbnails.high.url))
             results = songs
             }).catch(err=>{
                   console.error(err.message)
