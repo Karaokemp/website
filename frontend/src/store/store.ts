@@ -37,8 +37,11 @@ export class Store {
   }   
   @action
   updateSuggestions(term:string){
-    SongsService.getYoutubeResults(term).then(songs=>{
-      this.suggestions = songs;
+    const query = '+' + term.trim()
+    SongsService.getYoutubeKaraokeResults(term).then(songs=>{
+      this.suggestions.splice(0, this.suggestions.length)
+      this.suggestions.push(...songs)
+      this.secondaryComponent = SecondaryComponentMode.SONG_SUGGESTIONS
     })
   }
   @action

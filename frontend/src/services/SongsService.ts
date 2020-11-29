@@ -5,10 +5,15 @@ const KARAOKEMP_API = process.env.REACT_APP_KARAOKEMP_API
 const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY
 
 export default class{
+      static async getYoutubeKaraokeResults(term:string){
+            const query = term + ' +karaoke -carpool'
+            return this.getYoutubeResults(query)
+
+      }
 
       static async getYoutubeResults(term:string) : Promise<Song[]>{
             let results = new Array<Song>()
-            await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&type=video&q=${term}&part=snippet&fields=items(id/videoId,snippet/title)&maxResults=3`)
+            await fetch(`https://www.googleapis.com/youtube/v3/search?key=${YOUTUBE_API_KEY}&type=video&q=${term}&part=snippet&fields=items(id/videoId,snippet/title)&maxResults=20`)
             .then(res => res.json())
             .then((response:{items:{id:{videoId:string},snippet:{title:string}}[]}) => {
             const songs = response.items.map(item=>new Song(item.id.videoId,item.snippet.title,'https://i.ytimg.com/vi/AUjmpbd-U2Q/hqdefault.jpg'))
@@ -24,7 +29,6 @@ export default class{
             const objects:KaraokempSong[] = await fetch(`${KARAOKEMP_API}/songs`)
             .then(res => res.json())
             let songs = objects.map(obj=> new KaraokempSong(obj.videoId,obj.title,obj.image,obj.cloudUrl))
-            console.log()
             bucketSongs = songs
 
       return bucketSongs;

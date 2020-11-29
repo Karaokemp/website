@@ -71,8 +71,6 @@ export default class SongsSearchComponent extends Component<{}, {
           this.cleanMessage()
         })
       
-      
-
     }else{
       this.reportTerm()
   }
@@ -85,6 +83,8 @@ handleKeyPressed(event:any){
   if(event.key==='Enter'){
     
     const term = this.inputRef.current?.value
+    this.context.updateSuggestions(term)
+    console.log(this.context.suggestions)
   }
 }
   handleRequest(){
