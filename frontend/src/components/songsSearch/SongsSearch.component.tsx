@@ -35,11 +35,11 @@ export default class SongsSearchComponent extends Component<{}, {
   <h1>Karaokemp Website!</h1>
       <div className="text-center"><img className='big' src={karaokempLogo} alt='' style={{height:'100px',width:'100px'}}/></div> <br/><hr/>
         
-        <div className='instructions'><p>Paste link from &nbsp;<img src={youtubeLogo}alt=''/>
+        <div className='instructions'><p>Find song on &nbsp;<img src={youtubeLogo}alt=''/>
         <input type="text" ref = {this.inputRef}
         onChange={this.handleInputChange.bind(this)}
         onKeyDown={this.handleKeyPressed.bind(this)}
-        style={{ width: "90%" }} placeholder={`https://www.youtube.com/watch?v=${this.context.selectedSong.videoId}`}/>
+        style={{ width: "90%" }} placeholder="link, artist, title"/>
       
        <MSG message ={this.state.message} />
         </p></div>
@@ -54,7 +54,6 @@ export default class SongsSearchComponent extends Component<{}, {
   </div>
 </div>)
   }
-
   handleInputChange(change:ChangeEvent<HTMLInputElement> ){
     let value = this.inputRef.current!.value
     if(value.length < 3){
@@ -75,7 +74,6 @@ export default class SongsSearchComponent extends Component<{}, {
       this.reportTerm()
   }
 }
-
 handleClickDisplayedSong(){
   this.context.processSelectedSong()
 }
@@ -97,12 +95,10 @@ handleKeyPressed(event:any){
   sendRequest(){
     console.log('sending request!')
   }
-
   toggleTheme(){
     const newTheme = this.state.message.theme == MessageTheme.ERROR ? MessageTheme.SUCCESS: MessageTheme.ERROR
     this.setState({message:{text:this.state.message.text,theme:newTheme}})
   }
-
   reportLink(){
     this.setState({
       message:{text: 'Found Youtube Link!', theme: MessageTheme.SUCCESS}
