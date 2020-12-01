@@ -17,10 +17,10 @@ export default class SongSuggestionsComponent extends Component<{}, {}>{
     render(){
       return (<div>
         <h4>Suggestions</h4>
-        <ol>
+        <ul>
           {this.context.suggestions.map((suggestion: Song,index: number)=>
             <SongItem song={suggestion} key = {index} onClick={this.handleSuggestionClick.bind(this)}/>)}
-          </ol>
+          </ul>
         </div>)
     }
 

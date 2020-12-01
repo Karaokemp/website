@@ -22,7 +22,6 @@ export default class{
             }).catch(err=>{
                   console.error(err.message)
             })
-            console.log(results)
       return results
       }
       static async getBucketSongs(): Promise<KaraokempSong[]>{
@@ -32,6 +31,7 @@ export default class{
             .then(res => res.json())
             let songs = objects.map(obj=> new KaraokempSong(obj.videoId,obj.title,obj.image,obj.cloudUrl))
             bucketSongs = songs
+            console.log(bucketSongs)
 
       return bucketSongs;
       }
@@ -49,6 +49,7 @@ export default class{
             let result:any = await fetch(`${KARAOKEMP_API}/songs/youtube?video=${song.videoId}`,{method:'POST'})
             .then(response => response.json())
             const cloudSong: KaraokempSong = new KaraokempSong(result.videoId,result.title,result.image,result.cloudUrl)
+            console.log(cloudSong)
             return cloudSong
       } 
 }

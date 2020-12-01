@@ -20,6 +20,7 @@ def listSongs(event, context):
         song = {
             'videoId' : objData['x-amz-meta-videoid'],
             'title' : objData['x-amz-meta-title'],
+            'image' : objData['x-amz-meta-image'],
             'cloudUrl' : objData["x-amz-meta-cloudurl"]
         }
         songs.append(song)
