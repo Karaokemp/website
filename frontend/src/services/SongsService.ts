@@ -1,14 +1,15 @@
 import { classicNameResolver } from "typescript";
 import { Song,KaraokempSong, YoutubeURL} from "../types";
+import LanguageHelper from '../helpers/LanguageHelper'
 
 const KARAOKEMP_API = process.env.REACT_APP_KARAOKEMP_API
 const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY
 
 export default class{
       static async getYoutubeKaraokeResults(term:string){
-            const query = term + ' +karaoke -carpool'
+            const KARAOKE_KEYWORD = LanguageHelper.isHebrew(term) ? 'קריוקי' : 'karaoke'
+            const query = term + ` +${KARAOKE_KEYWORD} -carpool`
             return this.getYoutubeResults(query)
-
       }
 
       static async getYoutubeResults(term:string) : Promise<Song[]>{
@@ -21,6 +22,7 @@ export default class{
             }).catch(err=>{
                   console.error(err.message)
             })
+            console.log(results)
       return results
       }
       static async getBucketSongs(): Promise<KaraokempSong[]>{

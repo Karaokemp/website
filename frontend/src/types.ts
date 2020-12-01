@@ -83,3 +83,8 @@ export enum MessageTheme{
     SUCCESS,
     NOTHING
 }
+
+export enum Language{
+    ENGLISH,
+    HEWBREW
+}

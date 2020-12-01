@@ -82,7 +82,6 @@ handleKeyPressed(event:any){
     
     const term = this.inputRef.current?.value
     this.context.updateSuggestions(term)
-    console.log(this.context.suggestions)
   }
 }
   handleRequest(){
