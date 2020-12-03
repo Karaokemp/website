@@ -14,3 +14,6 @@ an invalid filename.
     filename = ''.join(c for c in s if c in valid_chars)
     filename = filename.replace(' ','_') # I don't like spaces in filenames.
     return filename
+def format_ascii(s):
+    asciidata = s.encode("ascii","ignore")
+    return s
