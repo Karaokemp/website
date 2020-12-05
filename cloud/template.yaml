@@ -61,7 +61,7 @@ Resources:
   KaraokeSongsTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
-  TableName: !Sub "${AWS::StackName}-karaoke-songs"
+      TableName: !Sub "${AWS::StackName}-karaoke-songs"
   KaraokeSongsBucket:
     Type: AWS::S3::Bucket
     Properties:
