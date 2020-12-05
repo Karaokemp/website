@@ -9,6 +9,7 @@ Globals:
     Environment:
       Variables: 
         S3_BUCKET : !Ref KaraokeSongsBucket
+        DYNAMODB_TABLE : !Ref KaraokeSongsTable
 
 Parameters:
  DNS: 
