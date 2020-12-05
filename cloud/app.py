@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 from requirements import youtube_dl 
 from requirements import boto3
@@ -48,7 +49,8 @@ def format_cloudUrl(key):
     return 'https://{}.s3.eu-central-1.amazonaws.com/{}'.format(S3_BUCKET,key)
 def uploadSongFromYoutube(videoId):
     url = 'https://www.youtube.com/watch?v=' + videoId
-    filename = '/tmp/videos/' + videoId + '.mp4'
+    root_folder = '' if sys.platform == 'win32' else '/tmp/'
+    filename = root_folder + 'videos/' + videoId + '.mp4'
     ydl_opts = {
     'outtmpl': filename
 }
@@ -66,3 +68,4 @@ def uploadSongFromYoutube(videoId):
             }
             s3.meta.client.upload_file(filename, S3_BUCKET, key, ExtraArgs={'ACL': 'public-read','ContentType': 'video/mp4','Metadata':song})
             return song
+uploadSongFromYoutube('3EA_8nnYbT0')
