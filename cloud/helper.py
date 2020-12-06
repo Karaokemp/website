@@ -1,4 +1,6 @@
 import string
+import json
+
 def format_filename(s):
     """Take a string and return a valid filename constructed from the string.
 Uses a whitelist approach: any characters not present in valid_chars are
@@ -14,8 +16,7 @@ an invalid filename.
     filename = ''.join(c for c in s if c in valid_chars)
     filename = filename.replace(' ','_') # I don't like spaces in filenames.
     return filename
-def format_cloudUrl(key):
-    return 'https://{}.s3.eu-central-1.amazonaws.com/{}'.format(S3_BUCKET,key)
+
 def packageResponse(song):
     return {
         'statusCode': 200,

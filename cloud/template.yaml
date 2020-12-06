@@ -59,6 +59,7 @@ Resources:
             Path: /songs/{source}
       Policies:
         - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
   KaraokeSongsTable:
     Type: AWS::Serverless::SimpleTable
     Properties:

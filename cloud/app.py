@@ -1,6 +1,5 @@
 import os
 import sys
-import json
 from requirements import youtube_dl 
 from requirements import boto3
 
@@ -24,10 +23,10 @@ def listSongs(event, context):
         response = s3Client.head_object(Bucket=S3_BUCKET,Key=obj.key)
         objData = response['ResponseMetadata']['HTTPHeaders']
         song = {
-            'videoId' : objData['x-amz-meta-videoid'],
-            'title' : objData['x-amz-meta-title'],
-            'image' : objData['x-amz-meta-image'],
-            'cloudUrl' : objData["x-amz-meta-cloudurl"]
+            'videoId' : 'objData[x-amz-meta-videoid]',
+            'title' : 'objData[x-amz-meta-title]',
+            'image' : 'objData[x-amz-meta-image]',
+            'cloudUrl' : 'objData[x-amz-meta-cloudurl]'
         }
         songs.append(song)
     return helper.packageResponse(songs)
@@ -59,9 +58,11 @@ def uploadSongFromYoutube(videoId):
                 'videoId':videoId,
                 'title' : title,
                 'image' : songImage,
-                'cloudUrl': helper.format_cloudUrl(key)
+                'cloudUrl': format_cloudUrl(key)
             }
             s3.meta.client.upload_file(filename, S3_BUCKET, key, ExtraArgs={'ACL': 'public-read','ContentType': 'video/mp4'})
             table.put_item(Item=song)
 
             return song
+def format_cloudUrl(key):
+    return 'https://{}.s3.eu-central-1.amazonaws.com/{}'.format(S3_BUCKET,key)
