@@ -7,7 +7,7 @@ from requirements import boto3
 import helper
 
 S3_BUCKET = os.environ.get('S3_BUCKET')
-DYNAMO_DB_TABLE = os.environ.get('DYNAMO_DB_TABLE')
+DYNAMO_DB_TABLE = os.environ.get('DYNAMODB_TABLE')
 # Get the service resource.
 dynamodb = boto3.resource('dynamodb')
 s3 = boto3.resource('s3')
