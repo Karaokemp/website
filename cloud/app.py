@@ -18,8 +18,8 @@ bucket = s3.Bucket(S3_BUCKET)
 
 
 def listSongs(event, context):
-    songs = list()
-    for obj in bucket.objects.all():
+    songs = table.scan()['Items']
+    '''for obj in bucket.objects.all():
         response = s3Client.head_object(Bucket=S3_BUCKET,Key=obj.key)
         objData = response['ResponseMetadata']['HTTPHeaders']
         song = {
@@ -28,7 +28,8 @@ def listSongs(event, context):
             'image' : 'objData[x-amz-meta-image]',
             'cloudUrl' : 'objData[x-amz-meta-cloudurl]'
         }
-        songs.append(song)
+        songs.append(song)'''
+    
     return helper.packageResponse(songs)
 
 def uploadSong(event, context):

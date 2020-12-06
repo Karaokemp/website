@@ -42,6 +42,7 @@ Resources:
             Path: /songs
       Policies:
         - AmazonS3ReadOnlyAccess
+        - AmazonDynamoDBReadOnlyAccess
   UploadFunction:
     Type: AWS::Serverless::Function
     Properties:
