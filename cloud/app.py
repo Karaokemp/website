@@ -19,17 +19,6 @@ bucket = s3.Bucket(S3_BUCKET)
 
 def listSongs(event, context):
     songs = table.scan()['Items']
-    '''for obj in bucket.objects.all():
-        response = s3Client.head_object(Bucket=S3_BUCKET,Key=obj.key)
-        objData = response['ResponseMetadata']['HTTPHeaders']
-        song = {
-            'videoId' : 'objData[x-amz-meta-videoid]',
-            'title' : 'objData[x-amz-meta-title]',
-            'image' : 'objData[x-amz-meta-image]',
-            'cloudUrl' : 'objData[x-amz-meta-cloudurl]'
-        }
-        songs.append(song)'''
-    
     return helper.packageResponse(songs)
 
 def uploadSong(event, context):
