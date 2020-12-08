@@ -90,35 +90,31 @@ stages{
        }
      }
   stage('Acceptance Tests') {
+      environment {
+        JEST_JUNIT_OUTPUT_NAME="integration.xml" 
+      }
       agent {
           dockerfile {
             filename 'agents/Dockerfile.agent'
-          }
-}         environment {
-            JEST_JUNIT_OUTPUT_NAME="integration.xml" 
-          }
+      }
+} 
             
-            steps {
-              build job: '../web-deployment/master',
-              parameters:[string(name: "DEPLOY_COMMIT", value:"${GIT_COMMIT}"), string(name: "ENVIRONMENT", value:"integration")]
-              dir('integration-tests'){
-                sh 'npm i'
-                sh 'npm run test:ci'
-              }
-              junit "reports/integration.xml"
+      steps {
+      build job: '../web-deployment/master',
+      parameters:[string(name: "DEPLOY_COMMIT", value:"${GIT_COMMIT}"), string(name: "ENVIRONMENT", value:"integration")]
+      dir('integration-tests'){
+        sh 'npm i'
+        sh 'npm run test:ci'
+      }
+      junit "reports/integration.xml"
 
-            }
-        }
+      }
+    }
         stage('Production'){
           agent any
            steps {
               build job: '../web-deployment/master',
               parameters:[string(name: "DEPLOY_COMMIT", value:"${GIT_COMMIT}"), string(name: "ENVIRONMENT", value:"production")]
-            }
-            post{
-              always{
-                copyArtifacts(projectName: '/web-deployment/master');
-              }
             }
         }
        }
