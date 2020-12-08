@@ -4,6 +4,9 @@ pipeline {
   triggers {
     pollSCM('* * * * *')
   }
+   environment {
+                 JEST_JUNIT_OUTPUT_DIR='../reports' 
+               }
   stages{
     stage('Check'){
        agent {
@@ -16,9 +19,6 @@ pipeline {
   }
 }
      stage('Build'){
-       environment {
-                 JEST_JUNIT_OUTPUT_DIR='../reports' 
-               }
        parallel{
          stage('Frontend'){
             agent {
@@ -89,12 +89,21 @@ stages{
          }
        }
      }
-          stage('Integration') {
+          stage('Integration Tests') {
          agent any
+         environment {
+            JEST_JUNIT_OUTPUT_NAME="integration.xml" 
+          }
             
             steps {
               build job: '../web-deployment/master',
               parameters:[string(name: "DEPLOY_COMMIT", value:"${GIT_COMMIT}"), string(name: "ENVIRONMENT", value:"integration")]
+              dir('integration-tests'){
+                sh 'npm i'
+                sh 'npm run test:ci'
+              }
+              junit "reports/integration.xml"
+
             }
         }
         stage('Production'){
