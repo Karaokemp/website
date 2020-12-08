@@ -89,9 +89,12 @@ stages{
          }
        }
      }
-          stage('Integration Tests') {
-         agent any
-         environment {
+  stage('Acceptance Tests') {
+      agent {
+          dockerfile {
+            filename 'agents/Dockerfile.agent'
+          }
+}         environment {
             JEST_JUNIT_OUTPUT_NAME="integration.xml" 
           }
             
