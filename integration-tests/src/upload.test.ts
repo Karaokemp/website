@@ -8,16 +8,17 @@ import {KaraokempSong} from '../../frontend/src/types'
 const BAD_TOUCH_VIDEO_ID = 'AUjmpbd-U2Q'
 const BAD_YOUCH_TITLE = 'The Bad Touch - The Bloodhound Gang | Karaoke Version | KaraFun'
 
-let connectionError = false
-
-
-
+const KATAN_ALENU = 'AUjmpbd-U2Q'
+const KATAN_ALENU_TITLE = 'The Bad Touch - The Bloodhound Gang | Karaoke Version | KaraFun'
 
 describe('Upload requests of Youtube songs', () => {
+    testYoutubeUpload('should give the right response',BAD_TOUCH_VIDEO_ID)
+    testYoutubeUpload('should work for hebrew songs',KATAN_ALENU)
+});
 
-
-    test("should show the right details in the response", async () => {
-        fetch(`${INTEGRATION_URL}/songs/youtube?video=${BAD_TOUCH_VIDEO_ID}`,{method:'POST'})
+function testYoutubeUpload(testDescription: string,videoId:string){
+    test(testDescription, () => {
+        fetch(`${INTEGRATION_URL}/songs/youtube?video=${videoId}`,{method:'POST'})
         .then(response => {
             expect(response.ok).toBeTruthy()
             return response.json()
@@ -27,19 +28,18 @@ describe('Upload requests of Youtube songs', () => {
                 expect(response.ok).toBeTruthy()
             })
             expect(cloudSong.title).toBe(BAD_YOUCH_TITLE)
-            expect(connectionError).toBeFalsy()
 
         }).catch(()=>{
+            //FAIL TEST ON ERROR
             expect(true).toBe(false)
         }).finally(()=>{
             deleteSong(BAD_TOUCH_VIDEO_ID)
         })
        
     });
-});
+}
 
 function deleteSong(key:string){
     fetch(`https://hmuhmxob6b.execute-api.eu-central-1.amazonaws.com/songs?song=${key}`,{method: 'DELETE'}).catch((err:any)=>{
     })
-
 }
