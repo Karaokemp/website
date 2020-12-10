@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="1" failures="0" errors="0" time="2.732">
-  <testsuite name="The server" errors="0" failures="0" skipped="0" timestamp="2020-12-08T12:48:05" time="1.331" tests="1">
-    <testcase classname="The server should upload mika song from youtube" name="The server should upload mika song from youtube" time="0.001">
-    </testcase>
-  </testsuite>
-</testsuites>

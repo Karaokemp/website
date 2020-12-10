@@ -30,6 +30,13 @@ def uploadSong(event, context):
 
     return helper.packageResponse(song)
 
+def deleteSong(event, context):
+    key = event['queryStringParameters']['song']
+    #key = 'AUjmpbd-U2Q'
+    table.delete_item(Key = {'id': key})
+    s3.Object(S3_BUCKET, key).delete()
+    return helper.packageResponse('A request to delete song ' + key + 'was received !')
+
 def uploadSongFromYoutube(videoId):
     url = 'https://www.youtube.com/watch?v=' + videoId
     root_folder = '' if sys.platform == 'win32' else '/tmp/'
@@ -56,3 +63,4 @@ def uploadSongFromYoutube(videoId):
             return song
 def format_cloudUrl(key):
     return 'https://{}.s3.eu-central-1.amazonaws.com/{}'.format(S3_BUCKET,key)
+#deleteSong({},{})

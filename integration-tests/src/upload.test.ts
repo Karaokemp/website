@@ -10,7 +10,7 @@ const BAD_YOUCH_TITLE = 'The Bad Touch - The Bloodhound Gang | Karaoke Version |
 
 
 
-describe('upload requests of Youtube songs', () => {
+describe('Upload requests of Youtube songs', () => {
 
     test("should show the right details in the response", async () => {
         fetch(`${INTEGRATION_URL}/songs/youtube?video=${BAD_TOUCH_VIDEO_ID}`,{method:'POST'})
@@ -19,8 +19,14 @@ describe('upload requests of Youtube songs', () => {
             return response.json()
         }).then(result=>{
             const cloudSong: KaraokempSong = new KaraokempSong(result.videoId,result.title,result.image,result.cloudUrl)
-            expect(cloudSong.title).toBe(BAD_YOUCH_TITLE)     
+            expect(cloudSong.title).toBe(BAD_YOUCH_TITLE)
+            test('should give valid URL to the song on the cloud', async ()=>{
+                const response = await fetch(cloudSong.cloudUrl)
+                expect(response.ok).toBeTruthy()
+            })
 
+        }).finally(()=>{
+            fetch(`https://hmuhmxob6b.execute-api.eu-central-1.amazonaws.com/songs?song=${BAD_TOUCH_VIDEO_ID}`,{method: 'DELETE'})
         })
        
     });

@@ -61,6 +61,24 @@ Resources:
       Policies:
         - AmazonS3FullAccess
         - AmazonDynamoDBFullAccess
+  DeleteFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      MemorySize: 3008 
+      Timeout: 180
+      CodeUri: ./
+      Handler: app.deleteSong
+      Runtime: python3.8      
+      Events:
+        DeleteRequest:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref SongsApi
+            Method: DELETE
+            Path: /songs
+      Policies:
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
   KaraokeSongsTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
